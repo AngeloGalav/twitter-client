@@ -7,5 +7,13 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+  ],
+  daisyui: {
+    themes: [
+      'light', // first one will be the default theme
+      'dark',
+    ],
+  },
 }
