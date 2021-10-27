@@ -23,15 +23,15 @@ export const TweetList = () => {
   const client = new TwitterApi('AAAAAAAAAAAAAAAAAAAAAEubVAEAAAAAKCxUBGiiiPqLoSw39uwOc6xLXEI%3DsgF83neaDxkh08z9yuJ3RQwE2PTUY0Tr5Xr8FX4c3TKcIarxqa');
   //const [tweets, setTweets] = useState([]);
 
-
+  /*
   const getTweet = async () => {
     const foundUsers = await client.v1.searchUsers('alki');
     console.log(foundUsers);
-  }
+  }*/
   
   return (
     <div>
-    {getTweet()}
+  
     </div>
   )
 }
