@@ -2,6 +2,7 @@
   "name": "twitter-client",
   "version": "0.1.0",
   "private": true,
+  "proxy" : "http://localhost:3001",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -20,6 +21,7 @@
     "redux": "^4.1.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.0",
+    "twitter": "^1.7.1",
     "twitter-api-v2": "^1.6.4",
     "web-vitals": "^1.1.2"
   },

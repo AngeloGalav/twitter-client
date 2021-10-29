@@ -1,13 +1,34 @@
 import TweetList from "./Components/TweetList";
 import SwitchTheme from "./Components/SwitchTheme";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import SearchBar from "./Components/SearchBar";
+import Tweet from "./Components/Tweet";
+import { useState, useEffect } from 'react' // useEffect esegue all'avvio una funzione
+import axios from 'axios';
+
+var primaRisposta = "ee";
+
+function getData () {
+  axios.get("/api")
+  .then((response) => {
+    primaRisposta = response.data[0].trends[0].name;
+    console.log(primaRisposta);
+  })
+  .catch(error => console.log(error.message))
+}
+
 
 function App() {
+
+  useEffect(() => getData())
+
   return (
     <div className="h-full">
       <div className="flex h-full gap-3 flex-col justify-center items-center">
       <h1 className="text-2xl">Hello Twitter!</h1>
       <TweetList />
+      <SearchBar />
+      <Tweet content={primaRisposta} />
       <SwitchTheme />
       
       <MapContainer

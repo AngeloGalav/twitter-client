@@ -4,7 +4,7 @@ const SwitchTheme = () => {
     //TODO aggiungere stato per preservare il tema scelto dall'utente all'utima visita
 
     //stato del tema attuale
-    const [theme, setTheme] = useState("light")
+    const [theme, setTheme] = useState("dark")
 
     //inverte il tema
     const changeTheme = () => {
