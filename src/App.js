@@ -1,4 +1,4 @@
-import TweetList from "./Components/TweetList";
+import TweetList from "./TweetList";
 import SwitchTheme from "./Components/SwitchTheme";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import SearchBar from "./Components/SearchBar";
