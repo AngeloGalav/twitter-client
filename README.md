@@ -41,7 +41,7 @@ Il progetto e' strutturato come consigliato dalla maggior parte degli sviluppato
 |   |   |
 │   └───Components
 |   │   |   button.js
-│   |   │   file112.txt
+│   |   │   SwitchTheme.js
 │   |   │
 |   |   └───Screens
 |   |   |   |   HomeScreen.js
@@ -66,7 +66,7 @@ La cartella `Actions` contiene i file necessari per svolgere le azioni asincrone
 La cartella `Assets` contiene tutti i file media come immagini, logo, video ecc.
 
 ### Components
-Nella cartella `Components` andranno i componenti React. Distinguiamo due tipi di Componenti, ovvero quelli classici (come bottoni, navbar ecc) e i componenti `Screens` che sono essenzialmente le pagine della nostra applicazione (ad esempio Homepage, About page, Login page ecc).
+Nella cartella `Components` andranno i componenti React. Distinguiamo due tipi di Componenti, ovvero quelli classici (come bottoni, navbar ecc) e i componenti `Screens` che sono essenzialmente le pagine della nostra applicazione (ad esempio Homepage, About page, Login page ecc). Per convenzione questi file iniziano con la lettera maiuscola. E' possibile anche utilizzare l'estensione `jsx` (Javascript esteso con html di React).
 
 ### Reducers
 I **Reducers** sono funzioni che trasformano lo stato corrente in un nuovo stato grazie all'informazione contenuta nell'azione che li viene passata come argomento [[2]](#2). Il file `index.js` in questa cartella contiene al suo interno un `combineReducers` che raggruppa al suo interno tutti i reducers dell'app (che possono essere diversi, dipende da come si gestisce lo store).
