@@ -10,7 +10,7 @@ var client = new Twitter({
 
 router.get('/', async (req, res, next) => {
   try{
-  const tweet = await client.get('trends/place.json',{id: 1}) // per ora mostra solo le tendenza del paese con id 1
+  const tweet = await client.get('trends/place.json',{id: 1}) // per ora mostra solo le tendenza del paese con id 1 (ovvero i trend nel mondo intero)
   res.send(tweet);
   } catch (error){
     next(error);
