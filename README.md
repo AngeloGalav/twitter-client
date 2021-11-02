@@ -75,6 +75,66 @@ I **Reducers** sono funzioni che trasformano lo stato corrente in un nuovo stato
 Nella cartella `Utils` andranno le funzioni generali, utili per qualche ragione. Ad esempio `WindowsSize.js` e' un hook che permette di ottenere le dimensioni attuali della viewport, ed e' una funzione generale utile a tutti i componenti.
 
 
+## Pillole di React
+React e' un framework component based. Questo significa che si creano delle **Componenti**, che potete immaginare come delle classi. Queste componenti altro non sono che porzioni di html/css che possono essere riutilizzate varie volte nel codice. In teoria si dovrebbero immaginare i componenti con un approccio bottom-up, ovvero prima i componenti piu' semplici e che si ripetono piu' spesso (ad esempio i bottoni, link, input forms ecc), e man mano costruire componenti sempre piu' complesse (ad esempio una home page). Ad ogni componente possono essere passate delle **props**, ovvero delle proprieta' che il componente padre puo' trasferire al componente figlio. Ad esempio
+```javascript
+function Ciao(props) {
+    return <h1>Ciao, {props.nome}</h1>;
+}
+```
+Qui abbiamo la componente `Ciao`, con una argomento `props`, che al suo interno contiene le props che gli passiamo. Adesso possiamo decidere di utilizzare la componente `Ciao` passandogli una props in questo modo
+```html
+<Ciao nome="Angela" />
+```
+Cosi' facendo quell'istanza di `Ciao` (possono esserci piu' `Ciao` diversi nel codice, cosi' come istanze diverse di una classe) avra' una props `nome` che puo'essere acceduta come abbiamo visto precedentemente. Il risultato sara' un header che contiene `Ciao, Angela`. Ovviamente si possono passare tante props, e le potete immaginare come degli attributi di una classe. Ogni componente ha un props di default che e' `children` che contiene gli elementi tra il tag di apertura e il tag di chiusura di un componente
+```html
+<Componente>
+<!--Tutto cio' che e' qui e' props.children-->
+<Componente />
+```
+A volte il fatto che le props possano essere passate solo "verso il basso" (ovvero da padre verso il figlio e cosi' via), puo' essere un problema. Per questo si utilizza Redux, che permette di avere una gestione "centralizzata" per tutte quelle informazioni che devono essere accedibili ovunque da piu' componenti (ad esempio una componente figlio potrebbe cambiare lo stato e questo sarebbe comunque accedibile alla componente padre, superando il limite delle props che vanno solo verso il basso).
+### Stato
+Ogni componente ha associato uno **stato**. E' possibile utilizzare l'hook `useState` per definire una nuova variabile di stato
+```javascript
+function Ciao() {
+    [count, setCount] = useState(0);
+    return <button onClick={() => setCount(count => count + 1)}>{count}</button>;
+}
+```
+In questo modo il nostro componente `Ciao` avra' una variabile di stato `count` inizializzata a `0`. Inoltre ci sara' un bottone che ogni volta che viene cliccato incrementera' il valore di `count` di 1. In generale la variabile di stato puo' contenere qualsiasi cosa, come un array o anche oggetti. Osserviamo che per fare interpolazione di variabile in react, ed in generale per inserire del codice javascript in react, bisogna introdurre `{}`. Ricordate che ogni parentesi potra' contenere un solo elemento padre, quindi dovrete mettere tutto il contenuto in un unico `<div>`
+
+```javascript
+{condizione && <div> Contenuto </div>}
+```
+Ad esempio inserendo con questo pezzo di codice in un componente react, renderizzeremo quel `div` solo se `condizione` e' verificata. Si potrebbe utilizzare anche un operatore ternario per simulare un `if-then-else`
+```javascript
+{condizione ? <div> Contenuto 1 <div/> : <div> Contenuto 2 <div/>}
+```
+
+### Effetti
+Spesso abbiamo bisogno di realizzare un effetto collaterale quando si verifica un evento. Per questo esiste l'hook `useEffect`
+```javscript
+useEffect(() => {}, [dipendenze])
+```
+In input prende la funzione che si deve eseguire quando una dipendenza passata come secondo argomento cambia valore. Possiamo immaginarlo come un effetto collaterla del mutamento di valore di una variabile di stato o proprieta' del componente. Ad esempio riprendendo il componente di prima
+```javascript
+function Ciao() {
+    [count, setCount] = useState(0);
+    useEffect(() => {
+        window.alert(count);
+    }, [count])
+    return <button onClick={() => setCount(count => count + 1)}>Clicca qui</button>;
+}
+```
+La funzione passata in input a `useEffect` fara' un alert che mostra il contenuto di `count` ogni volta che `count` cambia di valore, oppure nel primo render della pagina. A questo proposito:
+- Se a `useEffect` non vengono passate dipendenze, viene eseguito ad ogni render.
+- Se a `useEffect` e' passato un array vuoto viene eseguito solo al primo render.
+- Se a `useEffect` vengono passate delle dipendenze, viene eseguito solo ai render relativi all'aggiornamento delle sue dipendenze.
+
+In generale le dipendenze di `useEffect` dovrebbero essere tutte le variabili di stato che compaiono nel suo corpo. Tuttavia nel corpo della funzione non dovrebbe essere modificata una dipendenza altrimenti si entrerebbe in un loop infinito (per variabili che non causino re-render quando cambiano di valore vedere l'hook `useRef`).
+
+In aggiornamento...
+
 ## References
 <a id="1">[1]</a> 
 https://www.pluralsight.com/guides/how-to-organize-your-react-+-redux-codebase
