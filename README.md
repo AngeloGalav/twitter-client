@@ -60,7 +60,7 @@ Il progetto e' strutturato come consigliato dalla maggior parte degli sviluppato
 |   │   ...
 ```
 ### Actions
-La cartella `Actions` contiene i file necessari per svolgere le azioni asincrone sullo store di redux. Infatti, per definizione, le **azioni** sono semplici oggetti JavaScript che hanno un campo di `type` [[2]](#2). Oltre a questo hanno anche un campo `payload` che contiene le informazioni su come aggiornare lo stato. Tuttavia spesso abbiamo bisogno di effettuare delle azioni con una logica asincrona (ad esempio fetiching dei dati dal server). Per questo bisogna estendere le funzionalita' di Redux con il middleware **Redux-Thunk** [[2]](#2) che permette di fare quanto descritto.
+La cartella `Actions` contiene i file necessari per svolgere le azioni asincrone sullo store di redux. Infatti, per definizione, le **azioni** sono semplici oggetti JavaScript che hanno un campo di `type` [[2]](#2). Oltre a questo hanno anche un campo `payload` che contiene le informazioni su come aggiornare lo stato. Tuttavia spesso abbiamo bisogno di effettuare delle azioni con una logica asincrona (ad esempio fetiching dei dati dal server). Per questo bisogna estendere le funzionalita' di Redux con il middleware **Redux-Thunk** [[3]](#3) che permette di fare quanto descritto.
 
 ### Assets
 La cartella `Assets` contiene tutti i file media come immagini, logo, video ecc.
