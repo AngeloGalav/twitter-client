@@ -1,4 +1,4 @@
-import TweetList from "./TweetList";
+import TweetList from "./Components/TweetList";
 import SwitchTheme from "./Components/SwitchTheme";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import SearchBar from "./Components/SearchBar";
@@ -6,19 +6,19 @@ import Tweet from "./Components/Tweet";
 import { useState, useEffect } from 'react' // useEffect esegue all'avvio una funzione
 import axios from 'axios';
 
-var primaRisposta = "ee";
-
-function getData () {
-  axios.get("/api")
-  .then((response) => {
-    primaRisposta = response.data[0].trends[0].name;
-    console.log(primaRisposta);
-  })
-  .catch(error => console.log(error.message))
-}
-
 
 function App() {
+
+  const [primaRisposta, setRisposta] = useState(<i>in attesa di risposta dal server...</i>);
+
+  function getData () {
+    axios.get("/api")
+    .then((response) => {
+      setRisposta(response.data[0].trends[0].name);
+      console.log(primaRisposta);
+    })
+    .catch(error => console.log(error.message))
+  }
 
   useEffect(() => getData())
 
@@ -28,7 +28,7 @@ function App() {
       <h1 className="text-2xl">Hello Twitter!</h1>
       <TweetList />
       <SearchBar />
-      <Tweet content={primaRisposta} />
+      <Tweet content={<b>{primaRisposta}</b>} />
       <SwitchTheme />
       
       <MapContainer
@@ -42,7 +42,7 @@ function App() {
         <Popup>
         
         <div className="w-72">
-        <img className="w-full h-full" src="https://i.ytimg.com/vi/Pg1ogBDAMuo/maxresdefault.jpg" />
+        <img className="w-full h-full" alt="nice" src="https://i.ytimg.com/vi/Pg1ogBDAMuo/maxresdefault.jpg" />
           </div>
         
         
@@ -53,7 +53,7 @@ function App() {
         <Popup>
         
         <div className="w-72">
-        <img className="w-full h-full" src="https://external-preview.redd.it/_-sfH6MwYEX1W8k_8wPS51_HihPvi88C6Pmjo8z3O1w.png?width=640&crop=smart&format=pjpg&auto=webp&s=16bf1e3851f69e19b963bf05add03ef32c6c3de5" />
+        <img className="w-full h-full" alt="nice" src="https://external-preview.redd.it/_-sfH6MwYEX1W8k_8wPS51_HihPvi88C6Pmjo8z3O1w.png?width=640&crop=smart&format=pjpg&auto=webp&s=16bf1e3851f69e19b963bf05add03ef32c6c3de5" />
           </div>
         
         
@@ -64,7 +64,7 @@ function App() {
         <Popup>
         
         <div className="w-72">
-        <img className="w-full h-full" src="https://pbs.twimg.com/media/ElL0plwXUAMezy-.jpg" />
+        <img className="w-full h-full" alt="nice" src="https://pbs.twimg.com/media/ElL0plwXUAMezy-.jpg" />
           </div>
         
         
