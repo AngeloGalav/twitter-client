@@ -45,8 +45,29 @@ function App() {
           </Route>
         */}
 
+
+
         
       </Switch>
+
+      <button class="btn">neutral</button> 
+<button class="btn btn-primary">primary</button> 
+<button class="btn btn-secondary">secondary</button> 
+<button class="btn btn-accent">accent</button> 
+<button class="btn btn-ghost">ghost</button> 
+<button class="btn btn-link">link</button>
+<button class="btn btn-info">info</button> 
+<button class="btn btn-error">error</button> 
+<button class="btn btn-warning">warning</button> 
+<button class="btn btn-success">success</button> 
+<button class="btn btn-outline">neutral</button> 
+<button class="btn btn-outline btn-primary">primary</button> 
+<button class="btn btn-outline btn-secondary">secondary</button> 
+<button class="btn btn-outline btn-accent">accent</button>
+<button class="btn btn-outline btn-info">info</button> 
+<button class="btn btn-outline btn-error">error</button> 
+<button class="btn btn-outline btn-warning">warning</button> 
+<button class="btn btn-outline btn-success">success</button> 
       <div className="h-full">
           <div className="flex h-full gap-3 flex-col justify-center items-center">
             <h1 className="text-2xl">Hello Twitter!</h1>
