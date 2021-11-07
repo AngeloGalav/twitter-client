@@ -27,7 +27,7 @@ module.exports = {
     variants: {
         extend: {},
     },
-    plugins: [require("daisyui")],
+    plugins: [require("daisyui"), require('@tailwindcss/typography'),],
     daisyui: {
         themes: [
             {
@@ -43,15 +43,15 @@ module.exports = {
                     "secondary-content":
                         "#ffffff" /* Foreground content color to use on secondary color */,
 
-                    accent: "#e13960" /* Accent color */,
-                    "accent-focus": "#CF103D" /* Accent color - focused */,
+                    accent: "#1DF2D8" /* Accent color */,
+                    "accent-focus": "#0CD0B8" /* Accent color - focused */,
                     "accent-content":
                         "#ffffff" /* Foreground content color to use on accent color */,
 
-                    neutral: "#3d4451" /* Neutral color */,
-                    "neutral-focus": "#2a2e37" /* Neutral color - focused */,
+                    neutral: "#ffffff" /* Neutral color */,
+                    "neutral-focus": "#f9fafb" /* Neutral color - focused */,
                     "neutral-content":
-                        "#ffffff" /* Foreground content color to use on neutral color */,
+                        "#1f2937" /* Foreground content color to use on neutral color */,
 
                     "base-100":
                         "#ffffff" /* Base color of page, used for blank backgrounds */,
@@ -79,8 +79,8 @@ module.exports = {
                     "secondary-content":
                         "#14171A" /* Foreground content color to use on secondary color */,
 
-                    accent: "#e13960" /* Accent color */,
-                    "accent-focus": "#CF103D" /* Accent color - focused */,
+                    accent: "#1DF2D8" /* Accent color */,
+                    "accent-focus": "#f9fafb" /* Accent color - focused */,
                     "accent-content":
                         "#ffffff" /* Foreground content color to use on accent color */,
 

@@ -1,16 +1,19 @@
 //Components
-import Navbar from "../NavbarMobile";
+import NavbarMobile from '../NavbarMobile'
 import useWindowSize from "../../Utils/windowSize";
 
 import React from "react";
+import NavbarDesktop from '../NavbarDesktop';
 
 const HomeScreen = () => {
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
 
     return (
-        <div>
-            {width < 768 && <Navbar />}
+        <div
+        id="home-screen-container"
+        >
+            {width < 768 ? <NavbarMobile /> : <NavbarDesktop />}
             <div
                 class="hero min-h-screen"
                 style={{backgroundImage: `url("https://picsum.photos/id/1005/1600/1400")`}}

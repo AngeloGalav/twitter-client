@@ -5,14 +5,13 @@ import SwitchTheme from "./SwitchTheme";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation } from 'react-router-dom';
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 
-const Navbar = (props) => {
-//TODO: trovare il modo di impedire lo scrolling sotto se il menù è aperto  
+const NavbarMobile = (props) => {
     //stato
     const location = useLocation();
     const [colorChange, setColorchange] = useState(location.pathname !== "/");
     const [menuOpen, setMenuOpen] = useState(false);
-    
     const [y, setY] = useState(window.scrollY);
     const [scrollingDirection, setScrollingDirection] = useState("down");
 
@@ -61,15 +60,54 @@ const Navbar = (props) => {
       };
     }, [handleNavigation, changeNavbarColor]);
 
+    //animazione a "catena", prima apre il menu e poi rende lo sfondo con effetto glass, quando si chiude fa il contrario (a pila)
+    useEffect(() => {
+        if (menuOpen) {
+            setTimeout(() => {
+                document.getElementById("menu-navbar-mobile-container")?.classList.remove("top-screen");
+                document.getElementById("menu-navbar-mobile-container")?.classList.add("top-0");
+            }, 0);
+            setTimeout(() =>{
+                document.getElementById("menu-navbar-mobile-container")?.classList.add("bg-neutral", "bg-opacity-20", "backdrop-filter", "backdrop-blur");
+            }, 300);
+        } else {
+            setTimeout(() =>{
+                document.getElementById("menu-navbar-mobile-container")?.classList.remove("bg-neutral", "bg-opacity-20", "backdrop-filter", "backdrop-blur");
+            }, 0);
+            setTimeout(() => {
+                document.getElementById("menu-navbar-mobile-container")?.classList.remove("top-0");
+                document.getElementById("menu-navbar-mobile-container")?.classList.add("top-screen");
+            }, 300);
+        }
+    }, [menuOpen]);
+
+    //vieta lo scrolling sotto la modale se è aperta
+    useEffect(() => {
+        let containerId;
+        location.pathname === "/" ? containerId = "home-screen-container" : location.pathname === "/about" ? containerId = "about-screen-container" : containerId = "tweets-screen-container";
+
+        if (menuOpen) {
+            disableBodyScroll(document.getElementById(containerId));
+        } else {
+            enableBodyScroll(document.getElementById(containerId));
+        }
+
+        return () => {
+            //pulisce gli scrolling quando si fa unmount
+            clearAllBodyScrollLocks();
+        }
+
+    }, [menuOpen]);
+
     return (
         <div className="relative z-10">
             <div
                 className={`p-4 ${
-                    !colorChange ? "bg-transparent" : "bg-neutral"
+                    !colorChange ? "bg-transparent" : "bg-neutral shadow-md"
                 } fixed top-0 w-full transition-all duration-200 ease-linear`}
             >
                 <button
-                    className={`btn btn-natural btn-block ${colorChange ? "border-neutral-content" : "shadow-md"} rounded-full normal-case font-medium h-14`}
+                    className={`btn btn-natural btn-block ${colorChange ? "border-base-100 shadow-md" : ""} rounded-full normal-case font-medium h-14`}
                     onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
                 >
                     <i className="bi bi-search text-primary text-xl" /> &nbsp;
@@ -77,7 +115,7 @@ const Navbar = (props) => {
                 </button>
             </div>
 
-            <div className={`fixed w-full bg-neutral text-neutral-content h-20 ${scrollingDirection === "up" && y > 80 ? "bottom-0" : '-bottom-20'} transition-all duration-200 ease-linear`}>
+            <div className={`fixed w-full bg-neutral text-neutral-content h-20 ${scrollingDirection === "up" && (y > 80 || location.pathname !== "/") ? "bottom-0 border-t border-base-300" : '-bottom-20'} transition-all duration-200 ease-linear`}>
                 <div className="flex justify-center gap-12 smartphone:gap-20 items-center h-full">
                   <div className="flex flex-col justify-center items-center">
                   <button className="btn btn-link">
@@ -101,9 +139,8 @@ const Navbar = (props) => {
             </div>
 
             <div
-                className={`fixed overflow-auto h-screen w-full bg-gradient-to-r backdrop-brightness-200 from-blue-200 via-transparent to-blue-200 backdrop-filter backdrop-blur z-20 ${
-                    !menuOpen ? "top-screen" : "top-0"
-                } transition-all duration-500 ease-out`}
+                id="menu-navbar-mobile-container"
+                className="fixed overflow-auto top-screen h-screen w-full z-20 transition-all duration-300 ease-out"
             >
                 <div className=" px-4 smartphone:px-8 py-8 h-full relative top-20 rounded-t-3xl bg-base-100 text-base-content">
                     <button
@@ -136,4 +173,4 @@ const Navbar = (props) => {
     );
 };
 
-export default Navbar;
+export default NavbarMobile;
