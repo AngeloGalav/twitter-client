@@ -157,10 +157,10 @@ const NavbarMobile = (props) => {
                                     {...register("userInput", {
                                         required: true,
                                     })}
-                                    className="w-full pr-16 h-14 input input-primary input-bordered rounded-full"
+                                    className={`w-full pr-16 h-14 input ${errors.userInput ? "input-error" : "input-primary"} shadow-md input-bordered rounded-full`}
                                 />
                                 <input
-                                    class="absolute top-0 h-14 right-0 rounded-l-none btn btn-primary rounded-full"
+                                    class={`absolute top-0 h-14 right-0 rounded-l-none btn ${errors.userInput ? "btn-error" : "btn-primary"} rounded-full`}
                                     type="submit"
                                     value="Cerca"
                                 />

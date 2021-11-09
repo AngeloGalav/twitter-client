@@ -16,9 +16,9 @@ const HomeScreen = () => {
             {width < 768 ? <NavbarMobile /> : <NavbarDesktop />}
             <div
                 class="hero min-h-screen"
-                style={{backgroundImage: `url("https://picsum.photos/id/1005/1600/1400")`}}
+                style={{backgroundImage: `url("https://www.insursoft.it/wp-content/uploads/2021/06/futuristic-smart-city-with-5g-global-network-technology-scaled.jpg")`}}
             >
-                <div class="hero-overlay bg-opacity-60"></div>
+                <div class="hero-overlay backdrop-filter backdrop-blur-sm bg-opacity-40"></div>
                 <div class="text-center hero-content text-neutral-content">
                     <div class="max-w-md">
                         <h1 class="mb-5 text-5xl font-bold">Hello world</h1>
@@ -29,8 +29,6 @@ const HomeScreen = () => {
                     </div>
                 </div>
             </div>
-
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         </div>
     );
 };

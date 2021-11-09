@@ -6,6 +6,7 @@ import ScrollToTop from './Utils/ScrollOnTop';
 
 //router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Footer from "./Components/Footer";
 
 function App() {
     return (
@@ -31,6 +32,8 @@ function App() {
           </Route>
         */}
             </Switch>
+
+            <Footer />
         </Router>
     );
 }

@@ -25,8 +25,7 @@ const NavbarDesktop = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => console.log(data);
-    console.log(errors);
+    const onSubmit = (data) => console.log(data);   //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
 
     /*Cambia il colore della navbar */
     const changeNavbarColorDesktop = () => {
@@ -210,10 +209,10 @@ const NavbarDesktop = () => {
                                     {...register("userInput", {
                                         required: true,
                                     })}
-                                    className="w-full pr-16 h-14 input input-primary shadow-md input-bordered rounded-full"
+                                    className={`w-full pr-16 h-14 input ${errors.userInput ? "input-error" : "input-primary"} shadow-md input-bordered rounded-full`}
                                 />
                                 <input
-                                    class="absolute top-0 h-14 right-0 rounded-l-none btn btn-primary rounded-full"
+                                    class={`absolute top-0 h-14 right-0 rounded-l-none btn ${errors.userInput ? "btn-error" : "btn-primary"} rounded-full`}
                                     type="submit"
                                     value="Cerca"
                                 />
