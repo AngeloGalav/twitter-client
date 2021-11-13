@@ -1,6 +1,6 @@
 //components
 import SwitchTheme from "./SwitchTheme";
-
+import useWindowSize from "../Utils/windowSize";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,8 @@ const NavbarMobile = (props) => {
     const [y, setY] = useState(window.scrollY);
     const [tabFocus, setTabFocus] = useState(1);
     const [scrollingDirection, setScrollingDirection] = useState("down");
+    // eslint-disable-next-line
+    const [width, height] = useWindowSize();
 
     //hook form
     const {
@@ -114,7 +116,7 @@ const NavbarMobile = (props) => {
                 } fixed top-0 w-full transition-all duration-200 ease-linear`}
             >
                 <button
-                    className={`btn btn-natural btn-block ${colorChange ? "border-base-100 shadow-md" : ""} rounded-full normal-case font-medium h-14`}
+                    className={`btn btn-natural btn-block ${colorChange ? "border-base-100" : ""} shadow-md rounded-full normal-case font-medium h-14`}
                     onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
                 >
                     <i className="bi bi-search text-primary text-xl" /> &nbsp;
@@ -156,7 +158,7 @@ const NavbarMobile = (props) => {
                         <i className="bi bi-chevron-left text-xl" />
                     </button>
 
-                    <div className="flex-1 flex justify-center">
+                    { width > 400 ? (<div className="flex-1 flex justify-center mt-5">
                         <div className="tabs">
                             <a
                                 tabIndex="0"
@@ -189,7 +191,46 @@ const NavbarMobile = (props) => {
                                 Main filter 3
                             </a>
                         </div>
+                    </div>) : (<div class="carousel rounded-box">
+                    <div class="carousel-item">
+                      <a
+                          tabIndex="0"
+                          id="navbar-tab-1"
+                          className={`tab tab-bordered ${
+                              tabFocus === 1 ? "tab-active" : ""
+                          }`}
+                          onFocus={addTabFocusHandler}
+                      >
+                          Main filter 1
+                      </a>
                     </div>
+                    <div class="carousel-item">
+                      <a
+                          tabIndex="0"
+                          id="navbar-tab-2"
+                          className={`tab tab-bordered ${
+                              tabFocus === 2 ? "tab-active" : ""
+                          }`}
+                          onFocus={addTabFocusHandler}
+                      >
+                          Main filter 2
+                      </a>
+                    </div>
+                    <div class="carousel-item">
+                      <a
+                          tabIndex="0"
+                          id="navbar-tab-3"
+                          className={`tab tab-bordered ${
+                              tabFocus === 3 ? "tab-active" : ""
+                          }`}
+                          onFocus={addTabFocusHandler}
+                      >
+                          Main filter 3
+                      </a>
+                    </div>
+                  </div>)}
+
+
 
                     <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                         <div class="form-control mt-8">
