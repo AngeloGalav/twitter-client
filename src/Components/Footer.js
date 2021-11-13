@@ -6,10 +6,10 @@ const Footer = () => {
         <footer className="p-10 footer bg-base-200 text-base-content footer-center">
             <div className="grid grid-flow-col gap-4">
                 <Link to="/about" className="link link-hover">
-                    About us
+                    Chi siamo
                 </Link>
                 <Link to="/about#contacts" className="link link-hover">
-                    Contact
+                    Contattaci
                 </Link>
             </div>
             <div>
@@ -50,7 +50,7 @@ const Footer = () => {
                 </div>
             </div>
             <div>
-                <p>Copyright © 2021 - All right reserved by ...</p>
+                <p>Copyright © 2021 - All right reserved by Alma Mater - Univeristà di Bologna</p>
             </div>
         </footer>
     );
