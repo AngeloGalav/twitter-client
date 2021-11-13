@@ -25,7 +25,11 @@ const NavbarDesktop = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => console.log(data);   //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
+    const onSubmit = (data) => {  //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
+      console.log(data);
+      //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
+    }
+
 
     /*Cambia il colore della navbar */
     const changeNavbarColorDesktop = () => {
@@ -200,9 +204,10 @@ const NavbarDesktop = () => {
                         !colorChange || searchBarOpen ? "container" : "hidden"
                     } justify-center`}
                 >
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                         <div class="form-control mt-8">
                             <div class="relative w-full">
+
                                 <input
                                     type="text"
                                     placeholder={`Qualcosa inerente al filtro ${"Main filter " + tabFocus} ...`}
@@ -211,10 +216,16 @@ const NavbarDesktop = () => {
                                     })}
                                     className={`w-full pr-16 h-14 input ${errors.userInput ? "input-error" : "input-primary"} shadow-md input-bordered rounded-full`}
                                 />
+                                <label htmlFor="submit-search-btn"
+                                className={`absolute top-1 h-12 w-12 right-1 btn ${errors.userInput ? "btn-error" : "btn-primary"} rounded-full`}
+                                >
+                                    <i className="bi bi-search text-xl" />
+                                </label>
                                 <input
-                                    class={`absolute top-0 h-14 right-0 rounded-l-none btn ${errors.userInput ? "btn-error" : "btn-primary"} rounded-full`}
+                                    className="w-0 h-0 overflow-hidden"
                                     type="submit"
                                     value="Cerca"
+                                    id="submit-search-btn"
                                 />
                             </div>
                         </div>

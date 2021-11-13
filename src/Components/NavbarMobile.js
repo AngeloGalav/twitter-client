@@ -13,6 +13,7 @@ const NavbarMobile = (props) => {
     const [colorChange, setColorchange] = useState(location.pathname !== "/");
     const [menuOpen, setMenuOpen] = useState(false);
     const [y, setY] = useState(window.scrollY);
+    const [tabFocus, setTabFocus] = useState(1);
     const [scrollingDirection, setScrollingDirection] = useState("down");
 
     //hook form
@@ -21,8 +22,10 @@ const NavbarMobile = (props) => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const onSubmit = (data) => console.log(data);
-    console.log(errors);
+    const onSubmit = (data) => {  //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
+      console.log(data);
+      //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
+    }
 
     /*Cambia il colore della navbar */
     const changeNavbarColor = () => {
@@ -33,6 +36,10 @@ const NavbarMobile = (props) => {
             setColorchange(false);
         }
     };
+
+    //Gestisce il focus sulle tab
+    const addTabFocusHandler = (event) =>
+        setTabFocus(parseInt(event.target.id.slice(-1)));
 
     //vede se sta scrollando verso l'alto o il basso
     const handleNavigation = useCallback(
@@ -52,7 +59,7 @@ const NavbarMobile = (props) => {
       setY(window.scrollY);
       window.addEventListener("scroll", handleNavigation);
       window.addEventListener("scroll", changeNavbarColor);
-      
+
       //rimuove il callback da window quando si fa unmount del componente
       return () => {
         window.removeEventListener("scroll", handleNavigation);
@@ -121,13 +128,13 @@ const NavbarMobile = (props) => {
                   <button className="btn btn-link">
                   <Link to="/"><i className={`bi bi-house-door-fill text-2xl ${location.pathname === "/" ? "" : "text-neutral-content"}`} /></Link>
                   </button>
-                    
+
                     <span className="text-xs">Home</span>
                   </div>
                   <div className="flex flex-col justify-center items-center">
                   <button className="btn btn-link">
                     <Link to="/about"><i className={`bi bi-info-circle-fill text-2xl ${location.pathname === "/about" ? "" : "text-neutral-content"}`} /></Link>
-                    
+
                   </button>
                     <span className="text-xs">Info</span>
                   </div>
@@ -142,27 +149,69 @@ const NavbarMobile = (props) => {
                 id="menu-navbar-mobile-container"
                 className="fixed overflow-auto top-screen h-screen w-full z-20 transition-all duration-300 ease-out"
             >
-                <div className=" px-4 smartphone:px-8 py-8 h-full relative top-20 rounded-t-3xl bg-base-100 text-base-content">
+                <div style={{minHeight: "calc(100% - 5rem)"}} className=" px-4 smartphone:px-8 py-8 top-20 w-full absolute rounded-t-3xl bg-base-100 text-base-content">
                     <button
                         onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
                     >
                         <i className="bi bi-chevron-left text-xl" />
                     </button>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+
+                    <div className="flex-1 flex justify-center">
+                        <div className="tabs">
+                            <a
+                                tabIndex="0"
+                                id="navbar-tab-1"
+                                className={`tab tab-bordered ${
+                                    tabFocus === 1 ? "tab-active" : ""
+                                }`}
+                                onFocus={addTabFocusHandler}
+                            >
+                                Main filter 1
+                            </a>
+                            <a
+                                tabIndex="0"
+                                id="navbar-tab-2"
+                                className={`tab tab-bordered ${
+                                    tabFocus === 2 ? "tab-active" : ""
+                                }`}
+                                onFocus={addTabFocusHandler}
+                            >
+                                Main filter 2
+                            </a>
+                            <a
+                                tabIndex="0"
+                                id="navbar-tab-3"
+                                className={`tab tab-bordered ${
+                                    tabFocus === 3 ? "tab-active" : ""
+                                }`}
+                                onFocus={addTabFocusHandler}
+                            >
+                                Main filter 3
+                            </a>
+                        </div>
+                    </div>
+
+                    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                         <div class="form-control mt-8">
                             <div class="relative w-full">
                                 <input
                                     type="text"
-                                    placeholder="Lucca Comics 2021/2022"
+                                    placeholder={`Qualcosa inerente al filtro ${"Main filter " + tabFocus} ...`}
                                     {...register("userInput", {
                                         required: true,
                                     })}
-                                    className={`w-full pr-16 h-14 input ${errors.userInput ? "input-error" : "input-primary"} shadow-md input-bordered rounded-full`}
+                                    className={`w-full pr-16 text h-14 input ${errors.userInput ? "input-error" : "input-primary"} shadow-md input-bordered rounded-full`}
                                 />
+                                <label htmlFor="submit-search-btn"
+                                className={`absolute top-1 h-12 w-12 right-1 btn ${errors.userInput ? "btn-error" : "btn-primary"} rounded-full`}
+                                >
+                                    <i className="bi bi-search text-xl" />
+                                </label>
                                 <input
-                                    class={`absolute top-0 h-14 right-0 rounded-l-none btn ${errors.userInput ? "btn-error" : "btn-primary"} rounded-full`}
+                                    className="w-0 h-0 overflow-hidden"
                                     type="submit"
                                     value="Cerca"
+                                    id="submit-search-btn"
                                 />
                             </div>
                         </div>

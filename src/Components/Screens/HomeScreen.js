@@ -18,7 +18,7 @@ const HomeScreen = () => {
                 class="hero min-h-screen"
                 style={{backgroundImage: `url("https://www.insursoft.it/wp-content/uploads/2021/06/futuristic-smart-city-with-5g-global-network-technology-scaled.jpg")`}}
             >
-                <div class="hero-overlay backdrop-filter backdrop-blur-sm bg-opacity-40"></div>
+                <div style={{minHeight: "45rem"}} class="hero-overlay backdrop-filter backdrop-blur-sm bg-opacity-40"></div>
                 <div class="text-center hero-content text-neutral-content">
                     <div class="max-w-md">
                         <h1 class="mb-5 text-5xl font-bold">Hello world</h1>
