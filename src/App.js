@@ -2,7 +2,7 @@
 import AboutScreen from "./Components/Screens/AboutScreen";
 import TweetsScreen from "./Components/Screens/TweetsScreen";
 import HomeScreen from "./Components/Screens/HomeScreen";
-import ScrollToTop from './Utils/ScrollOnTop';
+import ScrollToTop from './Utils/ScrollToTop';
 
 //router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
