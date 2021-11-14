@@ -43,8 +43,8 @@ module.exports = {
                     "secondary-content":
                         "#ffffff" /* Foreground content color to use on secondary color */,
 
-                    accent: "#1DF2D8" /* Accent color */,
-                    "accent-focus": "#0CD0B8" /* Accent color - focused */,
+                    accent: "#ad72ff" /* Accent color */,
+                    "accent-focus": "#7B1FFC" /* Accent color - focused */,
                     "accent-content":
                         "#ffffff" /* Foreground content color to use on accent color */,
 
@@ -79,8 +79,8 @@ module.exports = {
                     "secondary-content":
                         "#14171A" /* Foreground content color to use on secondary color */,
 
-                    accent: "#1DF2D8" /* Accent color */,
-                    "accent-focus": "#0CD0B8" /* Accent color - focused */,
+                    accent: "#ad72ff" /* Accent color */,
+                    "accent-focus": "#7B1FFC" /* Accent color - focused */,
                     "accent-content":
                         "#ffffff" /* Foreground content color to use on accent color */,
 

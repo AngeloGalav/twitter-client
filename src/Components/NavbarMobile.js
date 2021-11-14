@@ -109,7 +109,7 @@ const NavbarMobile = (props) => {
     }, [menuOpen]);
 
     return (
-        <div className="relative z-10">
+        <div className="relative z-20">
             <div
                 className={`p-4 ${
                     !colorChange ? "bg-transparent" : "bg-neutral shadow-md"
@@ -149,7 +149,7 @@ const NavbarMobile = (props) => {
 
             <div
                 id="menu-navbar-mobile-container"
-                className="fixed overflow-auto top-screen h-screen w-full z-20 transition-all duration-300 ease-out"
+                className="fixed overflow-auto top-screen h-screen w-full z-30 transition-all duration-300 ease-out"
             >
                 <div style={{minHeight: "calc(100% - 5rem)"}} className=" px-4 smartphone:px-8 py-8 top-20 w-full absolute rounded-t-3xl bg-base-100 text-base-content">
                     <button

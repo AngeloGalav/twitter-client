@@ -10,9 +10,9 @@ import useWindowSize from "../Utils/windowSize";
 const NavbarDesktop = () => {
     //stato
     const location = useLocation();
-    const [colorChange, setColorchange] = useState(location.pathname !== "/");
     const [menuOpen, setMenuOpen] = useState(false);
     const [y, setY] = useState(window.scrollY);
+    const [colorChange, setColorchange] = useState(location.pathname !== "/" || y > 80);
     const [scrollingDirection, setScrollingDirection] = useState("down");
     const [tabFocus, setTabFocus] = useState(1);
     const [searchBarOpen, setSearchBarOpen] = useState(false);
@@ -59,7 +59,7 @@ const NavbarDesktop = () => {
     }, [changeNavbarColorDesktop]);
 
     return (
-        <div className="relative z-10">
+        <div className="relative z-20">
             <div
                 className={`p-4 ${
                     !colorChange ? "bg-transparent" : "bg-neutral shadow-md"
