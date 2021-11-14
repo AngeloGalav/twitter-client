@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Twitter = require('twitter')
 
-// ci logghiamo in modalita application, in modo che possiamo leggere un sacco di tweet alla volta
+// ci logghiamo in modalita application,
+// in modo che possiamo leggere un sacco di tweet alla volta
 var client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -10,8 +11,14 @@ var client = new Twitter({
 
 router.get('/', async (req, res, next) => {
   try{
-  const tweet = await client.get('trends/place.json',{id: 1}) // per ora mostra solo le tendenza del paese con id 1 (ovvero i trend nel mondo intero)
-  res.send(tweet);
+
+    // ricerca per keyword tramite parametro nella query
+    var keyword = req.query.keyword
+    param_string = keyword ? '?q=' + keyword  + '&result_type=popular' : ''
+    const tweet = await client.get('search/tweets.json' + param_string, {id: 1})
+
+    res.send(tweet.statuses[0].text);
+
   } catch (error){
     next(error);
   }
