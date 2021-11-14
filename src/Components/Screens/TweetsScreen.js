@@ -11,17 +11,20 @@ import axios from "axios";
 
 const TweetsScreen = () => {
     const [primaRisposta, setRisposta] = useState(
-        <i>in attesa di risposta dal server...</i>
+        <i>Cerca qualcosa per iniziare!</i>
     );
 
     function getData() {
-        axios
-            .get("/api")
-            .then((response) => {
-                setRisposta(response.data[0].trends[0].name);
-                console.log(primaRisposta);
-            })
-            .catch((error) => console.log(error.message));
+      const {search} = window.location;
+      const params = new URLSearchParams(search).toString();
+      if (!params) return;
+      axios
+        .get('/api?' + params)
+        .then((response) => {
+          console.log(response);
+          setRisposta(response.data);
+        })
+        .catch((error) => console.log(error.message));
     }
 
     useEffect(() => getData());
