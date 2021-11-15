@@ -122,7 +122,7 @@ const NavbarDesktop = () => {
                                     }`}
                                     onFocus={addTabFocusHandler}
                                 >
-                                    Main filter 1
+                                    Keyword
                                 </a>
                                 <a
                                     tabIndex="0"
@@ -132,7 +132,7 @@ const NavbarDesktop = () => {
                                     }`}
                                     onFocus={addTabFocusHandler}
                                 >
-                                    Main filter 2
+                                    Username
                                 </a>
                                 <a
                                     tabIndex="0"
@@ -142,7 +142,7 @@ const NavbarDesktop = () => {
                                     }`}
                                     onFocus={addTabFocusHandler}
                                 >
-                                    Main filter 3
+                                    Hashtag
                                 </a>
                             </div>
                         </div>
