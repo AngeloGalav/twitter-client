@@ -49,6 +49,8 @@ const NavbarDesktop = () => {
     const addTabFocusHandler = (event) =>
         setTabFocus(parseInt(event.target.id.slice(-1)));
 
+    const filters = ["keyword", "username", "hashtag"];
+
     //Effetti
     useEffect(() => {
         setY(window.scrollY);
@@ -176,7 +178,7 @@ const NavbarDesktop = () => {
                             }`}
                             onFocus={addTabFocusHandler}
                         >
-                            Main filter 1
+                            Keyword
                         </a>
                         <a
                             tabIndex="0"
@@ -186,7 +188,7 @@ const NavbarDesktop = () => {
                             }`}
                             onFocus={addTabFocusHandler}
                         >
-                            Main filter 2
+                            Username
                         </a>
                         <a
                             tabIndex="0"
@@ -196,7 +198,7 @@ const NavbarDesktop = () => {
                             }`}
                             onFocus={addTabFocusHandler}
                         >
-                            Main filter 3
+                            Hashtag
                         </a>
                     </div>
                 </div>
@@ -206,19 +208,24 @@ const NavbarDesktop = () => {
                         !colorChange || searchBarOpen ? "container" : "hidden"
                     } justify-center`}
                 >
-                    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+                    {/*bisogna modificare il comportamento in caso di errore
+                    per ogni filtro (sostituire errors.keyword con errors.hashtag etc)
+                    converrebbe fare dei componenti per le filter tab
+                    e generarli con un for sugli elementi dell'array "filters" */}
+
+                    <form autoComplete="off" action="/tweets" method="get">
                         <div class="form-control mt-8">
                             <div class="relative w-full">
                                 <input
                                     type="text"
                                     placeholder={`Qualcosa inerente al filtro ${
-                                        "Main filter " + tabFocus
+                                        filters[tabFocus-1]
                                     } ...`}
-                                    {...register("userInput", {
+                                    {...register(filters[tabFocus-1], {
                                         required: true,
                                     })}
                                     className={`w-full pr-16 h-14 input ${
-                                        errors.userInput
+                                        errors.keyword
                                             ? "input-error"
                                             : "input-primary"
                                     } shadow-md input-bordered rounded-full`}
@@ -226,7 +233,7 @@ const NavbarDesktop = () => {
                                 <label
                                     htmlFor="submit-search-btn"
                                     className={`absolute top-1 h-12 w-12 right-1 btn ${
-                                        errors.userInput
+                                        errors.keyword
                                             ? "btn-error"
                                             : "btn-primary"
                                     } rounded-full`}
