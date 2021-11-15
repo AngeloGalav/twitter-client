@@ -24,18 +24,4 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get("/sampleTweets", async (req, res, next) => {
-
-  try {
-
-    const data = await client.get("search/tweets", {q: "football", result_type: "popular", tweet_mode: "extended"})
-
-    res.status(200).json(data);
-
-  } catch (error) {
-    console.log(error)
-    next(error)
-  }
-});
-
 module.exports = router;

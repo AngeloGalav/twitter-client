@@ -15,25 +15,22 @@ const TweetsScreen = () => {
     );
 
     function getData() {
-      const {search} = window.location;
-      const params = new URLSearchParams(search).toString();
-      if (!params) return;
-      axios
-        .get('/api?' + params)
-        .then((response) => {
-          console.log(response);
-          setRisposta(response.data);
-        })
-        .catch((error) => console.log(error.message));
+        const { search } = window.location;
+        const params = new URLSearchParams(search).toString();
+        if (!params) return;
+        axios
+            .get("/api?" + params)
+            .then((response) => {
+                console.log(response);
+                setRisposta(response.data);
+            })
+            .catch((error) => console.log(error.message));
     }
 
     useEffect(() => getData());
 
     return (
-        <div
-        id="tweets-screen-container"
-        className="h-full"
-        >
+        <div id="tweets-screen-container" className="h-full">
             <div className="h-full">
                 <div className="flex h-full gap-3 flex-col justify-center items-center">
                     <h1 className="text-2xl">Hello Twitter!</h1>

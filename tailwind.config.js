@@ -3,10 +3,10 @@ module.exports = {
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
-			inset: {
-				screen: "100vh", //top: 100vh;
-			}
-		},
+            inset: {
+                screen: "100vh", //top: 100vh;
+            },
+        },
         screens: {
             smartphone: "400px",
             // => @media (min-width: 400px) { ... }
@@ -27,7 +27,7 @@ module.exports = {
     variants: {
         extend: {},
     },
-    plugins: [require("daisyui"), require('@tailwindcss/typography'),],
+    plugins: [require("daisyui"), require("@tailwindcss/typography")],
     daisyui: {
         themes: [
             {
