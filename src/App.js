@@ -23,7 +23,7 @@ function App() {
 
                 <Route exact path="/about" component={AboutScreen} />
 
-                <Route exact path="/tweets" component={TweetsScreen} />
+                <Route exact path="/tweets:mainFilter" component={TweetsScreen} />
 
                 {/*Esiste anche questa altra sintassi per mostrare piu' di un componente ma si perde la props history in questo modo
           <Route exact path="/product/:model">

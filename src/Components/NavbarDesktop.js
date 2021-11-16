@@ -2,7 +2,7 @@
 import SwitchTheme from "./SwitchTheme";
 
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useWindowSize from "../Utils/windowSize";
@@ -10,6 +10,7 @@ import useWindowSize from "../Utils/windowSize";
 const NavbarDesktop = () => {
     //stato
     const location = useLocation();
+    const history = useHistory();
     const [menuOpen, setMenuOpen] = useState(false);
     const [y, setY] = useState(window.scrollY);
     const [colorChange, setColorchange] = useState(
@@ -31,6 +32,8 @@ const NavbarDesktop = () => {
         //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
         console.log(data);
         //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
+
+        //history.push(`/tweets/${filters[tabFocus-1]}?q=${data.userInput}`)
     };
 
     /*Cambia il colore della navbar */
