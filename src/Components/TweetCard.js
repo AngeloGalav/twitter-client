@@ -67,7 +67,7 @@ const TweetCard = ({ tweet }) => {
 
                     {/* Data */}
 
-                    <p class=" text-base-content filter contrast-50 text-base py-1 my-1">
+                    <p class=" text-base-content filter contrast-50 text-sm my-2">
                         Pubblicato il{" "}
                         {new Date(tweet.created_at).toLocaleDateString(
                             "it-IT",
@@ -76,27 +76,34 @@ const TweetCard = ({ tweet }) => {
                     </p>
                     <hr />
                     {/* Numeri */}
-                    <div class="flex mt-2">
+                    <div class="flex mt-2 items-center">
                         <div class="flex items-center text-base-content filter contrast-50 justify-evenly w-full mr-6">
-                            <div>
-                                <i class="bi bi-chat btn btn-ghost text-lg btn-circle hover:text-primary hover:bg-primary hover:bg-opacity-20 transform scale-75 smartphone:scale-100"></i>
-                                <span className="ml-1">
-                                    {tweet.comment_count}
+
+                            
+
+                            <div className="flex items-center">
+                                <i class="bi bi-chat smartphone:text-lg text-primary"></i>
+                                <span className="ml-2 text-sm smartphone:text-base">
+                                {tweet.comment_count}
                                 </span>
                             </div>
 
-                            <div>
-                                <i class="bi bi-arrow-repeat btn text-lg btn-ghost btn-circle hover:text-green-500 hover:bg-green-500 hover:bg-opacity-20 transform scale-75 smartphone:scale-100"></i>
-                                <span className="ml-1">
-                                    {tweet.retweet_count}
+                            <div className="flex items-center">
+                                <i class="bi bi-arrow-repeat smartphonetext-xl text-green-500"></i>
+                                <span className="ml-2 text-sm smartphone:text-base">
+                                {tweet.favorite_count}
                                 </span>
                             </div>
 
-                            <div>
-                                <i class="bi bi-heart btn btn-ghost text-lg btn-circle hover:text-error hover:bg-error hover:bg-opacity-20 transform scale-75 smartphone:scale-100"></i>
-                                <span className="ml-1">
-                                    {tweet.favorite_count}
+                            <div className="flex items-center">
+                                <i class="bi bi-heart smartphone:text-lg text-error"></i>
+                                <span className="ml-2 text-sm smartphone:text-base">
+                                {tweet.comment_count}
                                 </span>
+                            </div>
+
+                            <div className="hidden smartphone:flex items-center">
+                                <i class="bi bi-box-arrow-up smartphone:text-lg text-primary"></i>
                             </div>
                         </div>
                     </div>

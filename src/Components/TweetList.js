@@ -1,3 +1,6 @@
+//components
+import Tweet from "./Tweet";
+
 import { TwitterApi } from "twitter-api-v2";
 // import {useState} from "react";
 
@@ -29,7 +32,23 @@ export const TweetList = () => {
     console.log(foundUsers);
   }*/
 
-    return <div></div>;
+    return (
+      <ul id="twitter-list-container" className="list-none laptop:overflow-y-auto h-full">
+        <Tweet />
+        <hr />
+        <Tweet />
+        <hr />
+        <Tweet />
+        <hr />
+        <Tweet />
+        <hr />
+        <Tweet />
+        <hr />
+        <Tweet />
+        <hr />
+        <Tweet />
+      </ul>
+    )
 };
 
 export default TweetList;
