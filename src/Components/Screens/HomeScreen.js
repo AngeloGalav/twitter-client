@@ -10,9 +10,10 @@ import twitterSvg from "../../Media/undraw_viral_tweet_gndb.svg";
 import backgroundFigures from "../../Media/background_figures.svg";
 
 import React, { useEffect, useState } from "react";
-import { Link as ScrollLink } from "react-scroll";
+
 import Fade from "react-reveal/Fade";
 import Zoom from "react-reveal/Zoom";
+import Hero from "../Hero";
 
 const HomeScreen = () => {
     // eslint-disable-next-line
@@ -27,7 +28,7 @@ const HomeScreen = () => {
         image: twitterSvg,
         user: {
             profile_image_url:
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Seal_of_the_University_of_Bologna.svg/1200px-Seal_of_the_University_of_Bologna.svg.png",
+                "https://pbs.twimg.com/media/Dw-EQ2PU0AA2OKP.jpg",
             name: "Demo name",
             screen_name: "Demo_name",
         },
@@ -48,41 +49,15 @@ const HomeScreen = () => {
 
     return (
         <div id="home-screen-container">
-            {width < 768 ? <NavbarMobile /> : <NavbarDesktop />}
-            <div
-                class="hero h-screen bg-fixed relative bg-cover bg-center bg-gradient-to-t"
-                style={{
-                    backgroundImage: `url("https://images.unsplash.com/photo-1486520299386-6d106b22014b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1469&q=80")`,
-                    minHeight: "45rem",
-                }}
-            >
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-primary via-transparent to-transparent"></div>
-                <div class="hero-overlay h-full w-full bg-opacity-10"></div>
-                <div class="px-8 smartphone:px-12 text-neutral-content relative -top-20 text-center laptop:text-left ipad:absolute ipad:top-1/2 ipad:height-40 ipad:transform ipad:-translate-y-1/2 ipad:left-20">
-                    <div>
-                        <h1 class="mb-5 ipad:mb-8 text-5xl font-bold">
-                            Titolo non troppo lungo
-                        </h1>
-                        <p class="mb-5 text-base">
-                            <span className="font-bold">Twitter client</span> ti
-                            Sottotitolo di massimo due righe
-                        </p>
 
-                        <ScrollLink
-                            activeClass="active"
-                            to="home-main"
-                            spy={true}
-                            smooth={true}
-                            offset={-70}
-                            duration={800}
-                        >
-                            <button className="btn btn-secondary">
-                                Scopri di più
-                            </button>
-                        </ScrollLink>
-                    </div>
-                </div>
-            </div>
+            {/* Navbar */}
+            {width < 768 ? <NavbarMobile /> : <NavbarDesktop />}
+
+
+            {/* Hero section */}
+            <Hero />
+
+            {/* Main */}
             <main className="w-full overflow-hidden relative" id="home-main">
                 <div
                     style={{
@@ -95,6 +70,7 @@ const HomeScreen = () => {
                     {" "}
                 </div>
 
+                {/* Sezione 1 */}
                 <section className="w-full min-h-screen flex flex-col relative justify-center items-center px-4 py-8 bg-primary overflow-hidden">
                     <div className="flex flex-col min-h-screen justify-center laptop:justify-start laptop:flex-row gap-10 laptop:gap-20 container">
                         <Fade right>
@@ -116,6 +92,7 @@ const HomeScreen = () => {
                     </div>
                 </section>
 
+                {/* Sezione 2 */}
                 <section className="w-full relative min-h-screen">
                     <div>
                         <img className="" src={triangleSvg} alt="" />

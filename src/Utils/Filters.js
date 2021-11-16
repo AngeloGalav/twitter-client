@@ -1,0 +1,1 @@
+export const filters = ["keyword", "username", "hashtag"];

@@ -6,17 +6,17 @@ import { useHistory, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useWindowSize from "../Utils/windowSize";
+import {filters} from '../Utils/Filters'
+import Logo from "./Logo";
 
 const NavbarDesktop = () => {
     //stato
     const location = useLocation();
     const history = useHistory();
-    const [menuOpen, setMenuOpen] = useState(false);
     const [y, setY] = useState(window.scrollY);
     const [colorChange, setColorchange] = useState(
         location.pathname !== "/" || y >= 80
     );
-    const [scrollingDirection, setScrollingDirection] = useState("down");
     const [tabFocus, setTabFocus] = useState(1);
     const [searchBarOpen, setSearchBarOpen] = useState(false);
     // eslint-disable-next-line
@@ -30,10 +30,9 @@ const NavbarDesktop = () => {
     } = useForm();
     const onSubmit = (data) => {
         //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
-        console.log(data);
         //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
-
-        //history.push(`/tweets/${filters[tabFocus-1]}?q=${data.userInput}`)
+        history.push(`/tweets/${filters[tabFocus-1]}?q=${data.userInput}`)
+        history.go(0);
     };
 
     /*Cambia il colore della navbar */
@@ -51,8 +50,6 @@ const NavbarDesktop = () => {
     //Gestisce il focus sulle tab
     const addTabFocusHandler = (event) =>
         setTabFocus(parseInt(event.target.id.slice(-1)));
-
-    const filters = ["keyword", "username", "hashtag"];
 
     //Effetti
     useEffect(() => {
@@ -72,21 +69,13 @@ const NavbarDesktop = () => {
                     !colorChange ? "bg-transparent" : "bg-neutral shadow-md"
                 } fixed top-0 w-full transition-all duration-200 ease-linear`}
             >
+                {/* Navbar */}
                 <div className="flex justify-between items-center container mx-auto">
-                    <div>
-                        <button className="w-56 btn btn-link text-base-content hover:no-underline">
-                            <Link to="/">
-                                <i className="bi bi-twitter text-4xl text-primary" />{" "}
-                                <span className="text-2xl font-medium">
-                                    {" "}
-                                    &nbsp; Logo
-                                </span>
-                                <span className="text-2xl">Bold </span>
-                            </Link>
-                        </button>
-                    </div>
 
-                    {/* Un utente potrebbe selezionare prima un filtro principale ed effettuare una ricerca su questo (poi nella pagina dei tweets può fare sottofiltraggi) */}
+                    {/* Logo */}
+                    <Logo />
+
+                    {/* Tabs */}
                     {colorChange ? (
                         <div className="flex-1 flex justify-center">
                             <button
@@ -151,6 +140,8 @@ const NavbarDesktop = () => {
                         </div>
                     )}
 
+
+                    {/* Cambio tema */}
                     <div className="w-56 flex justify-center gap-4 items-center">
                         <div>
                             <SwitchTheme />
@@ -162,7 +153,8 @@ const NavbarDesktop = () => {
                         </div>
                     </div>
                 </div>
-
+                
+                {/* Tab quando si deve aprire il menu */}
                 <div
                     className={`flex-1 mt-5 justify-center ${
                         !colorChange && width < 1024
@@ -216,7 +208,7 @@ const NavbarDesktop = () => {
                     converrebbe fare dei componenti per le filter tab
                     e generarli con un for sugli elementi dell'array "filters" */}
 
-                    <form autoComplete="off" action="/tweets" method="get">
+                    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                         <div class="form-control mt-8">
                             <div class="relative w-full">
                                 <input
@@ -224,7 +216,7 @@ const NavbarDesktop = () => {
                                     placeholder={`Qualcosa inerente al filtro ${
                                         filters[tabFocus-1]
                                     } ...`}
-                                    {...register(filters[tabFocus-1], {
+                                    {...register("userInput", {
                                         required: true,
                                     })}
                                     className={`w-full pr-16 h-14 input ${

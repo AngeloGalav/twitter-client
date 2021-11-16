@@ -1,10 +1,11 @@
 //components
 import SwitchTheme from "./SwitchTheme";
 import useWindowSize from "../Utils/windowSize";
+import {filters} from '../Utils/Filters'
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import {
     disableBodyScroll,
     enableBodyScroll,
@@ -15,6 +16,7 @@ import { Link as ScrollLink } from "react-scroll";
 const NavbarMobile = (props) => {
     //stato
     const location = useLocation();
+    const history = useHistory();
     const [colorChange, setColorchange] = useState(
         location.pathname !== "/" || y >= 80
     );
@@ -33,8 +35,9 @@ const NavbarMobile = (props) => {
     } = useForm();
     const onSubmit = (data) => {
         //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
-        console.log(data);
         //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
+        history.push(`/tweets/${filters[tabFocus-1]}?q=${data.userInput}`)
+        history.go(0);
     };
 
     //Gestisce il focus sulle tab
