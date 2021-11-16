@@ -45,7 +45,7 @@ const Loading = () => {
                         />
                     </svg>
                 </x-loading>
-                <div class="mt-3 text-gray-200 font-mono text-sm sm:text-xs">
+                <div class="mt-3 font-mono filter opacity-50 text-sm sm:text-xs">
                     Loading...
                 </div>
             </div>
