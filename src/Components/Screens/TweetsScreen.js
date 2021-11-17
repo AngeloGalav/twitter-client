@@ -11,39 +11,34 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
 const TweetsScreen = () => {
     //stato
-    const [primaRisposta, setRisposta] = useState(null);
+    const [risposta, setRisposta] = useState(null);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
     const [isLoading, setIsLoading] = useState(true);
-    
-    // fuzione per reperire i dati dalla 
-    function getData() {
-        const { search } = window.location;
-        const params = new URLSearchParams(search).toString();
-        console.log("ecco: " + params);
-        if (!params) return;
-        axios
-            .get("/api?" + params)
-            .then((response) => {
-                console.log(response);
-                setRisposta(response.data);
-            })
-            .catch((error) => {
-                console.log(error.message)
-                setRisposta(null)
-            });
-    }
 
-    useEffect(() => getData(), []);
-
-    //simula un loading, va rimpiazzato con il vero await
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
+        // fuzione per reperire i dati dalla
+        async function getData() {
+            setIsLoading(true);
+            const { search } = window.location;
+            const params = new URLSearchParams(search).toString();
+            console.log("ecco: " + params);
+            if (!params) return;
+
+            try {
+                const {data} = await axios.get("/api?" + params);
+                console.log(data.statuses);
+                setRisposta(data.statuses);
+                setIsLoading(false);
+            } catch (error) {
+                console.log(error.message);
+                setRisposta(null);
+                setIsLoading(false);
+            }
+        }
+        getData();
     }, []);
 
     return (
@@ -56,7 +51,7 @@ const TweetsScreen = () => {
                         {isLoading ? (
                             <Loading />
                         ) : (
-                            <TweetList tweets = {primaRisposta} />
+                            <TweetList tweets={risposta} />
                         )}
                     </div>
 

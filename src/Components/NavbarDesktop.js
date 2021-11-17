@@ -203,10 +203,6 @@ const NavbarDesktop = () => {
                         !colorChange || searchBarOpen ? "container" : "hidden"
                     } justify-center`}
                 >
-                    {/*bisogna modificare il comportamento in caso di errore
-                    per ogni filtro (sostituire errors.keyword con errors.hashtag etc)
-                    converrebbe fare dei componenti per le filter tab
-                    e generarli con un for sugli elementi dell'array "filters" */}
 
                     <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                         <div class="form-control mt-8">
@@ -220,7 +216,7 @@ const NavbarDesktop = () => {
                                         required: true,
                                     })}
                                     className={`w-full pr-16 h-14 input ${
-                                        errors.keyword
+                                        errors.userInput
                                             ? "input-error"
                                             : "input-primary"
                                     } shadow-md input-bordered rounded-full`}
@@ -228,7 +224,7 @@ const NavbarDesktop = () => {
                                 <label
                                     htmlFor="submit-search-btn"
                                     className={`absolute top-1 h-12 w-12 right-1 btn ${
-                                        errors.keyword
+                                        errors.userInput
                                             ? "btn-error"
                                             : "btn-primary"
                                     } rounded-full`}

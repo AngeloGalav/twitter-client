@@ -9,7 +9,7 @@ export const Tweet = ({ tweet }) => {
             (url) =>
                 `<a class="text-primary hover:underline" href=${url}>${url}</a>`
         );
-
+console.log(tweet)
     return (
         <li>
             <>
@@ -37,22 +37,26 @@ export const Tweet = ({ tweet }) => {
                             </div>
 
                             {/* Twitter logo, da fare come pulsante */}
-                            <i className="bi bi-twitter text-primary text-2xl" />
+                            <a className="btn btn-link" href={`https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`}><i className="bi bi-twitter text-primary text-2xl" /></a>
+                            
                         </div>
 
                         {/* Text */}
                         <div className="my-2">
-                            {tweet.text}
+                            {tweet.retweet && <p className="font-bold text-xs my-2"><i class="bi bi-arrow-repeat"></i>{" "}Retwettato da @{tweet.retweet}</p> }
+                        <span className="my-2" dangerouslySetInnerHTML={{__html: parseText(tweet.text)}} />
                         </div>
+                        
+
 
                         {/* Image */}
 
-                        <div className="w-full border rounded-2xl overflow-hidden bg-blue-200">
+                        {tweet.image && <div className="w-full border rounded-2xl overflow-hidden bg-blue-200">
                             <img
                                 class="w-full h-full object-cover object-center"
                                 src={tweet.image}
                             />
-                        </div>
+                        </div>}
                         {/* Data */}
                         <p class="text-base-content filter contrast-50 py-2 text-sm w-full">
                             Pubblicato il{" "}

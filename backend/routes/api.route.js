@@ -21,7 +21,9 @@ router.get('/', async (req, res, next) => {
     // if (params['username']) param_string += 'from%3A' + params['username']
     // if (params['hashtag']) param_string += '%20%23' + params['hashtag']
     param_string += '&result_type=popular'
-    const tweet = await client.get('search/tweets.json' + param_string, {id: 1});
+    const tweet = await client.get('search/tweets.json' + param_string, {id: 1, tweet_mode: 'extended'});
+
+    res.status(200).json({... tweet});
 
   } catch (error){
     next(error);
