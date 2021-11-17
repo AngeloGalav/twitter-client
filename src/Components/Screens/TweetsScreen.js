@@ -14,16 +14,16 @@ import axios from "axios";
 
 const TweetsScreen = () => {
     //stato
-    const [primaRisposta, setRisposta] = useState(
-        <i>Cerca qualcosa per iniziare!</i>
-    );
+    const [primaRisposta, setRisposta] = useState(null);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
     const [isLoading, setIsLoading] = useState(true);
-
+    
+    // fuzione per reperire i dati dalla 
     function getData() {
         const { search } = window.location;
         const params = new URLSearchParams(search).toString();
+        console.log("ecco: " + params);
         if (!params) return;
         axios
             .get("/api?" + params)
@@ -31,7 +31,10 @@ const TweetsScreen = () => {
                 console.log(response);
                 setRisposta(response.data);
             })
-            .catch((error) => console.log(error.message));
+            .catch((error) => {
+                console.log(error.message)
+                setRisposta(null)
+            });
     }
 
     useEffect(() => getData(), []);
@@ -53,7 +56,7 @@ const TweetsScreen = () => {
                         {isLoading ? (
                             <Loading />
                         ) : (
-                            <TweetList />
+                            <TweetList tweets = {primaRisposta} />
                         )}
                     </div>
 

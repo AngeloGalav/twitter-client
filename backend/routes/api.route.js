@@ -14,16 +14,14 @@ router.get('/', async (req, res, next) => {
 
     // ricerca per keyword tramite parametro nella query
     var params = req.query
+    console.log(params);
     if (!params) return
-    param_string = '?q='
-    if (params['keyword']) param_string += params['keyword']
-    if (params['username']) param_string += 'from%3A' + params['username']
-    if (params['hashtag']) param_string += '%20%23' + params['hashtag']
+    param_string = '?q=' + params['q']; 
+    // if (params['keyword']) param_string += params['keyword']
+    // if (params['username']) param_string += 'from%3A' + params['username']
+    // if (params['hashtag']) param_string += '%20%23' + params['hashtag']
     param_string += '&result_type=popular'
-    console.log(param_string)
-    const tweet = await client.get('search/tweets.json' + param_string, {id: 1})
-
-    res.send('Twittato da @' + tweet.statuses[0].user.screen_name  + ': ' + tweet.statuses[0].text);
+    const tweet = await client.get('search/tweets.json' + param_string, {id: 1});
 
   } catch (error){
     next(error);

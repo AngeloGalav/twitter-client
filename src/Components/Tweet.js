@@ -36,7 +36,7 @@ export const Tweet = ({ tweet }) => {
                                 </div>
                             </div>
 
-                            {/* Twitter logo */}
+                            {/* Twitter logo, da fare come pulsante */}
                             <i className="bi bi-twitter text-primary text-2xl" />
                         </div>
 
