@@ -2,10 +2,10 @@
 import Tweet from "./Tweet";
 
 export const TweetList = ({tweets}) => {
-    
+    const content = "no response...";
     if (tweets != null)
     {
-        const content = tweets.map((tweet) =>
+        content = tweets.map((tweet) =>
         <Tweet
                 tweet={{
                     text: tweet.text,
