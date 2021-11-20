@@ -20,7 +20,7 @@ const HomeScreen = () => {
     const [width, height] = useWindowSize();
     const [y, setY] = useState(window.scrollY);
     const [tweet, setTweet] = useState({
-        text: "Prova prova. Mi sentite?$Benvenuto, io sono un tweet.$",
+        text: "Prova prova. Mi sentite?$Benvenuto, io sono un tweet.$", //ogni frase e' delimitata da $ e.g. frase1$frase2$...
         created_at: new Date(),
         retweet_count: 0,
         favorite_count: 0,
@@ -81,11 +81,11 @@ const HomeScreen = () => {
 
                         <div className="text-center w-full text-primary-content laptop:text-left justify-center laptop:flex laptop:flex-col laptop:min-h-screen order-1 relative">
                             <Fade left text cascade>
-                                <h1 className="text-5xl font-bold mb-5">
+                                <h1 className="smartphone:text-5xl text-4xl font-bold mb-5">
                                     Titolo sezione
                                 </h1>
-                                <p className="text font-normal max-w-md mx-auto text-lg laptop:mx-0 text-justify">
-                                    Breve descrizione
+                                <p className="text-base font-normal max-w-md mx-auto laptop:mx-0">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                 </p>
                             </Fade>
                         </div>
@@ -109,8 +109,7 @@ const HomeScreen = () => {
                                     adipiscing elit, sed do eiusmod tempor
                                     incididunt ut labore et dolore magna aliqua.
                                     Ut enim ad minim veniam, quis nostrud
-                                    exercitatcillum dolore eu fugiat nulla
-                                    pariatur. Excepteur sint occaecat cupidatat
+                                    exercitatcillum dolorecat cupidatat
                                     non proident, sunt in culpa qui officia
                                     deserunt mollit anim id est laborum."
                                 </FunctionalityCard>

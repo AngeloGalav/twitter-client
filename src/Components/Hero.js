@@ -14,12 +14,12 @@ const Hero = () => {
         <div class="hero-overlay h-full w-full bg-opacity-10"></div>
         <div class="px-8 smartphone:px-12 text-neutral-content relative -top-20 text-center laptop:text-left ipad:absolute ipad:top-1/2 ipad:height-40 ipad:transform ipad:-translate-y-1/2 ipad:left-20">
             <div>
-                <h1 class="mb-5 ipad:mb-8 text-5xl font-bold">
+                <h1 class="mb-5 ipad:mb-8 smartphone:text-5xl text-4xl font-bold">
                     Titolo non troppo lungo
                 </h1>
-                <p class="mb-5 text-base">
-                    <span className="font-bold">Twitter client</span> ti
-                    Sottotitolo di massimo due righe
+                <p class="mb-5 text-base max-w-lg">
+                    <span className="font-bold">Twitter client</span>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor , consectetur adipiscing elit
                 </p>
 
                 <ScrollLink

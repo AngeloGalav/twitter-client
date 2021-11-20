@@ -1,7 +1,7 @@
 //components
 import SwitchTheme from "./SwitchTheme";
 import useWindowSize from "../Utils/windowSize";
-import {filters} from '../Utils/Filters'
+import { filters } from "../Utils/Filters";
 
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,7 +22,7 @@ const NavbarMobile = (props) => {
     );
     const [menuOpen, setMenuOpen] = useState(false);
     const [y, setY] = useState(window.scrollY);
-    const [tabFocus, setTabFocus] = useState(1);
+    const [tabFocus, setTabFocus] = useState(0);
     const [scrollingDirection, setScrollingDirection] = useState("down");
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
@@ -36,7 +36,7 @@ const NavbarMobile = (props) => {
     const onSubmit = (data) => {
         //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
         //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
-        history.push(`/tweets/${filters[tabFocus-1]}?q=${data.userInput}`)
+        history.push(`/tweets/${filters[tabFocus]}?q=${data.userInput}`);
         history.go(0);
     };
 
@@ -144,7 +144,7 @@ const NavbarMobile = (props) => {
     }, [menuOpen]);
 
     return (
-        <div className="relative z-20">
+        <div className={`relative ${menuOpen ? "z-30" : "z-20"}`}>
             <div
                 className={`fixed ${
                     colorChange && scrollingDirection === "down"
@@ -166,7 +166,7 @@ const NavbarMobile = (props) => {
                     offset={-70}
                     duration={800}
                 >
-                    <button className="btn btn-neutral btn-circle">
+                    <button className="btn btn-neutral btn-circle shadow-md">
                         <i className="bi bi-chevron-up text-neutral-content" />
                     </button>
                 </ScrollLink>
@@ -191,7 +191,7 @@ const NavbarMobile = (props) => {
             <div
                 className={`fixed w-full bg-neutral text-neutral-content h-20 ${
                     scrollingDirection === "up" &&
-                    (y > 80 || location.pathname !== "/")
+                    y > 80 
                         ? "bottom-0 border-t border-base-300"
                         : "-bottom-20"
                 } transition-all duration-200 ease-linear`}
@@ -235,7 +235,7 @@ const NavbarMobile = (props) => {
 
             <div
                 id="menu-navbar-mobile-container"
-                className="fixed overflow-auto top-screen h-screen w-full z-30 transition-all duration-300 ease-out"
+                className={`fixed overflow-auto top-screen h-screen w-full ${menuOpen ? "z-50" : ""} transition-all duration-300 ease-out`}
             >
                 <div
                     style={{ minHeight: "calc(100% - 5rem)" }}
@@ -248,78 +248,39 @@ const NavbarMobile = (props) => {
                     </button>
 
                     {width > 400 ? (
-                        <div className="flex-1 flex justify-center mt-5">
-                            <div className="tabs">
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-1"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 1 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Main filter 1
-                                </a>
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-2"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 2 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Main filter 2
-                                </a>
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-3"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 3 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Main filter 3
-                                </a>
+                        <div className="flex-1 mt-5">
+                            <div className="tabs w-full flex justify-center ">
+                                {filters.map((filter, i) => (
+                                    <a
+                                    style={{maxWidth: "10rem"}}
+                                        tabIndex="0"
+                                        id={`navbar-tab-${i}`}
+                                        className={`tab tab-bordered flex-1 ${
+                                            tabFocus === i ? "tab-active" : ""
+                                        }`}
+                                        onFocus={addTabFocusHandler}
+                                    >
+                                        {filter}
+                                    </a>
+                                ))}
                             </div>
                         </div>
                     ) : (
-                        <div class="carousel rounded-box">
-                            <div class="carousel-item">
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-1"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 1 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Main filter 1
-                                </a>
-                            </div>
-                            <div class="carousel-item">
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-2"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 2 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Main filter 2
-                                </a>
-                            </div>
-                            <div class="carousel-item">
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-3"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 3 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Main filter 3
-                                </a>
-                            </div>
+                        <div className="carousel flex mt-5">
+                            {filters.map((filter, i) => (
+                                <div class="carousel-item flex-1">
+                                    <a
+                                        tabIndex="0"
+                                        id={`navbar-tab-${i}`}
+                                        className={`tab tab-bordered flex-1 ${
+                                            tabFocus === i ? "tab-active" : ""
+                                        }`}
+                                        onFocus={addTabFocusHandler}
+                                    >
+                                        {filter}
+                                    </a>
+                                </div>
+                            ))}
                         </div>
                     )}
 
@@ -328,11 +289,13 @@ const NavbarMobile = (props) => {
                             <div class="relative w-full">
                                 <input
                                     type="text"
-                                    placeholder={`Qualcosa inerente al filtro ${
-                                        "Main filter " + tabFocus
-                                    } ...`}
+                                    placeholder={`${tabFocus === 0 ? "Inserisci ciò che preferisci" : tabFocus === 1 ? "Inserisci un username come @Twitter" : "Inserisci un hashtag come #politica"}`}
                                     {...register("userInput", {
                                         required: true,
+                                        pattern: {
+                                            value: new RegExp(`${tabFocus === 0 ? ".*" : tabFocus === 1 ? "^@[a-zA-Z0-9_]{1,15}$" : "^#[a-zA-Z0-9_]+$"}`),
+                                            message: `${tabFocus === 0 ? "Inserisci qualcosa" : tabFocus === 1 ? "Inserisci un username come @Twitter" : "Inserisci un hashtag come #politica"}`
+                                          }
                                     })}
                                     className={`w-full pr-16 text h-14 input ${
                                         errors.userInput

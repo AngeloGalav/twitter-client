@@ -17,7 +17,7 @@ const NavbarDesktop = () => {
     const [colorChange, setColorchange] = useState(
         location.pathname !== "/" || y >= 80
     );
-    const [tabFocus, setTabFocus] = useState(1);
+    const [tabFocus, setTabFocus] = useState(0);
     const [searchBarOpen, setSearchBarOpen] = useState(false);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
@@ -31,7 +31,7 @@ const NavbarDesktop = () => {
     const onSubmit = (data) => {
         //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
         //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
-        history.push(`/tweets/${filters[tabFocus-1]}?q=${data.userInput}`)
+        history.push(`/tweets/${filters[tabFocus]}?q=${data.userInput}`)
         history.go(0);
     };
 
@@ -63,7 +63,7 @@ const NavbarDesktop = () => {
     }, [changeNavbarColorDesktop]);
 
     return (
-        <div className="relative z-20">
+        <div className={`relative ${searchBarOpen ? "z-50" : "z-20"}`}>
             <div
                 className={`p-4 ${
                     !colorChange ? "bg-transparent" : "bg-neutral shadow-md"
@@ -106,36 +106,18 @@ const NavbarDesktop = () => {
                     ) : (
                         <div className="flex-1 laptop:flex justify-center hidden">
                             <div className="tabs">
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-1"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 1 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Keyword
-                                </a>
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-2"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 2 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Username
-                                </a>
-                                <a
-                                    tabIndex="0"
-                                    id="navbar-tab-3"
-                                    className={`tab tab-bordered ${
-                                        tabFocus === 3 ? "tab-active" : ""
-                                    }`}
-                                    onFocus={addTabFocusHandler}
-                                >
-                                    Hashtag
-                                </a>
+                            {filters.map((filter, i) => 
+                        <a
+                            tabIndex="0"
+                            id={`navbar-tab-${i}`}
+                            className={`tab tab-bordered w-36 ${
+                                tabFocus === i ? "tab-active" : ""
+                            }`}
+                            onFocus={addTabFocusHandler}
+                        >
+                            {filter}
+                        </a>
+                    )}
                             </div>
                         </div>
                     )}
@@ -165,36 +147,19 @@ const NavbarDesktop = () => {
                     }`}
                 >
                     <div className="tabs">
+                    {filters.map((filter, i) => 
                         <a
                             tabIndex="0"
-                            id="navbar-tab-1"
-                            className={`tab tab-bordered ${
-                                tabFocus === 1 ? "tab-active" : ""
+                            id={`navbar-tab-${i}`}
+                            className={`tab tab-bordered w-36 ${
+                                tabFocus === i ? "tab-active" : ""
                             }`}
                             onFocus={addTabFocusHandler}
                         >
-                            Keyword
+                            {filter}
                         </a>
-                        <a
-                            tabIndex="0"
-                            id="navbar-tab-2"
-                            className={`tab tab-bordered ${
-                                tabFocus === 2 ? "tab-active" : ""
-                            }`}
-                            onFocus={addTabFocusHandler}
-                        >
-                            Username
-                        </a>
-                        <a
-                            tabIndex="0"
-                            id="navbar-tab-3"
-                            className={`tab tab-bordered ${
-                                tabFocus === 3 ? "tab-active" : ""
-                            }`}
-                            onFocus={addTabFocusHandler}
-                        >
-                            Hashtag
-                        </a>
+                    )}
+                    
                     </div>
                 </div>
 
@@ -209,11 +174,13 @@ const NavbarDesktop = () => {
                             <div class="relative w-full">
                                 <input
                                     type="text"
-                                    placeholder={`Qualcosa inerente al filtro ${
-                                        filters[tabFocus-1]
-                                    } ...`}
+                                    placeholder={`${tabFocus === 0 ? "Inserisci ciò che preferisci" : tabFocus === 1 ? "Inserisci un username come @Twitter" : "Inserisci un hashtag come #politica"}`}
                                     {...register("userInput", {
                                         required: true,
+                                        pattern: {
+                                            value: new RegExp(`${tabFocus === 0 ? ".*" : tabFocus === 1 ? "^@[a-zA-Z0-9_]{1,15}$" : "^#[a-zA-Z0-9_]+$"}`),
+                                            message: `${tabFocus === 0 ? "Inserisci qualcosa" : tabFocus === 1 ? "Inserisci un username come @Twitter" : "Inserisci un hashtag come #politica"}`
+                                          }
                                     })}
                                     className={`w-full pr-16 h-14 input ${
                                         errors.userInput
