@@ -1,3 +1,6 @@
+## Documentazione per capire meglio organizzazione del progetto
+
+
 ## Struttura del progetto
 
 Il progetto e' strutturato come consigliato dalla maggior parte degli sviluppatori React-Redux [[1]](#1), eccezion fatta per il server. Infatti generalmente si separano backend e frontend in due directory distinte, tuttavia in questo caso, visto che il backend ha un ruolo solo marginale (anzi e' semplicemente un vincolo imposto dalle API di twitter), abbiamo deciso di tenere la cartella backend in quella del client. Se in futuro avremo bisogno faremo come spiegato sopra. Per quanto riguarda il client abbiamo la seguente gerarchia:
