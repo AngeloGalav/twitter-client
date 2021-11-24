@@ -3,6 +3,7 @@ import AboutScreen from "./Components/Screens/AboutScreen";
 import TweetsScreen from "./Components/Screens/TweetsScreen";
 import HomeScreen from "./Components/Screens/HomeScreen";
 import ScrollToTop from './Utils/ScrollToTop';
+import Cloud from "./Components/Cloud";
 
 //router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -24,6 +25,8 @@ function App() {
                 <Route exact path="/about" component={AboutScreen} />
 
                 <Route exact path="/tweets/:mainFilter" component={TweetsScreen} />
+
+                <Route exact path="/cloud" component={Cloud} />
 
                 {/*Esiste anche questa altra sintassi per mostrare piu' di un componente ma si perde la props history in questo modo
           <Route exact path="/product/:model">
