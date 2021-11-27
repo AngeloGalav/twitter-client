@@ -3,12 +3,26 @@ import React from "react";
 export const Tweet = ({ tweet }) => {
     const urlRegex =
         /(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/gi;
-    const parseText = (text) =>
-        text.replace(
+    const hashtagRegex = /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+/g
+    const userNameRegex = /(^|[^@\w])@(\w{1,15})\b/
+    const parseText = (text) => {
+        let textLink = text.replace(
             urlRegex,
             (url) =>
                 `<a class="text-primary hover:underline" href=${url}>${url}</a>`
         );
+
+        let textHashtagLink = textLink.replace(
+            hashtagRegex,
+            (hashtag) => `<a class="text-primary hover:underline" href=http://localhost:3000/tweets/Hashtag?q=${hashtag.substring(1)}>${hashtag}</a>`
+        )
+
+        return textHashtagLink.replace(
+            userNameRegex,
+            (userName) => `<a class="text-primary hover:underline " href=http://localhost:3000/tweets/Username?q=${userName.replace("@", '').replace(" ", '')}>${userName}</a>`
+        )
+    }
+        
 console.log(tweet)
     return (
         <li>
@@ -60,7 +74,7 @@ console.log(tweet)
                         {/* Data */}
                         <p class="text-base-content filter contrast-50 py-2 text-sm w-full">
                             Pubblicato il{" "}
-                            {new Date().toLocaleDateString("it-IT", {
+                            {tweet.created_at.toLocaleDateString("it-IT", {
                                 year: "numeric",
                                 day: "numeric",
                                 month: "short",

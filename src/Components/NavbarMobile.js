@@ -36,7 +36,7 @@ const NavbarMobile = (props) => {
     const onSubmit = (data) => {
         //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
         //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
-        history.push(`/tweets/${filters[tabFocus]}?q=${data.userInput}`);
+        history.push(`/tweets/${filters[tabFocus]}?q=${filters[tabFocus] !== "Keyword" ? data.userInput.substring(1) :  data.userInput}`);
         history.go(0);
     };
 
@@ -293,7 +293,7 @@ const NavbarMobile = (props) => {
                                     {...register("userInput", {
                                         required: true,
                                         pattern: {
-                                            value: new RegExp(`${tabFocus === 0 ? ".*" : tabFocus === 1 ? "^@[a-zA-Z0-9_]{1,15}$" : "^#[a-zA-Z0-9_]+$"}`),
+                                            value: new RegExp(`${tabFocus === 0 ? ".*" : tabFocus === 1 ? "^@[a-zA-Z0-9_]{1,15}$" : /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+/.source}`),
                                             message: `${tabFocus === 0 ? "Inserisci qualcosa" : tabFocus === 1 ? "Inserisci un username come @Twitter" : "Inserisci un hashtag come #politica"}`
                                           }
                                     })}

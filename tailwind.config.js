@@ -25,7 +25,9 @@ module.exports = {
         },
     },
     variants: {
-        extend: {},
+        extend: {
+            zIndex: ['hover', 'active'],
+        },
     },
     plugins: [require("daisyui"), require("@tailwindcss/typography")],
     daisyui: {

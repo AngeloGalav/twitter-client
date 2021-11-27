@@ -2,20 +2,19 @@
 import Tweet from "./Tweet";
 
 export const TweetList = ({ tweets }) => {
-    
     return (
         <ul
             id="twitter-list-container"
             className="list-none laptop:overflow-y-auto h-full flex flex-col gap-4 smartphone:px-4 py-4"
         >
-            {tweets ? (
+            {tweets.length > 0 ? (
                tweets.map(tweet => (
                 <Tweet key={tweet.id}
                     tweet={{
                         id_str: tweet.id_str,
                         text: `${tweet.retweeted_status ? `${tweet.retweeted_status.full_text.substring(tweet.retweeted_status.display_text_range[0], tweet.retweeted_status.display_text_range[1])}` : `${tweet.full_text.substring(tweet.display_text_range[0], tweet.display_text_range[1])}`}`,
                         retweet: `${tweet.retweeted_status ? `${tweet.entities.user_mentions[0].screen_name}` : ""}`,
-                        created_at: tweet.created_at,
+                        created_at: new Date(tweet.created_at),
                         retweet_count:
                             tweet.retweeted_status == null
                                 ? tweet.retweet_count

@@ -4,58 +4,82 @@ import NavbarMobile from "../NavbarMobile";
 import NavbarDesktop from "../NavbarDesktop";
 import useWindowSize from "../../Utils/windowSize";
 import Loading from "../Loading";
+import NavigationTab from "../NavigationTab";
 
 //altro
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import NavigationTab from "../NavigationTab";
+import UserMarker from "../UserMarker";
+import FilterTab from "../FilterTab";
+import { useLocation } from "react-router";
 
 const TweetsScreen = () => {
+
+    const location = useLocation();
     //stato
-    const [risposta, setRisposta] = useState(null);
+    const [risposta, setRisposta] = useState([]);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTab, setSelectedTab] = useState("tweets");
+    const [radius, setRadius] = useState(null);
+    const [position, setPosition] = useState(null);
+    const [newSearch, setNewSearch] = useState(false);
 
     useEffect(() => {
         // fuzione per reperire i dati dalla
         async function getData() {
+            setNewSearch(false);
             setIsLoading(true);
             const { search } = window.location;
-            const params = new URLSearchParams(search).toString();
-            console.log("ecco: " + params);
+            console.log(search)
+            const params =
+                new URLSearchParams(search).toString() +
+                "&" +
+                new URLSearchParams({
+                    radius: `${radius ? `${radius / 1000}` : null}`,
+                    position: `${position ? `${position.lat},${position.lng}` : null}`
+                }).toString();
             if (!params) return;
 
             try {
-                const { data } = await axios.get("/api?" + params);
+                const { data } = await axios.get(`/api/${location.pathname.substring(location.pathname.lastIndexOf('/') + 1)}?${params}`);
                 console.log(data.statuses);
-                setRisposta(data.statuses);
+                setRisposta(data.statuses || []);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error.message);
-                setRisposta(null);
+                setRisposta([]);
                 setIsLoading(false);
             }
         }
         getData();
-    }, []);
+    }, [newSearch]);
 
-    const handleChangeTab = (tab) => {
-        setSelectedTab(tab);
-    };
+    const handleChangeTab = (tab) => setSelectedTab(tab);
+
+    // L'unico modo per prendere le coordiate lat long su click del mouse e' usando un componente figlio
+    // Questa funzione gli viene passata per fargli aggiornare la posizione
+    const handleChangePosition = (position) => setPosition(position);
+
+    const handleChangeRadius = (radius) => setRadius(radius);
 
     return (
         <div id="tweets-screen-container">
             {width < 768 ? <NavbarMobile /> : <NavbarDesktop />}
             <div className="pt-20 laptop:h-screen mx-auto">
                 <div className="flex flex-col laptop:flex-row justify-center items-center h-full">
-
-                    <div style={{minHeight: "30rem"}} className="laptop:h-full w-full laptop:w-1/2 order-2 laptop:flex-row">
+                    <div
+                        style={{ minHeight: "30rem" }}
+                        className="laptop:h-full w-full laptop:w-1/2 order-2 laptop:flex-row"
+                    >
                         {!isLoading && (
-                            <div style={{top: "5.5rem"}} className="sticky left-0 w-full z-20 shadow-md">
+                            <div
+                                style={{ top: "5.5rem" }}
+                                className="sticky left-0 w-full z-20 shadow-md"
+                            >
                                 <div className="flex items-center justify-center w-full bg-neutral px-8">
                                     <div class="tabs h-14 rounded-none w-full flex justify-center">
                                         <NavigationTab
@@ -98,13 +122,32 @@ const TweetsScreen = () => {
                                 <Loading />
                             ) : selectedTab === "tweets" ? (
                                 <div className="pt-4 h-full">
-                                <TweetList tweets={risposta} />
+                                    <TweetList tweets={risposta} />
                                 </div>
-                                
                             ) : selectedTab === "stats" ? (
                                 <div>Statistiche</div>
                             ) : (
-                                <div>Filtri</div>
+                                <div className="pt-4 h-full">
+                                    <form
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                            setNewSearch(true);
+                                        }}
+                                    >
+                                        <FilterTab
+                                            position={position}
+                                            radius={radius}
+                                            setRadius={handleChangeRadius}
+                                        />
+
+                                        <button
+                                            className="btn btn-primary"
+                                            type="submit"
+                                        >
+                                            Filtra
+                                        </button>
+                                    </form>
+                                </div>
                             )}
                         </div>
                     </div>
@@ -120,7 +163,17 @@ const TweetsScreen = () => {
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
-                            <Marker position={[51.505, -0.09]}>
+
+                            <UserMarker
+                                position={position}
+                                setPosition={handleChangePosition}
+                            />
+
+                            {radius && (
+                                <Circle center={position} radius={radius} />
+                            )}
+
+                            <Marker position={[51.5, -0.09]}>
                                 <Popup>
                                     <div className="w-72">Ciao</div>
                                 </Popup>
