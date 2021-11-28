@@ -15,8 +15,8 @@ router.get("/Keyword", async (req, res, next) => {
         var params = req.query;
         if (!params) return;
         let filterObj = {};
-        filterObj.q = params.q;
-        filterObj.result_type = "mixed";
+        filterObj.q = params.q + ` since:${params.startDate} until:${params.endDate}`;
+        filterObj.result_type = `${params.popular === "true" ? "popular" : "mixed"}`;
         filterObj.tweet_mode = "extended";
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)
@@ -37,8 +37,8 @@ router.get("/Hashtag", async (req, res, next) => {
         var params = req.query;
         if (!params) return;
         let filterObj = {};
-        filterObj.q = `%23${params.q}`;
-        filterObj.result_type = "mixed";
+        filterObj.q = `%23${params.q} since:${params.startDate} until:${params.endDate}`;
+        filterObj.result_type = `${params.popular === "true" ? "popular" : "mixed"}`;
         filterObj.tweet_mode = "extended";
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)
@@ -59,8 +59,8 @@ router.get("/Username", async (req, res, next) => {
         var params = req.query;
         if (!params) return;
         let filterObj = {};
-        filterObj.q = `from:${params.q}`;
-        filterObj.result_type = "mixed";
+        filterObj.q = `from:${params.q} since:${params.startDate} until:${params.endDate}`;
+        filterObj.result_type = `${params.popular === "true" ? "popular" : "mixed"}`;
         filterObj.tweet_mode = "extended";
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)

@@ -4,8 +4,7 @@ import Tweet from "./Tweet";
 export const TweetList = ({ tweets }) => {
     return (
         <ul
-            id="twitter-list-container"
-            className="list-none laptop:overflow-y-auto h-full flex flex-col gap-4 smartphone:px-4 py-4"
+            className="list-none laptop:overflow-y-auto h-full flex flex-col gap-4 smartphone:px-4 py-4 noScrollBar"
         >
             {tweets.length > 0 ? (
                tweets.map(tweet => (

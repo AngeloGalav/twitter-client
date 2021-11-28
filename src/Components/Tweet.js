@@ -23,7 +23,6 @@ export const Tweet = ({ tweet }) => {
         )
     }
         
-console.log(tweet)
     return (
         <li>
             <>

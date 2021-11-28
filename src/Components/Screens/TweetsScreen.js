@@ -27,6 +27,11 @@ const TweetsScreen = () => {
     const [radius, setRadius] = useState(null);
     const [position, setPosition] = useState(null);
     const [newSearch, setNewSearch] = useState(false);
+    const [selectionRange, setSelectionRange] = useState({
+        startDate: new Date(new Date().setDate(new Date().getDate() - 7)),
+        endDate: new Date(),
+    })
+    const [popular, setPopular] = useState(false)
 
     useEffect(() => {
         // fuzione per reperire i dati dalla
@@ -40,7 +45,10 @@ const TweetsScreen = () => {
                 "&" +
                 new URLSearchParams({
                     radius: `${radius ? `${radius / 1000}` : null}`,
-                    position: `${position ? `${position.lat},${position.lng}` : null}`
+                    position: `${position ? `${position.lat},${position.lng}` : null}`,
+                    startDate: selectionRange.startDate.toISOString().split("T")[0],
+                    endDate: selectionRange.endDate.toISOString().split("T")[0],
+                    popular: popular
                 }).toString();
             if (!params) return;
 
@@ -65,6 +73,12 @@ const TweetsScreen = () => {
     const handleChangePosition = (position) => setPosition(position);
 
     const handleChangeRadius = (radius) => setRadius(radius);
+
+    const handleNewSearch = () => setNewSearch(true);
+    
+    const handleDateChange = (dateRange) => setSelectionRange(dateRange)
+
+    const handlePopularChange= () => setPopular(popular => !popular);
 
     return (
         <div id="tweets-screen-container">
@@ -128,25 +142,17 @@ const TweetsScreen = () => {
                                 <div>Statistiche</div>
                             ) : (
                                 <div className="pt-4 h-full">
-                                    <form
-                                        onSubmit={(e) => {
-                                            e.preventDefault();
-                                            setNewSearch(true);
-                                        }}
-                                    >
                                         <FilterTab
+                                            popular={popular}
                                             position={position}
                                             radius={radius}
+                                            selectionRange={selectionRange}
+                                            setPopular={handlePopularChange}
                                             setRadius={handleChangeRadius}
+                                            setPosition={handleChangePosition}
+                                            setNewSearch={handleNewSearch}
+                                            setSelectionRange={handleDateChange}
                                         />
-
-                                        <button
-                                            className="btn btn-primary"
-                                            type="submit"
-                                        >
-                                            Filtra
-                                        </button>
-                                    </form>
                                 </div>
                             )}
                         </div>
