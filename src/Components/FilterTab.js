@@ -79,7 +79,7 @@ const FilterTab = (props) => {
                     <div className="w-full h-px bg-base-content bg-opacity-50 mt-2" />
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-8">
                     <div className="px-4">
                         <h2 className="text-3xl font-bold">Posizione</h2>
                         {props.position && (
@@ -127,7 +127,7 @@ const FilterTab = (props) => {
                             <div className="mt-2">
                                 <div>
                                     <span>
-                                        Prova a cliccare su un punto per
+                                        Prova a cliccare su un punto sulla mappa per
                                         selezionare una posizione.
                                     </span>
                                 </div>
@@ -154,14 +154,14 @@ const FilterTab = (props) => {
                         )}
                     </div>
 
-                    <div className="w-full h-px bg-base-content bg-opacity-50 mt-4" />
+                    <div className="w-full h-px bg-base-content bg-opacity-50 mt-8" />
 
-                    <div className="mt-4 px-4">
+                    <div className="mt-8 px-4">
                         <h2 className="text-3xl font-bold">Data</h2>
                         <p className="text-sm mt-2">
                             Scegli che fetta dell'ultima settimana ti interessa
                         </p>
-                        <div className="mt-4 relative flex">
+                        <div className="mt-4 relative flex gap-4">
                             <DatePicker
                                 className={`${
                                     user.theme === "dark"
@@ -213,9 +213,9 @@ const FilterTab = (props) => {
                         </div>
                     </div>
 
-                    <div className="w-full h-px bg-base-content bg-opacity-50 mt-4" />
+                    <div className="w-full h-px bg-base-content bg-opacity-50 mt-8" />
 
-                    <div className="mt-4 px-4 flex justify-between items-center gap-10">
+                    <div className="mt-8 px-4 flex justify-between items-center gap-10">
                         <div>
                             <h3 className="text-xl font-bold">Solo popolari</h3>
                             <p className="text-sm mt-2">
@@ -236,7 +236,7 @@ const FilterTab = (props) => {
                     <div className="px-4 my-20">
                         <button
                             onClick={() => props.setNewSearch()}
-                            className="btn btn-primary btn-block"
+                            className="btn btn-secondary btn-block"
                         >
                             Filtra
                         </button>

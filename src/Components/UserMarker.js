@@ -9,7 +9,6 @@ const UserMarker = (props) => {
             props.setPosition(e.latlng);
         },
     });
-
     const icon = L.icon({
         iconUrl: "https://cdn-icons-png.flaticon.com/512/854/854859.png",
         iconSize: [60, 60],

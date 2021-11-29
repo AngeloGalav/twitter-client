@@ -16,7 +16,6 @@ import FilterTab from "../FilterTab";
 import { useLocation } from "react-router";
 
 const TweetsScreen = () => {
-
     const location = useLocation();
     //stato
     const [risposta, setRisposta] = useState([]);
@@ -30,8 +29,9 @@ const TweetsScreen = () => {
     const [selectionRange, setSelectionRange] = useState({
         startDate: new Date(new Date().setDate(new Date().getDate() - 7)),
         endDate: new Date(),
-    })
-    const [popular, setPopular] = useState(false)
+    });
+    const [popular, setPopular] = useState(false);
+    const [mapLarge, setMapLarge] = useState(true);
 
     useEffect(() => {
         // fuzione per reperire i dati dalla
@@ -39,21 +39,29 @@ const TweetsScreen = () => {
             setNewSearch(false);
             setIsLoading(true);
             const { search } = window.location;
-            console.log(search)
+            console.log(search);
             const params =
                 new URLSearchParams(search).toString() +
                 "&" +
                 new URLSearchParams({
                     radius: `${radius ? `${radius / 1000}` : null}`,
-                    position: `${position ? `${position.lat},${position.lng}` : null}`,
-                    startDate: selectionRange.startDate.toISOString().split("T")[0],
+                    position: `${
+                        position ? `${position.lat},${position.lng}` : null
+                    }`,
+                    startDate: selectionRange.startDate
+                        .toISOString()
+                        .split("T")[0],
                     endDate: selectionRange.endDate.toISOString().split("T")[0],
-                    popular: popular
+                    popular: popular,
                 }).toString();
             if (!params) return;
 
             try {
-                const { data } = await axios.get(`/api/${location.pathname.substring(location.pathname.lastIndexOf('/') + 1)}?${params}`);
+                const { data } = await axios.get(
+                    `/api/${location.pathname.substring(
+                        location.pathname.lastIndexOf("/") + 1
+                    )}?${params}`
+                );
                 console.log(data.statuses);
                 setRisposta(data.statuses || []);
                 setIsLoading(false);
@@ -66,6 +74,9 @@ const TweetsScreen = () => {
         getData();
     }, [newSearch]);
 
+    //trucchetto per far renderizzare tutta la mappa
+    useEffect(() => setMapLarge(false), []);
+
     const handleChangeTab = (tab) => setSelectedTab(tab);
 
     // L'unico modo per prendere le coordiate lat long su click del mouse e' usando un componente figlio
@@ -75,10 +86,10 @@ const TweetsScreen = () => {
     const handleChangeRadius = (radius) => setRadius(radius);
 
     const handleNewSearch = () => setNewSearch(true);
-    
-    const handleDateChange = (dateRange) => setSelectionRange(dateRange)
 
-    const handlePopularChange= () => setPopular(popular => !popular);
+    const handleDateChange = (dateRange) => setSelectionRange(dateRange);
+
+    const handlePopularChange = () => setPopular((popular) => !popular);
 
     return (
         <div id="tweets-screen-container">
@@ -135,30 +146,44 @@ const TweetsScreen = () => {
                             {isLoading ? (
                                 <Loading />
                             ) : selectedTab === "tweets" ? (
-                                <div className="pt-4 h-full">
+                                <div className="mt-8 h-full">
                                     <TweetList tweets={risposta} />
                                 </div>
                             ) : selectedTab === "stats" ? (
                                 <div>Statistiche</div>
                             ) : (
-                                <div className="pt-4 h-full">
-                                        <FilterTab
-                                            popular={popular}
-                                            position={position}
-                                            radius={radius}
-                                            selectionRange={selectionRange}
-                                            setPopular={handlePopularChange}
-                                            setRadius={handleChangeRadius}
-                                            setPosition={handleChangePosition}
-                                            setNewSearch={handleNewSearch}
-                                            setSelectionRange={handleDateChange}
-                                        />
+                                <div className="mt-8 h-full">
+                                    <FilterTab
+                                        popular={popular}
+                                        position={position}
+                                        radius={radius}
+                                        selectionRange={selectionRange}
+                                        setPopular={handlePopularChange}
+                                        setRadius={handleChangeRadius}
+                                        setPosition={handleChangePosition}
+                                        setNewSearch={handleNewSearch}
+                                        setSelectionRange={handleDateChange}
+                                    />
                                 </div>
                             )}
                         </div>
                     </div>
 
-                    <div className="h-64 laptop:h-full w-full laptop:w-1/2 z-0 order-1 laptop:order-2">
+                    <div
+                        className={`${
+                            mapLarge && width < 1024
+                                ? "h-screen-5rem"
+                                : "h-64"
+                        } laptop:h-full w-full laptop:w-1/2 z-0 order-1 laptop:order-2 relative flex justify-center transition-all duration-200 ease-linear`}
+                    >
+                        <button
+                            style={{ zIndex: "9999" }}
+                            onClick={() => setMapLarge((mapLarge) => !mapLarge)}
+                            className="btn btn-secondary absolute laptop:hidden btn-xs bottom-4 shadow-md"
+                        >
+                            {mapLarge ? "Riduci" : "Espandi"} &nbsp;{" "}
+                            <i class="bi bi-map"></i>
+                        </button>
                         <MapContainer
                             className="w-full h-full"
                             center={[51.505, -0.09]}

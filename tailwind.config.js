@@ -6,6 +6,9 @@ module.exports = {
             inset: {
                 screen: "100vh", //top: 100vh;
             },
+            height: {
+                'screen-5rem': 'calc(100vh - 5rem)', //height: calc(100vh - 5rem);
+            }
         },
         screens: {
             smartphone: "400px",
