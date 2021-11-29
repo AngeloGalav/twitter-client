@@ -1,4 +1,5 @@
 # Getting started
+[![Build Status](https://aminsep.disi.unibo.it/jenkins/buildStatus/icon?job=team11-twitter-client)](https://aminsep.disi.unibo.it/jenkins/job/team11-twitter-client/)
 
 ## Come avviare l'app React
 In questa dir fare
