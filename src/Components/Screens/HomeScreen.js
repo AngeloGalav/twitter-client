@@ -1,6 +1,4 @@
 //Components
-import NavbarMobile from "../NavbarMobile";
-import NavbarDesktop from "../NavbarDesktop";
 import TweetCard from "../TweetCard";
 import useWindowSize from "../../Utils/windowSize";
 import FunctionalityCard from "../FunctionalityCard";
@@ -14,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import Fade from "react-reveal/Fade";
 import Zoom from "react-reveal/Zoom";
 import Hero from "../Hero";
+import Navbar from "../Navbar";
 
 const HomeScreen = () => {
     // eslint-disable-next-line
@@ -51,7 +50,7 @@ const HomeScreen = () => {
         <div id="home-screen-container">
 
             {/* Navbar */}
-            {width < 768 ? <NavbarMobile /> : <NavbarDesktop />}
+            <Navbar width={width} />
 
 
             {/* Hero section */}

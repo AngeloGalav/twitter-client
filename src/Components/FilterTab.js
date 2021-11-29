@@ -31,11 +31,13 @@ const FilterTab = (props) => {
     const dispatch = useDispatch(); //il dispatch ci permette di inviare un'azione al reducer
 
     const [address, setAddress] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     //trasforma [lat, lng] in un indirizzo leggibile
     useEffect(() => {
         const getAddress = async () => {
             try {
+                setIsLoading(true);
                 const { data } = await axios.get(
                     `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${props.position.lat}&lon=${props.position.lng}`
                 );
@@ -46,7 +48,9 @@ const FilterTab = (props) => {
                     state: data.address.country,
                     postcode: data.address.postcode,
                 });
+                setIsLoading(false);
             } catch (error) {
+                setIsLoading(false);
                 console.log(error.response);
             }
         };
@@ -70,7 +74,7 @@ const FilterTab = (props) => {
     };
 
     return (
-        <div className="h-full noScrollBar laptop:overflow-y-auto">
+        <div className="h-full noScrollBar laptop:overflow-y-auto mt-8">
             <div>
                 <div>
                     <h1 className="text-center text-2xl font-semibold">
@@ -89,26 +93,45 @@ const FilterTab = (props) => {
                                     sulla mappa dove preferisci
                                 </p>
                                 <div className="flex mt-2 justify-between items-center border rounded-md px-4 py-2 relative">
-                                    <div className="w-full">
-                                        {address?.road && (
-                                            <h3 className="font-semibold">
-                                                {address?.road}
-                                            </h3>
-                                        )}
-                                        <p className="text-sm my-2">
-                                            {address?.postcode
-                                                ? address?.postcode + ", "
-                                                : ""}
-                                            {address?.city
-                                                ? address?.city + ", "
-                                                : ""}{" "}
-                                            {address?.state}
-                                        </p>
-                                        <p className="text-sm opacity-75 font-light my-2 truncate">
-                                            {props.position?.lat},{" "}
-                                            {props.position?.lng}
-                                        </p>
-                                    </div>
+                                    {!isLoading ? (
+                                        <div className="w-full">
+                                            {address?.road && (
+                                                <h3 className="font-semibold">
+                                                    {address?.road}
+                                                </h3>
+                                            )}
+                                            <p className="text-sm my-2">
+                                                {address?.postcode
+                                                    ? address?.postcode + ", "
+                                                    : ""}
+                                                {address?.city
+                                                    ? address?.city + ", "
+                                                    : ""}{" "}
+                                                {address?.state}
+                                            </p>
+                                            <p className="text-sm opacity-75 font-light my-2 truncate">
+                                                {props.position?.lat},{" "}
+                                                {props.position?.lng}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div style={{minHeight: "5rem"}} className="flex justify-center items-center">
+                                            <svg
+                                                fill="none"
+                                                class="w-6 h-6 animate-spin"
+                                                viewBox="0 0 32 32"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path
+                                                    clip-rule="evenodd"
+                                                    d="M15.165 8.53a.5.5 0 01-.404.58A7 7 0 1023 16a.5.5 0 011 0 8 8 0 11-9.416-7.874.5.5 0 01.58.404z"
+                                                    fill="currentColor"
+                                                    fill-rule="evenodd"
+                                                />
+                                            </svg>
+                                            <p className="text-sm">Caricamento posizione ...</p>
+                                        </div>
+                                    )}
                                     <div className="absolute right-0 top-0 mr-2 mt-2">
                                         <button
                                             className="btn btn-error btn-circle btn-sm"
@@ -127,8 +150,8 @@ const FilterTab = (props) => {
                             <div className="mt-2">
                                 <div>
                                     <span>
-                                        Prova a cliccare su un punto sulla mappa per
-                                        selezionare una posizione.
+                                        Prova a cliccare su un punto sulla mappa
+                                        per selezionare una posizione.
                                     </span>
                                 </div>
                             </div>

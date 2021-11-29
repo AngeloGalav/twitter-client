@@ -1,7 +1,6 @@
 //components
 import TweetList from "../TweetList";
-import NavbarMobile from "../NavbarMobile";
-import NavbarDesktop from "../NavbarDesktop";
+import Navbar from "../Navbar";
 import useWindowSize from "../../Utils/windowSize";
 import Loading from "../Loading";
 import NavigationTab from "../NavigationTab";
@@ -93,7 +92,10 @@ const TweetsScreen = () => {
 
     return (
         <div id="tweets-screen-container">
-            {width < 768 ? <NavbarMobile /> : <NavbarDesktop />}
+            
+            {/* Navbar */}
+            <Navbar width={width} />
+            
             <div className="pt-20 laptop:h-screen mx-auto">
                 <div className="flex flex-col laptop:flex-row justify-center items-center h-full">
                     <div
@@ -136,7 +138,7 @@ const TweetsScreen = () => {
                             style={{
                                 height: `${
                                     width > 1023
-                                        ? "calc(100% - 3.5rem)" //uguale a 100% - altezza div recedente
+                                        ? "calc(100% - 3.5rem)" //uguale a 100% - altezza div precedente
                                         : "auto"
                                 }`,
                             }}
@@ -146,13 +148,14 @@ const TweetsScreen = () => {
                             {isLoading ? (
                                 <Loading />
                             ) : selectedTab === "tweets" ? (
-                                <div className="mt-8 h-full">
+                                <div className="h-full">
                                     <TweetList tweets={risposta} />
                                 </div>
                             ) : selectedTab === "stats" ? (
                                 <div>Statistiche</div>
                             ) : (
-                                <div className="mt-8 h-full">
+                                <div className="h-full">
+                                    
                                     <FilterTab
                                         popular={popular}
                                         position={position}
