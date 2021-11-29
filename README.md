@@ -1,4 +1,4 @@
-# Getting started
+# twitter-client
 [![Build Status](https://aminsep.disi.unibo.it/jenkins/buildStatus/icon?job=team11-twitter-client)](https://aminsep.disi.unibo.it/jenkins/job/team11-twitter-client/)
 
 ## Come avviare l'app React
@@ -14,3 +14,6 @@ Per avviare il server (che verrà aperto nella porta 3001 dell'host), che purtop
 è necessario aprire una nuova istanza della console, entrare nella cartella 'backend' con il comando `cd backend` e avviare il server tramite
 
 `npm install && npm run dev`
+
+## Info aggiuntive
+Puoi trovare maggiori info sulla struttura del progetto [qui](https://aminsep.disi.unibo.it/gitlab/uniboswe-team-11/twitter-client/-/blob/master/Documentation.md).
