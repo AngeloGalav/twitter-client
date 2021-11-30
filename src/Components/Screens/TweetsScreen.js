@@ -13,11 +13,12 @@ import axios from "axios";
 import UserMarker from "../UserMarker";
 import FilterTab from "../FilterTab";
 import { useLocation } from "react-router";
+import StatisticTab from "../StatisticTab";
 
 const TweetsScreen = () => {
     const location = useLocation();
     //stato
-    const [risposta, setRisposta] = useState([]);
+    const [statuses, setStatuses] = useState([]);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
     const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +31,10 @@ const TweetsScreen = () => {
         endDate: new Date(),
     });
     const [popular, setPopular] = useState(false);
+    const [onlyItalian, setOnlyItalian] = useState(false);
     const [mapLarge, setMapLarge] = useState(true);
+    const [wordCloud, setWordCloud] = useState(null)
+    const [sentimentAnalysis, setSentimentAnalysis] = useState(null)
 
     useEffect(() => {
         // fuzione per reperire i dati dalla
@@ -38,7 +42,6 @@ const TweetsScreen = () => {
             setNewSearch(false);
             setIsLoading(true);
             const { search } = window.location;
-            console.log(search);
             const params =
                 new URLSearchParams(search).toString() +
                 "&" +
@@ -52,6 +55,7 @@ const TweetsScreen = () => {
                         .split("T")[0],
                     endDate: selectionRange.endDate.toISOString().split("T")[0],
                     popular: popular,
+                    onlyItalian: onlyItalian
                 }).toString();
             if (!params) return;
 
@@ -62,11 +66,16 @@ const TweetsScreen = () => {
                     )}?${params}`
                 );
                 console.log(data.statuses);
-                setRisposta(data.statuses || []);
+                setStatuses(data.statuses || []);
+                setWordCloud(data.wordCloud)
+                setSentimentAnalysis(data.sentimentAnalysis);
+                console.log(data.sentimentAnalysis)
                 setIsLoading(false);
             } catch (error) {
                 console.log(error.message);
-                setRisposta([]);
+                setStatuses([]);
+                setWordCloud(null)
+                setSentimentAnalysis(null);
                 setIsLoading(false);
             }
         }
@@ -89,6 +98,8 @@ const TweetsScreen = () => {
     const handleDateChange = (dateRange) => setSelectionRange(dateRange);
 
     const handlePopularChange = () => setPopular((popular) => !popular);
+
+    const handleOnlyItalianChange = () => setOnlyItalian(onlyItalian => !onlyItalian)
 
     return (
         <div id="tweets-screen-container">
@@ -149,10 +160,12 @@ const TweetsScreen = () => {
                                 <Loading />
                             ) : selectedTab === "tweets" ? (
                                 <div className="h-full">
-                                    <TweetList tweets={risposta} />
+                                    <TweetList tweets={statuses} />
                                 </div>
                             ) : selectedTab === "stats" ? (
-                                <div>Statistiche</div>
+                                <div className="h-full">
+                                    <StatisticTab wordCloud={wordCloud} sentimentAnalysis={sentimentAnalysis} found={statuses.length > 0} />
+                                </div>
                             ) : (
                                 <div className="h-full">
                                     
@@ -160,12 +173,14 @@ const TweetsScreen = () => {
                                         popular={popular}
                                         position={position}
                                         radius={radius}
+                                        onlyItalian={onlyItalian}
                                         selectionRange={selectionRange}
                                         setPopular={handlePopularChange}
                                         setRadius={handleChangeRadius}
                                         setPosition={handleChangePosition}
                                         setNewSearch={handleNewSearch}
                                         setSelectionRange={handleDateChange}
+                                        setOnlyItalian={handleOnlyItalianChange}
                                     />
                                 </div>
                             )}

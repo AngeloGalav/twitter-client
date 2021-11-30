@@ -74,8 +74,8 @@ const FilterTab = (props) => {
     };
 
     return (
-        <div className="h-full noScrollBar laptop:overflow-y-auto mt-8">
-            <div>
+        <div className="h-full noScrollBar laptop:overflow-y-auto">
+            <div className="mt-8">
                 <div>
                     <h1 className="text-center text-2xl font-semibold">
                         Filtri
@@ -254,7 +254,32 @@ const FilterTab = (props) => {
                                 onColor="#1DA1F2"
                             />
                         </div>
+
+                        
                     </div>
+
+
+                    <div className="mt-8 px-4 flex justify-between items-center gap-10">
+                        <div>
+                            <h3 className="text-xl font-bold">Lingua italiana</h3>
+                            <p className="text-sm mt-2">
+                                Scegli se visualizzare solo tweets in lingua italiana
+                            </p>
+                        </div>
+                        <div>
+                            <Switch
+                                onChange={() => props.setOnlyItalian()}
+                                checked={props.onlyItalian}
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                onColor="#1DA1F2"
+                            />
+                        </div>
+
+                        
+                    </div>
+
+                    
 
                     <div className="px-4 my-20">
                         <button

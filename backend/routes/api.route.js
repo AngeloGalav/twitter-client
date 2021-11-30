@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const Twitter = require("twitter");
+const {createWordCloud} = require("../middleware/createWordCloud")
+const {sentimentAnalysis} = require("../middleware/sentimentAnalysis")
 
 // ci logghiamo in modalita application,
 // in modo che possiamo leggere un sacco di tweet alla volta
@@ -15,8 +17,14 @@ router.get("/Keyword", async (req, res, next) => {
         var params = req.query;
         if (!params) return;
         let filterObj = {};
-        filterObj.q = params.q + ` since:${params.startDate} until:${params.endDate}`;
-        filterObj.result_type = `${params.popular === "true" ? "popular" : "mixed"}`;
+        filterObj.q =
+            params.q + ` since:${params.startDate} until:${params.endDate}`;
+        filterObj.result_type = `${
+            params.popular === "true" ? "popular" : "mixed"
+        }`;
+        params.onlyItalian === "true"
+        ? (filterObj.lang = "it")
+        : (filterObj = filterObj);
         filterObj.tweet_mode = "extended";
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)
@@ -24,12 +32,14 @@ router.get("/Keyword", async (req, res, next) => {
 
         const tweet = await client.get("search/tweets.json", filterObj);
 
-        res.status(200).json({ ...tweet });
+        req.data = tweet
+        return next()
+        //res.status(200).json({ ...tweet });
     } catch (error) {
         console.log(error);
         next(error);
     }
-});
+}, sentimentAnalysis, createWordCloud);
 
 //ricerca per hashtag
 router.get("/Hashtag", async (req, res, next) => {
@@ -38,20 +48,27 @@ router.get("/Hashtag", async (req, res, next) => {
         if (!params) return;
         let filterObj = {};
         filterObj.q = `%23${params.q} since:${params.startDate} until:${params.endDate}`;
-        filterObj.result_type = `${params.popular === "true" ? "popular" : "mixed"}`;
+        filterObj.result_type = `${
+            params.popular === "true" ? "popular" : "mixed"
+        }`;
         filterObj.tweet_mode = "extended";
+        params.onlyItalian === "true"
+            ? (filterObj.lang = "it")
+            : (filterObj = filterObj);
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)
             : (filterObj = filterObj);
 
         const tweet = await client.get("search/tweets.json", filterObj);
 
-        res.status(200).json({ ...tweet });
+        req.data = tweet
+        return next()
+        
     } catch (error) {
         console.log(error);
         next(error);
     }
-});
+}, sentimentAnalysis, createWordCloud);
 
 //ricerca per username
 router.get("/Username", async (req, res, next) => {
@@ -60,7 +77,12 @@ router.get("/Username", async (req, res, next) => {
         if (!params) return;
         let filterObj = {};
         filterObj.q = `from:${params.q} since:${params.startDate} until:${params.endDate}`;
-        filterObj.result_type = `${params.popular === "true" ? "popular" : "mixed"}`;
+        filterObj.result_type = `${
+            params.popular === "true" ? "popular" : "mixed"
+        }`;
+        params.onlyItalian === "true"
+        ? (filterObj.lang = "it")
+        : (filterObj = filterObj);
         filterObj.tweet_mode = "extended";
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)
@@ -68,12 +90,14 @@ router.get("/Username", async (req, res, next) => {
 
         const tweet = await client.get("search/tweets.json", filterObj);
 
-        res.status(200).json({ ...tweet });
+        req.data = tweet
+        return next()
+
     } catch (error) {
         console.log(error);
         next(error);
     }
-});
+}, sentimentAnalysis, createWordCloud);
 
 router.get("/trends", async (req, res, next) => {
     try {
