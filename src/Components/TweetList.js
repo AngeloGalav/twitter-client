@@ -2,7 +2,7 @@
 import Tweet from "./Tweet";
 import notFoundTweets from "../Media/undraw_not_found_-60-pq.svg"
 
-export const TweetList = ({ tweets }) => {
+export const TweetList = ({ tweets, setCenter }) => {
     return (
         <div className="laptop:overflow-y-auto h-full smartphone:px-4 noScrollBar">
             {tweets.length > 0 ? (
@@ -11,6 +11,7 @@ export const TweetList = ({ tweets }) => {
                         {tweets.map((tweet) => (
                             <Tweet
                                 key={tweet.id}
+                                setCenter={setCenter}
                                 tweet={{
                                     id_str: tweet.id_str,
                                     text: `${
@@ -54,6 +55,7 @@ export const TweetList = ({ tweets }) => {
                                         name: tweet.user.name,
                                         screen_name: tweet.user.screen_name,
                                     },
+                                    place: tweet.place
                                 }}
                             />
                         ))}

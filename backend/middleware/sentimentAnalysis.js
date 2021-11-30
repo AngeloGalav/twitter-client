@@ -15,7 +15,7 @@ exports.sentimentAnalysis = (req, res, next) => {
                     req.data.statuses[i].full_text,
                     req.data.statuses[i].lang || "en"
                 );
-                sentimentAnalysis.comparative += (partial.score / partial.tokens.length);
+                sentimentAnalysis.comparative += partial.comparative;
                 sentimentAnalysis.score += partial.score;
                 
                 sentimentAnalysis.positives += partial.positive.length
@@ -27,6 +27,7 @@ exports.sentimentAnalysis = (req, res, next) => {
 
         sentimentAnalysis.score /= req.data.statuses.length;
         sentimentAnalysis.comparative /= req.data.statuses.length;
+        console.log(sentimentAnalysis.comparative)
         sentimentAnalysis.comparative += 5;
 
         req.data.sentimentAnalysis = sentimentAnalysis;

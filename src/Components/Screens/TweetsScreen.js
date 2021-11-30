@@ -4,16 +4,18 @@ import Navbar from "../Navbar";
 import useWindowSize from "../../Utils/windowSize";
 import Loading from "../Loading";
 import NavigationTab from "../NavigationTab";
+import StatisticTab from "../StatisticTab";
+import UserMarker from "../UserMarker";
+import FilterTab from "../FilterTab";
 
 //altro
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import UserMarker from "../UserMarker";
-import FilterTab from "../FilterTab";
+
 import { useLocation } from "react-router";
-import StatisticTab from "../StatisticTab";
+import ChangeView from "../ChangeView";
 
 const TweetsScreen = () => {
     const location = useLocation();
@@ -33,8 +35,9 @@ const TweetsScreen = () => {
     const [popular, setPopular] = useState(false);
     const [onlyItalian, setOnlyItalian] = useState(false);
     const [mapLarge, setMapLarge] = useState(true);
-    const [wordCloud, setWordCloud] = useState(null)
-    const [sentimentAnalysis, setSentimentAnalysis] = useState(null)
+    const [wordCloud, setWordCloud] = useState(null);
+    const [sentimentAnalysis, setSentimentAnalysis] = useState(null);
+    const [center, setCenter] = useState([41.9109, 12.4818]);
 
     useEffect(() => {
         // fuzione per reperire i dati dalla
@@ -55,7 +58,7 @@ const TweetsScreen = () => {
                         .split("T")[0],
                     endDate: selectionRange.endDate.toISOString().split("T")[0],
                     popular: popular,
-                    onlyItalian: onlyItalian
+                    onlyItalian: onlyItalian,
                 }).toString();
             if (!params) return;
 
@@ -67,20 +70,31 @@ const TweetsScreen = () => {
                 );
                 console.log(data.statuses);
                 setStatuses(data.statuses || []);
-                setWordCloud(data.wordCloud)
+                setWordCloud(data.wordCloud);
                 setSentimentAnalysis(data.sentimentAnalysis);
-                console.log(data.sentimentAnalysis)
+                console.log(data.sentimentAnalysis);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error.message);
                 setStatuses([]);
-                setWordCloud(null)
+                setWordCloud(null);
                 setSentimentAnalysis(null);
                 setIsLoading(false);
             }
         }
         getData();
     }, [newSearch]);
+
+    useEffect(() => {
+        statuses.forEach((tweet) => {
+            if (tweet.place) {
+                setCenter([
+                    tweet.place?.bounding_box.coordinates[0][0][1],
+                    tweet.place?.bounding_box.coordinates[0][0][0],
+                ]);
+            }
+        });
+    }, [statuses]);
 
     //trucchetto per far renderizzare tutta la mappa
     useEffect(() => setMapLarge(false), []);
@@ -99,14 +113,16 @@ const TweetsScreen = () => {
 
     const handlePopularChange = () => setPopular((popular) => !popular);
 
-    const handleOnlyItalianChange = () => setOnlyItalian(onlyItalian => !onlyItalian)
+    const handleChangeCenter = (center) => setCenter(center)
+
+    const handleOnlyItalianChange = () =>
+        setOnlyItalian((onlyItalian) => !onlyItalian);
 
     return (
         <div id="tweets-screen-container">
-            
             {/* Navbar */}
             <Navbar width={width} />
-            
+
             <div className="pt-20 laptop:h-screen mx-auto">
                 <div className="flex flex-col laptop:flex-row justify-center items-center h-full">
                     <div
@@ -160,15 +176,20 @@ const TweetsScreen = () => {
                                 <Loading />
                             ) : selectedTab === "tweets" ? (
                                 <div className="h-full">
-                                    <TweetList tweets={statuses} />
+                                    <TweetList
+                                    setCenter={handleChangeCenter}
+                                    tweets={statuses} />
                                 </div>
                             ) : selectedTab === "stats" ? (
                                 <div className="h-full">
-                                    <StatisticTab wordCloud={wordCloud} sentimentAnalysis={sentimentAnalysis} found={statuses.length > 0} />
+                                    <StatisticTab
+                                        wordCloud={wordCloud}
+                                        sentimentAnalysis={sentimentAnalysis}
+                                        found={statuses.length > 0}
+                                    />
                                 </div>
                             ) : (
                                 <div className="h-full">
-                                    
                                     <FilterTab
                                         popular={popular}
                                         position={position}
@@ -189,9 +210,7 @@ const TweetsScreen = () => {
 
                     <div
                         className={`${
-                            mapLarge && width < 1024
-                                ? "h-screen-5rem"
-                                : "h-64"
+                            mapLarge && width < 1024 ? "h-screen-5rem" : "h-64"
                         } laptop:h-full w-full laptop:w-1/2 z-0 order-1 laptop:order-2 relative flex justify-center transition-all duration-200 ease-linear`}
                     >
                         <button
@@ -204,10 +223,11 @@ const TweetsScreen = () => {
                         </button>
                         <MapContainer
                             className="w-full h-full"
-                            center={[51.505, -0.09]}
+                            center={center}
                             zoom={13}
                             scrollWheelZoom={true}
                         >
+                            <ChangeView center={center} zoom={13} /> 
                             <TileLayer
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -222,23 +242,41 @@ const TweetsScreen = () => {
                                 <Circle center={position} radius={radius} />
                             )}
 
-                            <Marker position={[51.5, -0.09]}>
-                                <Popup>
-                                    <div className="w-72">Ciao</div>
-                                </Popup>
-                            </Marker>
-
-                            <Marker position={[51.535, -0.0902]}>
-                                <Popup>
-                                    <div className="w-72">Ciao</div>
-                                </Popup>
-                            </Marker>
-
-                            <Marker position={[51.55, -0.0908]}>
-                                <Popup>
-                                    <div className="w-72">Ciao</div>
-                                </Popup>
-                            </Marker>
+                            {statuses.length > 0 && (
+                                <>
+                                    {statuses.map((tweet, i) => (
+                                        <>
+                                            {tweet.place && (
+                                                <Marker
+                                                    position={[
+                                                        tweet.place
+                                                            ?.bounding_box
+                                                            .coordinates[0][0][1],
+                                                        tweet.place
+                                                            ?.bounding_box
+                                                            .coordinates[0][0][0],
+                                                    ]}
+                                                >
+                                                    <Popup>
+                                                        <div className="">
+                                                                <img
+                                                                    className="rounded-full mx-auto"
+                                                                    src={
+                                                                        tweet
+                                                                            .user
+                                                                            .profile_image_url
+                                                                    }
+                                                                    alt="Immagine profilo"
+                                                                />
+                                                                <p className="font-semibold">@{tweet.user.screen_name}</p>
+                                                        </div>
+                                                    </Popup>
+                                                </Marker>
+                                            )}
+                                        </>
+                                    ))}
+                                </>
+                            )}
                         </MapContainer>
                     </div>
                 </div>
