@@ -52,7 +52,7 @@ export const Tweet = ({ tweet, setCenter }) => {
                                     <p class="text-base-content font-bold block ">
                                         {tweet.user.name}
                                     </p>
-                                    <span class="text-base-content filter contrast-50 font-normal text-sm block">
+                                    <span class="text-base-content text-opacity-50 font-normal text-sm block">
                                         @{tweet.user.screen_name}
                                     </span>
                                 </div>
@@ -94,7 +94,7 @@ export const Tweet = ({ tweet, setCenter }) => {
                             </div>
                         )}
                         {/* Data */}
-                        <p class="text-base-content filter contrast-50 py-2 text-sm w-full">
+                        <p class="text-base-content text-opacity-50 py-2 text-sm w-full">
                             Pubblicato il{" "}
                             {tweet.created_at.toLocaleDateString("it-IT", {
                                 year: "numeric",
@@ -106,7 +106,7 @@ export const Tweet = ({ tweet, setCenter }) => {
                         <hr />
                         {/* Numeri */}
                         <div class="flex items-center w-full overflow-hidden pt-2">
-                            <div class="flex items-center text-base-content filter contrast-50 gap-10 justify-evenly w-full">
+                            <div class="flex items-center text-base-content text-opacity-50 gap-10 justify-evenly w-full">
                                 <div className="flex items-center w-1/3 justify-center">
                                     <button
                                         onClick={() => {

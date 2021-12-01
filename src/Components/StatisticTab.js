@@ -15,21 +15,27 @@ const StatisticTab = (props) => {
 
     useEffect(() => {
         if (props.sentimentAnalysis) {
+
+
+
             setSentimentData({
-                labels: ["Positivi", "Negativi"],
+                labels: ["Positivi", "Negativi", "Neutrali"],
                 datasets: [
                     {
                         data: [
                             props.sentimentAnalysis.positives,
                             props.sentimentAnalysis.negatives,
+                            props.sentimentAnalysis.neutrals
                         ],
                         backgroundColor: [
                             "rgba(60, 179, 113, 0.2)",
                             "rgba(255, 0, 0, 0.2)",
+                            "rgba(255, 165, 0, 0.2)"
                         ],
                         borderColor: [
                             "rgba(60, 179, 113, 1)",
                             "rgba(255, 0, 0, 1)",
+                            "rgba(255, 165, 0, 1)"
                         ],
                         borderWidth: 1,
                     },

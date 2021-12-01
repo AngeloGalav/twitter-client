@@ -23,7 +23,7 @@ const TweetCard = ({ tweet }) => {
                                 <p class="text-base-content font-bold block ">
                                     {tweet.user.name}
                                 </p>
-                                <span class="text-base-content filter contrast-50 font-normal text-sm block">
+                                <span class="text-base-content text-opacity-50 font-normal text-sm block">
                                     @{tweet.user.screen_name}
                                 </span>
                             </div>
@@ -56,7 +56,7 @@ const TweetCard = ({ tweet }) => {
                         />
                     </div>
                          {/* Data */}
-                    <p class="text-base-content filter contrast-50 py-2 text-sm w-full">
+                    <p class="text-base-content text-opacity-50 py-2 text-sm w-full">
                         Pubblicato il{" "}
                         {new Date().toLocaleDateString(
                             "it-IT",
@@ -67,7 +67,7 @@ const TweetCard = ({ tweet }) => {
                     <hr />
                     {/* Numeri */}
                     <div class="flex items-center w-full overflow-hidden pt-2">
-                        <div class="flex items-center text-base-content filter contrast-50 gap-10 justify-evenly w-full">
+                        <div class="flex items-center text-base-content text-opacity-50 gap-10 justify-evenly w-full">
                             <div className="flex items-center">
                                 <i class="bi bi-chat smartphone:text-lg text-primary"></i>
                                 <span className="ml-2 text-sm smartphone:text-base">

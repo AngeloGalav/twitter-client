@@ -6,7 +6,8 @@ exports.sentimentAnalysis = (req, res, next) => {
             score: 0,
             comparative: 0,
             positives: 0,
-            negatives: 0
+            negatives: 0,
+            neutrals: 0
         };
 
         for (let i = 0; i < req.data.statuses.length; i++) {
@@ -20,14 +21,14 @@ exports.sentimentAnalysis = (req, res, next) => {
                 
                 sentimentAnalysis.positives += partial.positive.length
                 sentimentAnalysis.negatives += partial.negative.length
+                sentimentAnalysis.neutrals += partial.tokens.length - (sentimentAnalysis.positives + sentimentAnalysis.negatives)
             } catch (error) {
-                console.log(error)
+                //console.log(error)
             }
         }
 
         sentimentAnalysis.score /= req.data.statuses.length;
         sentimentAnalysis.comparative /= req.data.statuses.length;
-        console.log(sentimentAnalysis.comparative)
         sentimentAnalysis.comparative += 5;
 
         req.data.sentimentAnalysis = sentimentAnalysis;
