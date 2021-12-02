@@ -8,30 +8,31 @@ import StatisticTab from "../StatisticTab";
 import UserMarker from "../UserMarker";
 import FilterTab from "../FilterTab";
 
+//actions
+import { getTweetsAction } from "../../Actions/tweetActions";
+
 //altro
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { useState, useEffect } from "react";
-import axios from "axios";
-
 import { useLocation } from "react-router";
 import ChangeView from "../ChangeView";
 import { useDispatch, useSelector } from "react-redux";
-import { getTweetsAction } from "../../Actions/tweetActions";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 const TweetsScreen = () => {
     const location = useLocation();
 
     //redux stuff
-    const { statuses, isLoading, wordCloud, sentimentAnalysis } = useSelector((state) => state.tweetReducer);
+    const { statuses, isLoading, wordCloud, sentimentAnalysis, coordinates } =
+        useSelector((state) => state.tweetReducer);
     const dispatch = useDispatch();
 
-
     //stato
-   // const [statuses, setStatuses] = useState([]);
+    // const [statuses, setStatuses] = useState([]);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
-  //  const [isLoading, setIsLoading] = useState(false);
+    //  const [isLoading, setIsLoading] = useState(false);
     const [selectedTab, setSelectedTab] = useState("tweets");
     const [radius, setRadius] = useState(null);
     const [position, setPosition] = useState(null);
@@ -95,22 +96,20 @@ const TweetsScreen = () => {
         setNewSearch(false);
         const { search } = window.location;
         const params =
-                new URLSearchParams(search).toString() +
-                "&" +
-                new URLSearchParams({
-                    radius: `${radius ? `${radius / 1000}` : null}`,
-                    position: `${
-                        position ? `${position.lat},${position.lng}` : null
-                    }`,
-                    startDate: selectionRange.startDate
-                        .toISOString()
-                        .split("T")[0],
-                    endDate: selectionRange.endDate.toISOString().split("T")[0],
-                    popular: popular,
-                    onlyItalian: onlyItalian,
-                }).toString();
+            new URLSearchParams(search).toString() +
+            "&" +
+            new URLSearchParams({
+                radius: `${radius ? `${radius / 1000}` : null}`,
+                position: `${
+                    position ? `${position.lat},${position.lng}` : null
+                }`,
+                startDate: selectionRange.startDate.toISOString().split("T")[0],
+                endDate: selectionRange.endDate.toISOString().split("T")[0],
+                popular: popular,
+                onlyItalian: onlyItalian,
+            }).toString();
 
-                dispatch(getTweetsAction(params, location))
+        dispatch(getTweetsAction(params, location));
     }, [newSearch]);
 
     useEffect(() => {
@@ -141,7 +140,7 @@ const TweetsScreen = () => {
 
     const handlePopularChange = () => setPopular((popular) => !popular);
 
-    const handleChangeCenter = (center) => setCenter(center)
+    const handleChangeCenter = (center) => setCenter(center);
 
     const handleOnlyItalianChange = () =>
         setOnlyItalian((onlyItalian) => !onlyItalian);
@@ -205,8 +204,9 @@ const TweetsScreen = () => {
                             ) : selectedTab === "tweets" ? (
                                 <div className="h-full">
                                     <TweetList
-                                    setCenter={handleChangeCenter}
-                                    tweets={statuses} />
+                                        setCenter={handleChangeCenter}
+                                        tweets={statuses}
+                                    />
                                 </div>
                             ) : selectedTab === "stats" ? (
                                 <div className="h-full">
@@ -255,7 +255,7 @@ const TweetsScreen = () => {
                             zoom={13}
                             scrollWheelZoom={true}
                         >
-                            <ChangeView center={center} zoom={13} /> 
+                            <ChangeView center={center} zoom={13} />
                             <TileLayer
                                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -270,39 +270,118 @@ const TweetsScreen = () => {
                                 <Circle center={position} radius={radius} />
                             )}
 
-                            {statuses.length > 0 && (
+                            {coordinates && (
                                 <>
-                                    {statuses.map((tweet, i) => (
-                                        <>
-                                            {tweet.place && (
-                                                <Marker
-                                                    position={[
-                                                        tweet.place
-                                                            ?.bounding_box
-                                                            .coordinates[0][0][1],
-                                                        tweet.place
-                                                            ?.bounding_box
-                                                            .coordinates[0][0][0],
-                                                    ]}
-                                                >
-                                                    <Popup>
-                                                        <div className="">
-                                                                <img
-                                                                    className="rounded-full mx-auto"
-                                                                    src={
-                                                                        tweet
-                                                                            .user
-                                                                            .profile_image_url
-                                                                    }
-                                                                    alt="Immagine profilo"
-                                                                />
-                                                                <p className="font-semibold">@{tweet.user.screen_name}</p>
-                                                        </div>
-                                                    </Popup>
-                                                </Marker>
-                                            )}
-                                        </>
-                                    ))}
+                                    {Object.keys(coordinates).map(
+                                        (coordinate, i) => (
+                                            <MarkerClusterGroup>
+                                                {Array(
+                                                    coordinates[
+                                                        coordinate.split(",")
+                                                    ].value
+                                                )
+                                                    .fill(0)
+                                                    .map((_, i) => (
+                                                        <Marker
+                                                            position={coordinate.split(
+                                                                ","
+                                                            )}
+                                                        >
+                                                            <Popup>
+                                                                <div>
+                                                                    <div class="flex items-center">
+                                                                        {/* Proile image */}
+                                                                        <div className="h-14 w-14 rounded-full overflow-hidden">
+                                                                            <img
+                                                                                className="w-full h-full bg-cover bg-center"
+                                                                                src={
+                                                                                    statuses[
+                                                                                        coordinates[
+                                                                                            coordinate.split(
+                                                                                                ","
+                                                                                            )
+                                                                                        ]
+                                                                                            .index[
+                                                                                            i
+                                                                                        ]
+                                                                                    ]
+                                                                                        .user
+                                                                                        .profile_image_url ||
+                                                                                    "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"
+                                                                                }
+                                                                            />
+                                                                        </div>
+
+                                                                        {/* Profile name */}
+                                                                        <div class="ml-1.5 text-sm leading-tight">
+                                                                            <p
+                                                                                style={{
+                                                                                    margin: "0",
+                                                                                    maxWidth: "10rem"
+                                                                                }}
+                                                                                class="font-bold block truncate"
+                                                                            >
+                                                                                {
+                                                                                    statuses[
+                                                                                        coordinates[
+                                                                                            coordinate.split(
+                                                                                                ","
+                                                                                            )
+                                                                                        ]
+                                                                                            .index[
+                                                                                            i
+                                                                                        ]
+                                                                                    ]
+                                                                                        .user
+                                                                                        .name
+                                                                                }
+                                                                            </p>
+                                                                            <span class="text-opacity-50 font-normal text-sm block">
+                                                                                @
+                                                                                {
+                                                                                    statuses[
+                                                                                        coordinates[
+                                                                                            coordinate.split(
+                                                                                                ","
+                                                                                            )
+                                                                                        ]
+                                                                                            .index[
+                                                                                            i
+                                                                                        ]
+                                                                                    ]
+                                                                                        .user
+                                                                                        .screen_name
+                                                                                }
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <p
+                                                                        style={{
+                                                                            marginTop: "1rem",
+                                                                        }}
+                                                                    >
+                                                                        {
+                                                                            statuses[
+                                                                                coordinates[
+                                                                                    coordinate.split(
+                                                                                        ","
+                                                                                    )
+                                                                                ]
+                                                                                    .index[
+                                                                                    i
+                                                                                ]
+                                                                            ]
+                                                                                .full_text
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                            </Popup>
+                                                        </Marker>
+                                                    ))}
+                                            </MarkerClusterGroup>
+                                        )
+                                    )}
                                 </>
                             )}
                         </MapContainer>

@@ -2,13 +2,20 @@
 import Tweet from "./Tweet";
 import notFoundTweets from "../Media/undraw_not_found_-60-pq.svg"
 
-export const TweetList = ({ tweets, setCenter }) => {
+import { useSelector } from "react-redux";
+
+export const TweetList = ({ setCenter }) => {
+
+    //redux stuff
+    const { statuses } = useSelector((state) => state.tweetReducer);
+
+    
     return (
         <div className="laptop:overflow-y-auto h-full smartphone:px-4 noScrollBar">
-            {tweets.length > 0 ? (
+            {statuses.length > 0 ? (
                 <>
                     <ul className="list-none flex flex-col gap-4 py-4">
-                        {tweets.map((tweet) => (
+                        {statuses.map((tweet) => (
                             <Tweet
                                 key={tweet.id}
                                 setCenter={setCenter}

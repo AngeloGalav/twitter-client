@@ -12,12 +12,39 @@ export const getTweetsAction = (params, location) => async (dispatch) => {
             )}?${params}`
         );
 
+        const coordinates = new Map();
+        
+        //costruisce una mappa del tipo
+        //[coordinate] = {numero di coordinate uguali presenti, lista di indici che si rifanno ai tweet in questione}
+        data.statuses?.forEach((tweet, i) => {
+            if (tweet.place) {
+                const key = [
+                    tweet.place.bounding_box.coordinates[0][0][1],
+                    tweet.place.bounding_box.coordinates[0][0][0],
+                ].toString();
+                
+                if (coordinates.has(key)) {
+                    coordinates.set(key, {
+                        value: coordinates.get(key).value + 1,
+                        index: [...coordinates.get(key).index, i]
+                    });
+                } else {
+                    coordinates.set(key, {
+                        value: 1,
+                        index: [ i ]
+                    });
+                }
+            }
+        });
+
+
         dispatch({
             type: TWEET_SUCCESS,
             payload: {
                 statuses: data.statuses || [],
                 wordCloud: data.wordCloud,
-                sentimentAnalysis: data.sentimentAnalysis
+                sentimentAnalysis: data.sentimentAnalysis,
+                coordinates: Object.fromEntries(coordinates)
             },
         });
     } catch (error) {

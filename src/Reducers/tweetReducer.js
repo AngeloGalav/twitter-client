@@ -4,7 +4,8 @@ const initalState = {
     statuses: [],
     wordCloud: null,
     sentimentAnalysis: null,
-    isLoading: false
+    isLoading: false,
+    coordinates: null
 };
 
 export default function userReducer(state = initalState, action) {
@@ -15,7 +16,8 @@ export default function userReducer(state = initalState, action) {
                 isLoading: false,
                 statuses: action.payload.statuses,
                 wordCloud: action.payload.wordCloud,
-                sentimentAnalysis: action.payload.sentimentAnalysis
+                sentimentAnalysis: action.payload.sentimentAnalysis,
+                coordinates: action.payload.coordinates
             };
         case TWEET_REQUEST:
             return {
@@ -28,7 +30,8 @@ export default function userReducer(state = initalState, action) {
                 isLoading: false,
                 statuses: [],
                 wordCloud: null,
-                sentimentAnalysis: null
+                sentimentAnalysis: null,
+                coordinates: null
             }
         default:
             return state;
