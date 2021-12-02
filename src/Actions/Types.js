@@ -1,1 +1,4 @@
 export const CHANGE_THEME = "CHANGE_THEME"
+export const TWEET_REQUEST = "TWEET_REQUEST"
+export const TWEET_SUCCESS = "TWEET_SUCCESS"
+export const TWEET_FAIL = "TWEET_FAIL"

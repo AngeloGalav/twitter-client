@@ -16,14 +16,22 @@ import axios from "axios";
 
 import { useLocation } from "react-router";
 import ChangeView from "../ChangeView";
+import { useDispatch, useSelector } from "react-redux";
+import { getTweetsAction } from "../../Actions/tweetActions";
 
 const TweetsScreen = () => {
     const location = useLocation();
+
+    //redux stuff
+    const { statuses, isLoading, wordCloud, sentimentAnalysis } = useSelector((state) => state.tweetReducer);
+    const dispatch = useDispatch();
+
+
     //stato
-    const [statuses, setStatuses] = useState([]);
+   // const [statuses, setStatuses] = useState([]);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
-    const [isLoading, setIsLoading] = useState(false);
+  //  const [isLoading, setIsLoading] = useState(false);
     const [selectedTab, setSelectedTab] = useState("tweets");
     const [radius, setRadius] = useState(null);
     const [position, setPosition] = useState(null);
@@ -35,17 +43,58 @@ const TweetsScreen = () => {
     const [popular, setPopular] = useState(false);
     const [onlyItalian, setOnlyItalian] = useState(false);
     const [mapLarge, setMapLarge] = useState(true);
-    const [wordCloud, setWordCloud] = useState(null);
-    const [sentimentAnalysis, setSentimentAnalysis] = useState(null);
+    // const [wordCloud, setWordCloud] = useState(null);
+    // const [sentimentAnalysis, setSentimentAnalysis] = useState(null);
     const [center, setCenter] = useState([41.9109, 12.4818]);
 
     useEffect(() => {
         // fuzione per reperire i dati dalla
-        async function getData() {
-            setNewSearch(false);
-            setIsLoading(true);
-            const { search } = window.location;
-            const params =
+        // async function getData() {
+        //     setNewSearch(false);
+        //     setIsLoading(true);
+        //     const { search } = window.location;
+        //     const params =
+        //         new URLSearchParams(search).toString() +
+        //         "&" +
+        //         new URLSearchParams({
+        //             radius: `${radius ? `${radius / 1000}` : null}`,
+        //             position: `${
+        //                 position ? `${position.lat},${position.lng}` : null
+        //             }`,
+        //             startDate: selectionRange.startDate
+        //                 .toISOString()
+        //                 .split("T")[0],
+        //             endDate: selectionRange.endDate.toISOString().split("T")[0],
+        //             popular: popular,
+        //             onlyItalian: onlyItalian,
+        //         }).toString();
+        //     if (!params) return;
+
+        //     try {
+        //         const { data } = await axios.get(
+        //             `/api/${location.pathname.substring(
+        //                 location.pathname.lastIndexOf("/") + 1
+        //             )}?${params}`
+        //         );
+        //         console.log(data.statuses);
+        //         setStatuses(data.statuses || []);
+        //         setWordCloud(data.wordCloud);
+        //         setSentimentAnalysis(data.sentimentAnalysis);
+        //         console.log(data.sentimentAnalysis);
+        //         setIsLoading(false);
+        //     } catch (error) {
+        //         console.log(error.message);
+        //         setStatuses([]);
+        //         setWordCloud(null);
+        //         setSentimentAnalysis(null);
+        //         setIsLoading(false);
+        //     }
+        // }
+        // getData();
+
+        setNewSearch(false);
+        const { search } = window.location;
+        const params =
                 new URLSearchParams(search).toString() +
                 "&" +
                 new URLSearchParams({
@@ -60,29 +109,8 @@ const TweetsScreen = () => {
                     popular: popular,
                     onlyItalian: onlyItalian,
                 }).toString();
-            if (!params) return;
 
-            try {
-                const { data } = await axios.get(
-                    `/api/${location.pathname.substring(
-                        location.pathname.lastIndexOf("/") + 1
-                    )}?${params}`
-                );
-                console.log(data.statuses);
-                setStatuses(data.statuses || []);
-                setWordCloud(data.wordCloud);
-                setSentimentAnalysis(data.sentimentAnalysis);
-                console.log(data.sentimentAnalysis);
-                setIsLoading(false);
-            } catch (error) {
-                console.log(error.message);
-                setStatuses([]);
-                setWordCloud(null);
-                setSentimentAnalysis(null);
-                setIsLoading(false);
-            }
-        }
-        getData();
+                dispatch(getTweetsAction(params, location))
     }, [newSearch]);
 
     useEffect(() => {
