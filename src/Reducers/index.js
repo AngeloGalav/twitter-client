@@ -6,4 +6,7 @@ import tweetReducer from "./tweetReducer";
 export default combineReducers({
     userReducer: userReducer,
     tweetReducer: tweetReducer,
+    filterReducer: filterReducer,
 });
+
+

@@ -24,8 +24,7 @@ const TweetsScreen = () => {
     const location = useLocation();
 
     //redux stuff
-    const { statuses, isLoading, wordCloud, sentimentAnalysis, coordinates } =
-        useSelector((state) => state.tweetReducer);
+    const { statuses, isLoading, wordCloud, sentimentAnalysis, coordinates } = useSelector((state) => state.tweetReducer);
     const dispatch = useDispatch();
 
     //stato
@@ -33,7 +32,19 @@ const TweetsScreen = () => {
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
     //  const [isLoading, setIsLoading] = useState(false);
+
+    /*
+    const filters = ['radius', 'position', 'newSearch', 'selectionRange', 'popular', ...]
+    const useStates = {}
+    const handles = {}
+    filters.forEach((filter) => {
+        useStates[filter] = useState(null)
+        handles[filter] = (value) => useStates[filter][1](value)
+    })
+    */
+
     const [selectedTab, setSelectedTab] = useState("tweets");
+
     const [radius, setRadius] = useState(null);
     const [position, setPosition] = useState(null);
     const [newSearch, setNewSearch] = useState(false);
@@ -122,6 +133,10 @@ const TweetsScreen = () => {
             }
         });
     }, [statuses]);
+
+    // [[var, setVar] for var in filters] = useState()
+    //  [handle...() for x in ^^^]
+    // setVar[i] = handle[i]
 
     //trucchetto per far renderizzare tutta la mappa
     useEffect(() => setMapLarge(false), []);

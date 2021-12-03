@@ -5,7 +5,7 @@ const initalState = {
     wordCloud: null,
     sentimentAnalysis: null,
     isLoading: false,
-    coordinates: null
+    coordinates: null,
 };
 
 export default function userReducer(state = initalState, action) {

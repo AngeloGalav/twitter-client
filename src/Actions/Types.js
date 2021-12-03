@@ -1,4 +1,17 @@
 export const CHANGE_THEME = "CHANGE_THEME"
+
+//tweet
 export const TWEET_REQUEST = "TWEET_REQUEST"
 export const TWEET_SUCCESS = "TWEET_SUCCESS"
 export const TWEET_FAIL = "TWEET_FAIL"
+
+
+//filters
+export const CHANGE_RADIUS = "CHANGE_RADIUS"
+export const CHANGE_POSITIONS = "CHANGE_POSITIONS"
+export const CHANGE_NEW_SEARCH = "CHANGE_NEW_SEARCH"
+export const CHANGE_DATE_RANGE = "CHANGE_DATE_RANGE"
+export const CHANGE_POPULAR = "CHANGE_POPULAR"
+export const CHANGE_LANGUAGE = "CHANGE_LANGUAGE"
+export const CHANGE_CENTER = "CHANGE_CENTER"
+
