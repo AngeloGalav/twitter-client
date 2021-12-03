@@ -243,13 +243,33 @@ const FilterTab = (props) => {
                                 label="A"
                                 value={props.selectionRange.endDate}
                                 onChange={(value) =>
-                                    props.setSelectionRange({
-                                        startDate:
-                                            props.selectionRange.startDate,
-                                        endDate: new Date(
-                                            new Date(value).setHours(23, 59, 59)
-                                        ),
+                                    dispatch({
+                                        type: "CHANGE_DATE",
+                                        payload: {
+                                            dateRange: {
+                                                startDate:
+                                                    dateRange.startDate,
+                                                endDate: new Date(
+                                                    new Date(value).setHours(23, 59, 59)
+                                                ),
+                                            }
+                                        }
+
                                     })
+                                    // props.setSelectionRange({
+                                    //     startDate:
+                                    //         props.selectionRange.startDate,
+                                    //     endDate: new Date(
+                                    //         new Date(value).setHours(23, 59, 59)
+                                    //     ),
+                                    // })
+
+                                    //                                             type: "CHANGE_DATE",
+                                    //         payload: {dateRange: {startDate: new Date(
+                                    //             new Date(value).setHours(0, 0, 0)
+                                    //         ),
+                                    //         endDate: dateRange.endDate,}}
+                                    //     })  
                                 }
                                 minDate={props.selectionRange.startDate}
                                 maxDate={new Date()}
@@ -269,7 +289,10 @@ const FilterTab = (props) => {
                         </div>
                         <div>
                             <Switch
-                                onChange={() => props.setPopular()}
+                                onChange={() => dispatch({
+                                    type: "CHANGE_POPULAR",
+                                    payload: {popular: !popular},
+                                })}
                                 checked={props.popular}
                                 uncheckedIcon={false}
                                 checkedIcon={false}
@@ -290,7 +313,10 @@ const FilterTab = (props) => {
                         </div>
                         <div>
                             <Switch
-                                onChange={() => props.setOnlyItalian()}
+                                onChange={() => dispatch({
+                                    type: "CHANGE_LANGUAGE",
+                                    payload: {language: !language}
+                                })}
                                 checked={props.onlyItalian}
                                 uncheckedIcon={false}
                                 checkedIcon={false}
