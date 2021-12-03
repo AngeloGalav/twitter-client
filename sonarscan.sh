@@ -1,5 +1,5 @@
 sonar-scanner \
-  -Dsonar.projectKey=twitter-client_team11 \
-  -Dsonar.sources=. \
+  -Dsonar.projectKey=team11-twitter-client \
+  -Dsonar.sources=src,backend/middleware,backend/routes \
   -Dsonar.host.url=https://aminsep.disi.unibo.it/sonarqube \
-  -Dsonar.login=f3b4a06fbebf6bb93f64df1fd5ae5a5ccd169ae6
+  -Dsonar.login=bb4b2bff72d2f1eb8c5ee96d73e1ce893cd67734
