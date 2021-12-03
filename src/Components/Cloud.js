@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 // import "tippy.js/animations/scale.css";
 // import Switch from "react-switch";
 
+
+//commento inutile
 const options = {
     enableTooltip: true,
     deterministic: false,
@@ -56,6 +58,8 @@ const Cloud = ({ wordCloud }) => {
     //             setResponse(null);
     //             setIsLoading(false);
     //         }
+
+
     //     }
     //     getData();
     // }, [onlyItaly]);
