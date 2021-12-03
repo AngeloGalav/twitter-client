@@ -1,3 +1,5 @@
+# sonar-scanner stuff
+
 sonar-scanner \
   -Dsonar.projectKey=team11-twitter-client \
   -Dsonar.sources=src,backend/middleware,backend/routes \
