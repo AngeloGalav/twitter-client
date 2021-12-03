@@ -21,99 +21,44 @@ import { useDispatch, useSelector } from "react-redux";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 
 const TweetsScreen = () => {
+
     const location = useLocation();
 
     //redux stuff
     const { statuses, isLoading, wordCloud, sentimentAnalysis, coordinates } = useSelector((state) => state.tweetReducer);
+    const {
+        radius,
+        position,
+        newSearch,
+        selectionRange,
+        popular,
+        onlyItalian
+    } = useSelector((state) => state.filterReducer);
     const dispatch = useDispatch();
 
     //stato
-    // const [statuses, setStatuses] = useState([]);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
-    //  const [isLoading, setIsLoading] = useState(false);
-
-    /*
-    const filters = ['radius', 'position', 'newSearch', 'selectionRange', 'popular', ...]
-    const useStates = {}
-    const handles = {}
-    filters.forEach((filter) => {
-        useStates[filter] = useState(null)
-        handles[filter] = (value) => useStates[filter][1](value)
-    })
-    */
-
     const [selectedTab, setSelectedTab] = useState("tweets");
-
-    const [radius, setRadius] = useState(null);
-    const [position, setPosition] = useState(null);
-    const [newSearch, setNewSearch] = useState(false);
-    const [selectionRange, setSelectionRange] = useState({
-        startDate: new Date(new Date().setDate(new Date().getDate() - 7)),
-        endDate: new Date(),
-    });
-    const [popular, setPopular] = useState(false);
-    const [onlyItalian, setOnlyItalian] = useState(false);
     const [mapLarge, setMapLarge] = useState(true);
-    // const [wordCloud, setWordCloud] = useState(null);
-    // const [sentimentAnalysis, setSentimentAnalysis] = useState(null);
     const [center, setCenter] = useState([41.9109, 12.4818]);
 
+
     useEffect(() => {
-        // fuzione per reperire i dati dalla
-        // async function getData() {
-        //     setNewSearch(false);
-        //     setIsLoading(true);
-        //     const { search } = window.location;
-        //     const params =
-        //         new URLSearchParams(search).toString() +
-        //         "&" +
-        //         new URLSearchParams({
-        //             radius: `${radius ? `${radius / 1000}` : null}`,
-        //             position: `${
-        //                 position ? `${position.lat},${position.lng}` : null
-        //             }`,
-        //             startDate: selectionRange.startDate
-        //                 .toISOString()
-        //                 .split("T")[0],
-        //             endDate: selectionRange.endDate.toISOString().split("T")[0],
-        //             popular: popular,
-        //             onlyItalian: onlyItalian,
-        //         }).toString();
-        //     if (!params) return;
-
-        //     try {
-        //         const { data } = await axios.get(
-        //             `/api/${location.pathname.substring(
-        //                 location.pathname.lastIndexOf("/") + 1
-        //             )}?${params}`
-        //         );
-        //         console.log(data.statuses);
-        //         setStatuses(data.statuses || []);
-        //         setWordCloud(data.wordCloud);
-        //         setSentimentAnalysis(data.sentimentAnalysis);
-        //         console.log(data.sentimentAnalysis);
-        //         setIsLoading(false);
-        //     } catch (error) {
-        //         console.log(error.message);
-        //         setStatuses([]);
-        //         setWordCloud(null);
-        //         setSentimentAnalysis(null);
-        //         setIsLoading(false);
-        //     }
-        // }
-        // getData();
-
-        setNewSearch(false);
+        dispatch({
+            type: "CHANGE_NEW_SEARCH",
+            payload: {
+                newSearch: false
+            }
+        })
         const { search } = window.location;
         const params =
             new URLSearchParams(search).toString() +
             "&" +
             new URLSearchParams({
                 radius: `${radius ? `${radius / 1000}` : null}`,
-                position: `${
-                    position ? `${position.lat},${position.lng}` : null
-                }`,
+                position: `${position ? `${position.lat},${position.lng}` : null
+                    }`,
                 startDate: selectionRange.startDate.toISOString().split("T")[0],
                 endDate: selectionRange.endDate.toISOString().split("T")[0],
                 popular: popular,
@@ -134,31 +79,11 @@ const TweetsScreen = () => {
         });
     }, [statuses]);
 
-    // [[var, setVar] for var in filters] = useState()
-    //  [handle...() for x in ^^^]
-    // setVar[i] = handle[i]
-
     //trucchetto per far renderizzare tutta la mappa
     useEffect(() => setMapLarge(false), []);
 
     const handleChangeTab = (tab) => setSelectedTab(tab);
-
-    // L'unico modo per prendere le coordiate lat long su click del mouse e' usando un componente figlio
-    // Questa funzione gli viene passata per fargli aggiornare la posizione
-    const handleChangePosition = (position) => setPosition(position);
-
-    const handleChangeRadius = (radius) => setRadius(radius);
-
-    const handleNewSearch = () => setNewSearch(true);
-
-    const handleDateChange = (dateRange) => setSelectionRange(dateRange);
-
-    const handlePopularChange = () => setPopular((popular) => !popular);
-
     const handleChangeCenter = (center) => setCenter(center);
-
-    const handleOnlyItalianChange = () =>
-        setOnlyItalian((onlyItalian) => !onlyItalian);
 
     return (
         <div id="tweets-screen-container">
@@ -205,11 +130,10 @@ const TweetsScreen = () => {
 
                         <div
                             style={{
-                                height: `${
-                                    width > 1023
+                                height: `${width > 1023
                                         ? "calc(100% - 3.5rem)" //uguale a 100% - altezza div precedente
                                         : "auto"
-                                }`,
+                                    }`,
                             }}
                             className="max-w-3xl mx-auto w-full"
                         >
@@ -220,7 +144,6 @@ const TweetsScreen = () => {
                                 <div className="h-full">
                                     <TweetList
                                         setCenter={handleChangeCenter}
-                                        tweets={statuses}
                                     />
                                 </div>
                             ) : selectedTab === "stats" ? (
@@ -234,17 +157,6 @@ const TweetsScreen = () => {
                             ) : (
                                 <div className="h-full">
                                     <FilterTab
-                                        popular={popular}
-                                        position={position}
-                                        radius={radius}
-                                        onlyItalian={onlyItalian}
-                                        selectionRange={selectionRange}
-                                        setPopular={handlePopularChange}
-                                        setRadius={handleChangeRadius}
-                                        setPosition={handleChangePosition}
-                                        setNewSearch={handleNewSearch}
-                                        setSelectionRange={handleDateChange}
-                                        setOnlyItalian={handleOnlyItalianChange}
                                     />
                                 </div>
                             )}
@@ -252,9 +164,8 @@ const TweetsScreen = () => {
                     </div>
 
                     <div
-                        className={`${
-                            mapLarge && width < 1024 ? "h-screen-5rem" : "h-64"
-                        } laptop:h-full w-full laptop:w-1/2 z-0 order-1 laptop:order-2 relative flex justify-center transition-all duration-200 ease-linear`}
+                        className={`${mapLarge && width < 1024 ? "h-screen-5rem" : "h-64"
+                            } laptop:h-full w-full laptop:w-1/2 z-0 order-1 laptop:order-2 relative flex justify-center transition-all duration-200 ease-linear`}
                     >
                         <button
                             style={{ zIndex: "9999" }}
@@ -277,8 +188,6 @@ const TweetsScreen = () => {
                             />
 
                             <UserMarker
-                                position={position}
-                                setPosition={handleChangePosition}
                             />
 
                             {radius && (
@@ -317,7 +226,7 @@ const TweetsScreen = () => {
                                                                                             )
                                                                                         ]
                                                                                             .index[
-                                                                                            i
+                                                                                        i
                                                                                         ]
                                                                                     ]
                                                                                         .user
@@ -344,7 +253,7 @@ const TweetsScreen = () => {
                                                                                             )
                                                                                         ]
                                                                                             .index[
-                                                                                            i
+                                                                                        i
                                                                                         ]
                                                                                     ]
                                                                                         .user
@@ -361,7 +270,7 @@ const TweetsScreen = () => {
                                                                                             )
                                                                                         ]
                                                                                             .index[
-                                                                                            i
+                                                                                        i
                                                                                         ]
                                                                                     ]
                                                                                         .user
@@ -384,7 +293,7 @@ const TweetsScreen = () => {
                                                                                     )
                                                                                 ]
                                                                                     .index[
-                                                                                    i
+                                                                                i
                                                                                 ]
                                                                             ]
                                                                                 .full_text

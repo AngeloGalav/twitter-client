@@ -6,15 +6,20 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import ReactStoreIndicator from "react-score-indicator";
 import notFoundTweets from "../Media/undraw_void_-3-ggu.svg"
+import { useSelector } from "react-redux";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const StatisticTab = (props) => {
+
+    //redux stuff
+    const { sentimentAnalysis, wordCloud } = useSelector((state) => state.tweetReducer);
+
     const [sentimentData, setSentimentData] = useState(null);
     const [sentimentTab, setSentimentTab] = useState(false);
 
     useEffect(() => {
-        if (props.sentimentAnalysis) {
+        if (sentimentAnalysis) {
 
 
 
@@ -23,9 +28,9 @@ const StatisticTab = (props) => {
                 datasets: [
                     {
                         data: [
-                            props.sentimentAnalysis.positives,
-                            props.sentimentAnalysis.negatives,
-                            props.sentimentAnalysis.neutrals
+                            sentimentAnalysis.positives,
+                            sentimentAnalysis.negatives,
+                            sentimentAnalysis.neutrals
                         ],
                         backgroundColor: [
                             "rgba(60, 179, 113, 0.2)",
@@ -43,7 +48,7 @@ const StatisticTab = (props) => {
             });
         }
 
-        console.log(props.sentimentAnalysis);
+        console.log(sentimentAnalysis);
     }, []);
 
     return (
@@ -68,7 +73,7 @@ const StatisticTab = (props) => {
                                             <ReactStoreIndicator
                                                 value={
                                                     Math.round(
-                                                        props.sentimentAnalysis
+                                                        sentimentAnalysis
                                                             .comparative * 2
                                                     ) / 2
                                                 }
@@ -93,20 +98,19 @@ const StatisticTab = (props) => {
                                             tendenza per questa ricerca è{" "}
                                             <span
                                                 className={`${
-                                                    props.sentimentAnalysis
+                                                    sentimentAnalysis
                                                         .score < 0
                                                         ? "text-error"
-                                                        : props
-                                                              .sentimentAnalysis
+                                                        : sentimentAnalysis
                                                               .score === 0
                                                         ? "text-warning"
                                                         : "text-success"
                                                 } font-bold`}
                                             >{`${
-                                                props.sentimentAnalysis
+                                                sentimentAnalysis
                                                     .score < 0
                                                     ? "Negativa"
-                                                    : props.sentimentAnalysis
+                                                    : sentimentAnalysis
                                                           .score === 0
                                                     ? "Neutrale"
                                                     : "Positiva"
@@ -135,7 +139,7 @@ const StatisticTab = (props) => {
                         <h2 className="text-xl font-bold text-left">
                             Wordcloud
                         </h2>
-                        <Cloud wordCloud={props.wordCloud} />
+                        <Cloud wordCloud={wordCloud} />
                     </div>{" "}
                 </>
             ) : (

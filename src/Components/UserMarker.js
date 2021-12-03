@@ -1,12 +1,24 @@
 import React, { useState } from "react";
 import { useMapEvents, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserMarker = (props) => {
 
+    const {
+        position,
+    } = useSelector((state) => state.filterReducer);
+    const dispatch = useDispatch();
+
     const map = useMapEvents({
         click(e) {
-            props.setPosition(e.latlng);
+            dispatch({
+                type: "CHANGE_POSITION",
+                payload: {
+                    position: e.latlng
+                }
+            })
+            //props.setPosition(e.latlng);
         },
     });
     const icon = L.icon({
@@ -18,8 +30,8 @@ const UserMarker = (props) => {
 
     return (
         <div>
-            {props.position && (
-                <Marker position={props.position} icon={icon}>
+            {position && (
+                <Marker position={position} icon={icon}>
                     <Popup>
                         <div className="w-72">Questo sei tu</div>
                     </Popup>

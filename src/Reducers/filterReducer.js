@@ -1,113 +1,64 @@
-import { CHANGE_RADIUS, CHANGE_POSITIONS, CHANGE_NEW_SEARCH, CHANGE_DATE_RANGE, CHANGE_POPULAR, CHANGE_LANGUAGE, CHANGE_CENTER} from "../Actions/Types";
-
-
+import {
+    CHANGE_RADIUS,
+    CHANGE_POSITION,
+    CHANGE_NEW_SEARCH,
+    CHANGE_SELECTION_RANGE,
+    CHANGE_POPULAR,
+    CHANGE_ONLY_ITALIAN,
+} from "../Actions/Types";
 
 const initalState = {
+    radius: null,
+    position: null,
+    newSearch: false,
+    selectionRange: {
+        startDate: new Date(new Date().setDate(new Date().getDate() - 7)),
 
-    radius : null, 
-
-    position : null,
-
-    newSearch : false, 
-
-    dateRange : {startDate: new Date(new Date().setDate(new Date().getDate() - 7)),
-
-    endDate: new Date()},
-
-    popular : false,
-
-    language : false,
-
-    center : [41.9109, 12.4818]
-
+        endDate: new Date(),
+    },
+    popular: false,
+    onlyItalian: false,
 };
 
-
-
 export default function filterReducer(state = initalState, action) {
-
     switch (action.type) {
-
         case CHANGE_RADIUS:
-
             return {
-
                 ...state,
-
                 radius: action.payload.radius,
-
             };
 
-        case CHANGE_POSITIONS:
-
+        case CHANGE_POSITION:
             return {
-
                 ...state,
-
                 position: action.payload.position,
-
             };
 
         case CHANGE_NEW_SEARCH:
-
             return {
-
                 ...state,
-
                 newSearch: action.payload.newSearch,
-
             };
 
-        case CHANGE_DATE_RANGE:
-
+        case CHANGE_SELECTION_RANGE:
             return {
-
                 ...state,
-
-                dateRange: action.payload.dateRange,
-
+                selectionRange: action.payload.selectionRange,
             };
 
         case CHANGE_POPULAR:
+            return {
+                ...state,
+                popular: action.payload.popular,
+            };
 
-                    return {
-
-                        ...state,
-
-                        popular: action.payload.popular
-
-                    };
-
-        case CHANGE_LANGUAGE:
-
-                    return {
-
-                        ...state,
-
-                        language: action.payload.language,
-
-                    };
-
-        case CHANGE_CENTER:
-
-                    return {
-
-                        ...state,
-
-                        center: action.payload.center,
-
-                    };
-
-        
+        case CHANGE_ONLY_ITALIAN:
+            return {
+                ...state,
+                onlyItalian: action.payload.onlyItalian,
+            };
 
         default:
-
             return state;
-
     }
-
 }
-
-
-
-
