@@ -38,7 +38,7 @@ const SwitchTheme = () => {
     }, [theme]);
 
     return (
-        <div>
+        <div data-testid="switch-theme-test">
             <button className="btn btn-ghost" onClick={changeTheme}>
                 {theme === "light" ? (
                     <i className="bi bi-brightness-high-fill text-2xl"></i>
