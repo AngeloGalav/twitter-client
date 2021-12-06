@@ -101,8 +101,8 @@ const HomeScreen = () => {
                         <div className="flex flex-col gap-16 laptop:flex-row laptop:gap-4 justify-center items-center">
                             <Zoom>
                                 <FunctionalityCard
-                                    title={"Funzionalità 1"}
-                                    icon={"bi-geo-alt-fill"}
+                                    title={"Searching"}
+                                    icon={"bi-search"}
                                 >
                                     "Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit, sed do eiusmod tempor
@@ -116,8 +116,8 @@ const HomeScreen = () => {
 
                             <Zoom>
                                 <FunctionalityCard
-                                    title={"Funzionalità 2"}
-                                    icon={"bi-twitter"}
+                                    title={"Statistics"}
+                                    icon={"bi-graph-up"}
                                 >
                                     "Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit, sed do eiusmod tempor
@@ -134,8 +134,8 @@ const HomeScreen = () => {
                         <div className="flex flex-col gap-16 laptop:flex-row laptop:gap-4 justify-center items-center">
                             <Zoom>
                                 <FunctionalityCard
-                                    title={"Funzionalità 1"}
-                                    icon={"bi-search"}
+                                    title={"Filtering"}
+                                    icon={"bi-geo-alt-fill"}
                                 >
                                     "Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit, sed do eiusmod tempor
