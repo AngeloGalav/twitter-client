@@ -106,11 +106,7 @@ const HomeScreen = () => {
                                 >
                                     "Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud
-                                    exercitatcillum dolorecat cupidatat
-                                    non proident, sunt in culpa qui officia
-                                    deserunt mollit anim id est laborum."
+                                    incididunt ut labore et dolore magna aliqua."
                                 </FunctionalityCard>
                             </Zoom>
 
@@ -119,14 +115,7 @@ const HomeScreen = () => {
                                     title={"Statistics"}
                                     icon={"bi-graph-up"}
                                 >
-                                    "Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud
-                                    exercitatcillum dolore eu fugiat nulla
-                                    pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia
-                                    deserunt mollit anim id est laborum."
+                                    Costruiamo automaticamente statistiche analizzando le informazioni contenute nei vari tweet per capire cosa pensa la gente.
                                 </FunctionalityCard>
                             </Zoom>
                         </div>
@@ -137,30 +126,18 @@ const HomeScreen = () => {
                                     title={"Filtering"}
                                     icon={"bi-geo-alt-fill"}
                                 >
-                                    "Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud
-                                    exercitatcillum dolore eu fugiat nulla
-                                    pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia
-                                    deserunt mollit anim id est laborum."
+                                    Non sprecare tempo, filtra in base ai tuoi interessi, effettua una ricerca mirata a soddisfare ogni tua necessità e mostrartela sulla mappa.
                                 </FunctionalityCard>
                             </Zoom>
 
                             <Zoom>
                                 <FunctionalityCard
-                                    title={"Funzionalità 1"}
+                                    title={"NEW user stories"}
                                     icon={"bi-box"}
                                 >
                                     "Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua.
-                                    Ut enim ad minim veniam, quis nostrud
-                                    exercitatcillum dolore eu fugiat nulla
-                                    pariatur. Excepteur sint occaecat cupidatat
-                                    non proident, sunt in culpa qui officia
-                                    deserunt mollit anim id est laborum."
+                                    incididunt ut labore et dolore magna aliqua."
                                 </FunctionalityCard>
                             </Zoom>
                         </div>

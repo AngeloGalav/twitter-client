@@ -3,7 +3,7 @@ import React from "react";
 const FunctionalityCard = (props) => {
     return (
         <div
-            style={{ minHeight: "27rem" }}
+            style={{ minHeight: "20rem" }}
             className="relative flex-1 max-w-xs bg-base-200 p-8 rounded-xl text-center shadow-lg"
         >
             <div className="absolute top-0 left-1/2 transform -translate-y-1/2 -translate-x-1/2 flex justify-center items-center">
@@ -15,6 +15,7 @@ const FunctionalityCard = (props) => {
                 <h2 className="font-bold text-lg text-primary">
                     {props.title}
                 </h2>
+                <br></br>
                 <p className="mt-4 text-base">{props.children}</p>
             </div>
         </div>
