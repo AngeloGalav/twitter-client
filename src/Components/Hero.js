@@ -19,7 +19,7 @@ const Hero = () => {
                 </h1>
                 <p class="mb-5 text-base max-w-lg">
                     <span className="font-bold">iTWEET </span>
-                    è il tuo twitter client che facilità e velocizza la tua ricerca.
+                    è il tuo client twitter che facilità e velocizza la tua ricerca.
                 </p>
 
                 <ScrollLink

@@ -104,9 +104,8 @@ const HomeScreen = () => {
                                     title={"Searching"}
                                     icon={"bi-search"}
                                 >
-                                    "Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua."
+                                    Sfrutta la potente barra di ricerca per trovare quello che vuoi, specificando subito se si tratta di una keyword, uno '@'_username o un '#'_hashtag
+                                                           
                                 </FunctionalityCard>
                             </Zoom>
 
