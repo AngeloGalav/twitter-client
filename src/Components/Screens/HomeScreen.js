@@ -19,7 +19,7 @@ const HomeScreen = () => {
     const [width, height] = useWindowSize();
     const [y, setY] = useState(window.scrollY);
     const [tweet, setTweet] = useState({
-        text: "Prova prova. Mi sentite?$Benvenuto, io sono un tweet.$", //ogni frase e' delimitata da $ e.g. frase1$frase2$...
+        text: "Prova prova. Mi sentite?$Benvenuto, io sono un tweet.$Sono un Tweet un po speciale, infatti come puoi vedere non mi fermo mai.$Come dici? Ti interessa sapere cosa si dice riguardo al Milan nella zona di Paperino in provincia di Prato?$ Beh che aspetti, scoprilo subito!", //ogni frase e' delimitata da $ e.g. frase1$frase2$...
         created_at: new Date(),
         retweet_count: 0,
         favorite_count: 0,
@@ -28,8 +28,8 @@ const HomeScreen = () => {
         user: {
             profile_image_url:
                 "https://pbs.twimg.com/media/Dw-EQ2PU0AA2OKP.jpg",
-            name: "Demo name",
-            screen_name: "Demo_name",
+            name: "HITWEET",
+            screen_name: "HI_TWEET",
         },
     });
 
@@ -81,10 +81,10 @@ const HomeScreen = () => {
                         <div className="text-center w-full text-primary-content laptop:text-left justify-center laptop:flex laptop:flex-col laptop:min-h-screen order-1 relative">
                             <Fade left text cascade>
                                 <h1 className="smartphone:text-5xl text-4xl font-bold mb-5">
-                                    Titolo sezione
+                                    Come a casa tua
                                 </h1>
                                 <p className="text-base font-normal max-w-md mx-auto laptop:mx-0">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                Con <span className="font-bold">HI</span><span className="font-normal text-sm">TWEET</span> ti sentirai come su Twitter... ma con qualcosa in più!
                                 </p>
                             </Fade>
                         </div>

@@ -34,7 +34,7 @@ const TweetCard = ({ tweet }) => {
                     </div>
 
                     {/* Text */}
-                    <div className="my-2 h-10">
+                    <div className="my-2 h-20">
                         <Typewriter
                             class="text-base-content block text-base leading-snug my-3"
                             options={{

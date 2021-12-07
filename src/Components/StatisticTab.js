@@ -5,24 +5,22 @@ import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import ReactStoreIndicator from "react-score-indicator";
-import notFoundTweets from "../Media/undraw_void_-3-ggu.svg"
+import notFoundTweets from "../Media/undraw_void_-3-ggu.svg";
 import { useSelector } from "react-redux";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const StatisticTab = (props) => {
-
     //redux stuff
-    const { sentimentAnalysis, wordCloud } = useSelector((state) => state.tweetReducer);
+    const { sentimentAnalysis, wordCloud } = useSelector(
+        (state) => state.tweetReducer
+    );
 
     const [sentimentData, setSentimentData] = useState(null);
     const [sentimentTab, setSentimentTab] = useState(false);
 
     useEffect(() => {
         if (sentimentAnalysis) {
-
-
-
             setSentimentData({
                 labels: ["Positivi", "Negativi", "Neutrali"],
                 datasets: [
@@ -30,17 +28,17 @@ const StatisticTab = (props) => {
                         data: [
                             sentimentAnalysis.positives,
                             sentimentAnalysis.negatives,
-                            sentimentAnalysis.neutrals
+                            sentimentAnalysis.neutrals,
                         ],
                         backgroundColor: [
                             "rgba(60, 179, 113, 0.2)",
                             "rgba(255, 0, 0, 0.2)",
-                            "rgba(255, 165, 0, 0.2)"
+                            "rgba(255, 165, 0, 0.2)",
                         ],
                         borderColor: [
                             "rgba(60, 179, 113, 1)",
                             "rgba(255, 0, 0, 1)",
-                            "rgba(255, 165, 0, 1)"
+                            "rgba(255, 165, 0, 1)",
                         ],
                         borderWidth: 1,
                     },
@@ -64,17 +62,19 @@ const StatisticTab = (props) => {
                     <div className="mt-8 px-4">
                         {sentimentData && (
                             <div>
-                                <h2 className="text-xl font-bold text-left">
+                                
+                                <div class="card text-center bg-neutral shadow-xl mt-2 p-4">
+
+                                <h2 className="text-3xl font-bold text-left mb-4">
                                     Analisi dei sentimenti
                                 </h2>
-                                <div class="card text-center bg-neutral shadow-xl mt-2">
                                     <div class="px-10 pt-10">
                                         {!sentimentTab ? (
                                             <ReactStoreIndicator
                                                 value={
                                                     Math.round(
-                                                        sentimentAnalysis
-                                                            .comparative * 2
+                                                        sentimentAnalysis.comparative *
+                                                            2
                                                     ) / 2
                                                 }
                                                 maxValue={10}
@@ -98,20 +98,18 @@ const StatisticTab = (props) => {
                                             tendenza per questa ricerca è{" "}
                                             <span
                                                 className={`${
-                                                    sentimentAnalysis
-                                                        .score < 0
+                                                    sentimentAnalysis.score < 0
                                                         ? "text-error"
-                                                        : sentimentAnalysis
-                                                              .score === 0
+                                                        : sentimentAnalysis.score ===
+                                                          0
                                                         ? "text-warning"
                                                         : "text-success"
                                                 } font-bold`}
                                             >{`${
-                                                sentimentAnalysis
-                                                    .score < 0
+                                                sentimentAnalysis.score < 0
                                                     ? "Negativa"
-                                                    : sentimentAnalysis
-                                                          .score === 0
+                                                    : sentimentAnalysis.score ===
+                                                      0
                                                     ? "Neutrale"
                                                     : "Positiva"
                                             }`}</span>
@@ -134,12 +132,14 @@ const StatisticTab = (props) => {
                             </div>
                         )}
                     </div>
-                    <div className="w-full h-px bg-base-content bg-opacity-50 mt-8" />
+                    
                     <div className="mt-8 px-4">
-                        <h2 className="text-xl font-bold text-left">
+                        <div class="card text-center bg-neutral shadow-xl mt-2 p-4">
+                        <h2 className="text-3xl font-bold text-left mb-4">
                             Wordcloud
                         </h2>
-                        <Cloud wordCloud={wordCloud} />
+                            <Cloud wordCloud={wordCloud} />
+                        </div>
                     </div>{" "}
                 </>
             ) : (

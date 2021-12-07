@@ -1,6 +1,7 @@
 const express = require('express');
 const createError = require('http-errors');
 const morgan = require('morgan');
+const sendEmail = require('./utils/sendEmail');
 require('dotenv').config();
 
 const app = express();
@@ -13,6 +14,21 @@ app.get('/', async (req, res, next) => {
 });
 
 app.use('/api', require('./routes/api.route'));
+
+app.post("/api/contacts", async (req, res, next) => {
+  const { message, email, name } = req.body;
+  try {
+    //mandiamo la mail
+    await sendEmail({
+      to: process.env.EMAIL_FROM,
+      subject: `Richiesta di contatto da ${name}`,
+      text: message + `<p><a href="mailto:${email}">Rispondi</a></p>`,
+    });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.use((req, res, next) => {
   next(createError.NotFound());

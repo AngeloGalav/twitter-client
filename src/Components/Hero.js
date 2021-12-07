@@ -18,8 +18,8 @@ const Hero = () => {
                     Trova le tue tendenze
                 </h1>
                 <p class="mb-5 text-base max-w-lg">
-                    <span className="font-bold">hiTWEET </span>
-                    è il tuo client twitter che facilità e velocizza la tua ricerca.
+                    <span className="font-bold">HI<span className="font-normal text-sm">TWEET</span> </span>
+                    è il tuo client twitter che facilita e velocizza la tua ricerca.
                 </p>
 
                 <ScrollLink

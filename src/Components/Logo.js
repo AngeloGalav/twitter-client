@@ -7,8 +7,8 @@ const Logo = () => {
             <button className="w-56 btn btn-link text-base-content hover:no-underline">
                 <Link to="/">
                     <i className="bi bi-twitter text-4xl text-primary" />{" "}
-                    <span className="text-2xl font-medium lowercase"> &nbsp; hi</span>
-                    <span className="text-2xl">Tweet </span>
+                    <span style={{fontFamily: "Montserrat"}} className="text-3xl font-bold"> HI</span>
+                    <span style={{fontFamily: "Montserrat"}} className="text-2xl font-normal">TWEET</span>
                 </Link>
             </button>
         </div>
