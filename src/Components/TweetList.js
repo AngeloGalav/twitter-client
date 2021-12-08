@@ -62,7 +62,8 @@ export const TweetList = ({ setCenter }) => {
                                         name: tweet.user.name,
                                         screen_name: tweet.user.screen_name,
                                     },
-                                    place: tweet.place
+                                    place: tweet.place,
+                                    isVerified: tweet.user.verified
                                 }}
                             />
                         ))}

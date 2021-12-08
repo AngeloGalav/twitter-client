@@ -169,13 +169,20 @@ const FilterTab = (props) => {
                                             className="btn btn-error btn-circle btn-sm"
                                             type="button"
                                             onClick={
-                                                () =>
+                                                () => {
+                                                    dispatch({
+                                                        type: "CHANGE_RADIUS",
+                                                        payload: {
+                                                            radius: null,
+                                                        },
+                                                    })
                                                     dispatch({
                                                         type: "CHANGE_POSITION",
                                                         payload: {
                                                             position: null,
                                                         },
                                                     })
+                                                }
                                                 //props.setPosition(null)
                                             }
                                         >

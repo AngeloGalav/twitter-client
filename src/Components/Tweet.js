@@ -49,8 +49,9 @@ export const Tweet = ({ tweet, setCenter }) => {
 
                                 {/* Profile name */}
                                 <div class="ml-1.5 text-sm leading-tight">
-                                    <p class="text-base-content font-bold block ">
+                                    <p class="text-base-content font-bold flex gap-2 items-center">
                                         {tweet.user.name}
+                                        {tweet.isVerified && <img className="w-5" src="https://img.icons8.com/color/48/000000/verified-badge.png"/>}
                                     </p>
                                     <span class="text-base-content text-opacity-50 font-normal text-sm block">
                                         @{tweet.user.screen_name}
@@ -89,7 +90,7 @@ export const Tweet = ({ tweet, setCenter }) => {
                             <div className="w-full border rounded-2xl overflow-hidden bg-blue-200">
                                 <img
                                     class="w-full h-full object-cover object-center"
-                                    src={tweet.image}
+                                    src={tweet.image || "https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png"}
                                 />
                             </div>
                         )}
