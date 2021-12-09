@@ -32,8 +32,7 @@ exports.sentimentAnalysis = (req, res, next) => {
         sentimentAnalysis.comparative += 5;
 
         req.data.sentimentAnalysis = sentimentAnalysis;
-        next();
-    } else {
-        next();
     }
+
+	next();
 };

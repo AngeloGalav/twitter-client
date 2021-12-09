@@ -53,4 +53,6 @@ exports.createWordCloud = (req, res, next) => {
     } else {
         res.status(200).json({ ...req.data });
     }
+
+	next();
 };
