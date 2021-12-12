@@ -47,10 +47,13 @@ export const getTweetsAction = (params, location) => async (dispatch) => {
                 coordinates: Object.fromEntries(coordinates)
             },
         });
+
+        return Promise.resolve();
     } catch (error) {
         console.log(error);
         dispatch({
             type: TWEET_FAIL,
         });
+        return Promise.reject();
     }
 };

@@ -5,6 +5,7 @@ import {
     CHANGE_SELECTION_RANGE,
     CHANGE_POPULAR,
     CHANGE_ONLY_ITALIAN,
+    CHANGE_STREAMING,
 } from "../Actions/Types";
 
 const initalState = {
@@ -18,6 +19,7 @@ const initalState = {
     },
     popular: false,
     onlyItalian: false,
+    streaming: true
 };
 
 export default function filterReducer(state = initalState, action) {
@@ -57,7 +59,11 @@ export default function filterReducer(state = initalState, action) {
                 ...state,
                 onlyItalian: action.payload.onlyItalian,
             };
-
+        case CHANGE_STREAMING:
+            return {
+                ...state,
+                streaming: action.payload.streaming
+            }
         default:
             return state;
     }

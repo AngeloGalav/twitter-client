@@ -23,13 +23,13 @@ export const TweetList = ({ setCenter }) => {
                                     id_str: tweet.id_str,
                                     text: `${
                                         tweet.retweeted_status
-                                            ? `${tweet.retweeted_status.full_text.substring(
+                                            ? `${tweet.retweeted_status.full_text?.substring(
                                                   tweet.retweeted_status
                                                       .display_text_range[0],
                                                   tweet.retweeted_status
                                                       .display_text_range[1]
                                               )}`
-                                            : `${tweet.full_text.substring(
+                                            : `${tweet.full_text?.substring(
                                                   tweet.display_text_range[0],
                                                   tweet.display_text_range[1]
                                               )}`

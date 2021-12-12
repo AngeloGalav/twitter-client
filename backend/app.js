@@ -9,17 +9,16 @@ require('dotenv').config();
 const app = express();
 
 const server = http.createServer(app);
-const io = socketio(server);
+
+const io = socketio(server, {
+  cors: {
+    origin: "http://localhost:3000",
+}
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
-
-// Make io accessible to our router
-app.use(function(req,res,next) { 
-  req.io = io;
-  next();
-});
 
 app.get('/', async (req, res, next) => {
   res.send({ message: 'Awesome it works 🐻' });
@@ -59,4 +58,7 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
+//app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
+server.listen(PORT, () => {
+  console.log(`🚀 @ http://localhost:${PORT}`);
+});

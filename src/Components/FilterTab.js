@@ -37,6 +37,7 @@ const FilterTab = (props) => {
         selectionRange,
         popular,
         onlyItalian,
+        streaming,
     } = useSelector((state) => state.filterReducer);
 
     const [address, setAddress] = useState(null);
@@ -50,7 +51,6 @@ const FilterTab = (props) => {
                 const { data } = await axios.get(
                     `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${position.lat}&lon=${position.lng}`
                 );
-                console.log(data);
                 setAddress({
                     city: data.address.city || data.address.village,
                     road: data.address?.road || data.name,
@@ -364,6 +364,31 @@ const FilterTab = (props) => {
                                     })
                                 }
                                 checked={onlyItalian}
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                onColor="#1DA1F2"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mt-8 px-4 flex justify-between items-center gap-10">
+                        <div>
+                            <h3 className="text-xl font-bold">
+                                Streaming
+                            </h3>
+                            <p className="text-sm mt-2">
+                                Scegli se ricevere tweet in tempo reale inerenti alla tua ricerca
+                            </p>
+                        </div>
+                        <div>
+                            <Switch
+                                onChange={() =>
+                                    dispatch({
+                                        type: "CHANGE_STREAMING",
+                                        payload: { streaming: !streaming },
+                                    })
+                                }
+                                checked={streaming}
                                 uncheckedIcon={false}
                                 checkedIcon={false}
                                 onColor="#1DA1F2"

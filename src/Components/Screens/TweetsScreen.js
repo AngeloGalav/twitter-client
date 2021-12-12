@@ -19,6 +19,8 @@ import { useLocation } from "react-router";
 import ChangeView from "../ChangeView";
 import { useDispatch, useSelector } from "react-redux";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import socketIOClient from "socket.io-client";
+import axios from "axios";
 
 const TweetsScreen = () => {
 
@@ -32,7 +34,8 @@ const TweetsScreen = () => {
         newSearch,
         selectionRange,
         popular,
-        onlyItalian
+        onlyItalian,
+        streaming
     } = useSelector((state) => state.filterReducer);
     const dispatch = useDispatch();
 
@@ -43,6 +46,52 @@ const TweetsScreen = () => {
     const [mapLarge, setMapLarge] = useState(true);
     const [center, setCenter] = useState([41.9109, 12.4818]);
 
+
+    useEffect(() => {
+        const socket = socketIOClient('http://localhost:3001/');
+        socket.on('connect', () => {
+            console.log("Socket Connected");
+            socket.on("tweets", data => {
+                console.log(data)
+            });
+          });
+          socket.on('disconnect', () => {
+            socket.off("tweets")
+            socket.removeAllListeners("tweets");
+            console.log("Socket Disconnected");
+          });
+        return () => {
+            socket.disconnect();
+        }
+    }, [])
+
+    const handleStreaming = async keyword => {
+        if (!streaming) {
+            axios.post("/api/pause");
+        } else {
+            let filter = {};
+            const endPoint = location.pathname.substring(location.pathname.lastIndexOf("/") + 1)
+            if (endPoint === "Keyword") {
+                filter.track = keyword;
+            } else if (endPoint === "Hashtag") {
+                filter.track = "#" + keyword;
+            } else {
+                filter.follow = "@" + keyword;
+            }
+
+            if (onlyItalian) {
+                filter.language = "it-IT";
+            }
+
+            try {
+                await axios.post("/api/setFilter", {filter});
+                await axios.post("/api/resume");
+            } catch (error) {
+                console.log(error)
+            }
+            
+        }
+    }
 
     useEffect(() => {
         dispatch({
@@ -65,7 +114,13 @@ const TweetsScreen = () => {
                 onlyItalian: onlyItalian,
             }).toString();
 
-        dispatch(getTweetsAction(params, location));
+        dispatch(getTweetsAction(params, location))
+        .then((result) => {
+            handleStreaming(search.split("=")[1])
+        });
+
+        
+
     }, [newSearch]);
 
     useEffect(() => {
