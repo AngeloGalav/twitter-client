@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Twitter = require("twitter");
+const Twitterv2 = require("twitter-v2");
 const {createWordCloud} = require("../middleware/createWordCloud")
 const {sentimentAnalysis} = require("../middleware/sentimentAnalysis")
 
@@ -10,6 +11,39 @@ var client = new Twitter({
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
     bearer_token: process.env.TWITTER_BEARER_TOKEN,
 });
+
+// var clientStream = new Twitter({
+//     consumer_key: process.env.TWITTER_CONSUMER_KEY,
+//     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+//     access_token_key: process.env.TWITTER_ACCESS_TOKEN,
+//     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+// })
+
+// var clientv2 = new Twitterv2({
+//     bearer_token: process.env.TWITTER_BEARER_TOKEN,
+// });
+
+// // codice per lo streaming 
+// async function listenForever(streamFactory, dataConsumer) {
+//     try {
+//       for await (const { data } of streamFactory()) {
+//         dataConsumer(data);
+//       }
+//       // The stream has been closed by Twitter. It is usually safe to reconnect.
+//       console.log('Stream disconnected healthily. Reconnecting.');
+//       listenForever(streamFactory, dataConsumer);
+//     } catch (error) {
+//       // An error occurred so we reconnect to the stream. Note that we should
+//       // probably have retry logic here to prevent reconnection after a number of
+//       // closely timed failures (may indicate a problem that is not downstream).
+//       console.warn('Stream disconnected with error. Retrying.', error);
+//       listenForever(streamFactory, dataConsumer);
+//     }
+// }
+
+
+
+
 
 //ricerca per keyword
 router.get("/Keyword", async (req, res, next) => {
@@ -110,5 +144,18 @@ router.get("/trends", async (req, res, next) => {
         next(error);
     }
 });
+
+// router.get("/stream", async (req, res, next) => {
+//     clientStream.stream('statuses/filter', {track: 'javascript'}, stream => {
+//         stream.on('data', tweet => {
+//             res.status(200).json({test: tweet.text});
+//     });
+   
+//     stream.on('error', error => {
+//       throw error;
+//       console.log(error)
+//     });
+//   });
+// });
 
 module.exports = router;
