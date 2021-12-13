@@ -8,26 +8,39 @@ module.exports = (app, io) => {
         access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
     });
 
-    let socketConnection;
-    let twitterStream;
+    // let socketConnection;
+    // let twitterStream;
 
-    app.locals.filter = {};
+    app.locals.connectedSockets = new Map();
+
+    setInterval(() => {
+
+       let currentSockets =  Object.fromEntries(app.locals.connectedSockets)
+       if (Object.keys(currentSockets).length > 0) {
+        console.log("Current sockets connected:")
+        Object.keys(currentSockets).forEach(socket => console.log(socket + "\n"))
+       } else {
+           console.log("There aren't sockets connected currently")
+       }
+       
+       
+    }, 2000);
 
     /**
      * Resumes twitter stream.
      */
-    const stream = () => {
-        console.log('Resuming for ' + app.locals.filter);
-        twitter.stream('statuses/filter', app.locals.filter, (stream) => {
+    const stream = (currentSocketId) => {
+        console.log('Resuming for ' + app.locals.connectedSockets.get(currentSocketId));
+        twitter.stream('statuses/filter', app.locals.connectedSockets.get(currentSocketId).filter, (stream) => {
             stream.on('data', (tweet) => {
-                sendMessage(tweet);
+                sendMessage(tweet, app.locals.connectedSockets.get(currentSocketId).socketConnection);
             });
 
             stream.on('error', (error) => {
                 console.log(error);
             });
 
-            twitterStream = stream;
+            app.locals.connectedSockets.get(currentSocketId).twitterStream = stream;
         });
     }
 
@@ -35,7 +48,11 @@ module.exports = (app, io) => {
      * Sets search term for twitter stream.
      */
     app.post('/api/setFilter', async (req, res, next) => {
+        if (!req.body.socketId) {
+            return res.status(400).json({message: "no socket id"})
+        }
         let filter = req.body.filter;
+        console.log(req.body)
         if (filter.follow) {
             try {
                 const userId = await twitter.get("users/lookup", {screen_name: filter.follow.split("@")[1]})
@@ -48,10 +65,9 @@ module.exports = (app, io) => {
                 return next(error)
             }
         }
-        app.locals.filter = filter;
-        console.log(filter)
-        if (twitterStream) {
-            twitterStream.destroy();
+        app.locals.connectedSockets.get(req.body.socketId).filter = filter;
+        if (app.locals.connectedSockets.get(req.body.socketId) && app.locals.connectedSockets.get(req.body.socketId).twitterStream) {
+            app.locals.connectedSockets.get(req.body.socketId).twitterStream.destroy();
         }
         //stream();
         res.status(200).json({message: "filter ok"})
@@ -61,9 +77,12 @@ module.exports = (app, io) => {
      * Pauses the twitter stream.
      */
     app.post('/api/pause', (req, res) => {
+        if (!req.body.socketId) {
+            return res.status(400).json({message: "no socket id"})
+        }
         console.log('Pause');
-        if (twitterStream) {
-            twitterStream.destroy();
+        if (app.locals.connectedSockets.get(req.body.socketId) && app.locals.connectedSockets.get(req.body.socketId).twitterStream) {
+            app.locals.connectedSockets.get(req.body.socketId).twitterStream.destroy();
         }
         res.status(200).json({message: "pause ok"})
     });
@@ -72,19 +91,30 @@ module.exports = (app, io) => {
      * Resumes the twitter stream.
      */
     app.post('/api/resume', (req, res) => {
+        if (!req.body.socketId) {
+            return res.status(400).json({message: "no socket id"})
+        }
         console.log('Resume');
-        stream();
+        stream(req.body.socketId);
         res.status(200).json({message: "resume ok"})
     });
 
     //Establishes socket connection.
     io.on("connection", socket => {
-        socketConnection = socket;
+        app.locals.connectedSockets.set(socket.id, {
+            socketConnection: socket,
+            twitterStream: null,
+            filter: null
+        })
         //stream();
         socket.on("connection", () => console.log("Client connected"));
         socket.on("disconnect", () => {
+            if (app.locals.connectedSockets.get(socket.id).twitterStream) {
+                app.locals.connectedSockets.get(socket.id).twitterStream.destroy();
+                app.locals.connectedSockets.delete(socket.id);
+            }
+            socket.disconnect()
             console.log("Client disconnected")
-            socket.disconnect();
         });
     });
 
@@ -92,7 +122,7 @@ module.exports = (app, io) => {
      * Emits data from stream.
      * @param {String} msg 
      */
-    const sendMessage = (msg) => {
+    const sendMessage = (msg, socketConnection) => {
         socketConnection.emit("tweets", msg);
     }
 };

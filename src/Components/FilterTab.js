@@ -60,7 +60,7 @@ const FilterTab = (props) => {
                 setIsLoading(false);
             } catch (error) {
                 setIsLoading(false);
-                console.log(error.response);
+                //console.log(error.response);
             }
         };
         getAddress();

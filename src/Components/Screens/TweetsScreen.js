@@ -12,7 +12,7 @@ import FilterTab from "../FilterTab";
 import { getTweetsAction } from "../../Actions/tweetActions";
 
 //altro
-import React from "react";
+import React, { useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
@@ -45,14 +45,16 @@ const TweetsScreen = () => {
     const [selectedTab, setSelectedTab] = useState("tweets");
     const [mapLarge, setMapLarge] = useState(true);
     const [center, setCenter] = useState([41.9109, 12.4818]);
+    const [socketId, setSocketId] = useState(null)
 
 
     useEffect(() => {
         const socket = socketIOClient('http://localhost:3001/');
         socket.on('connect', () => {
-            console.log("Socket Connected");
+            console.log("Socket Connected " + socket.id);
+            setSocketId(socket.id)
             socket.on("tweets", data => {
-                console.log(data)
+                 console.log(data.text)
             });
           });
           socket.on('disconnect', () => {
@@ -65,9 +67,18 @@ const TweetsScreen = () => {
         }
     }, [])
 
+    useEffect(() => {
+        if (!socketId || isLoading) {
+            return
+        }
+        const { search } = window.location;
+        handleStreaming(search.split("=")[1])
+    }, [socketId, isLoading])
+
     const handleStreaming = async keyword => {
+        console.log(socketId)
         if (!streaming) {
-            axios.post("/api/pause");
+            axios.post("/api/pause", {socketId});
         } else {
             let filter = {};
             const endPoint = location.pathname.substring(location.pathname.lastIndexOf("/") + 1)
@@ -80,12 +91,12 @@ const TweetsScreen = () => {
             }
 
             if (onlyItalian) {
-                filter.language = "it-IT";
+                filter.language = "it";
             }
 
             try {
-                await axios.post("/api/setFilter", {filter});
-                await axios.post("/api/resume");
+                await axios.post("/api/setFilter", {filter, socketId});
+                await axios.post("/api/resume", {socketId});
             } catch (error) {
                 console.log(error)
             }
@@ -115,11 +126,6 @@ const TweetsScreen = () => {
             }).toString();
 
         dispatch(getTweetsAction(params, location))
-        .then((result) => {
-            handleStreaming(search.split("=")[1])
-        });
-
-        
 
     }, [newSearch]);
 
