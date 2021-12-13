@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 
 const NavigationTab = (props) => {
     return (
@@ -10,7 +10,8 @@ const NavigationTab = (props) => {
                 props.selectedTab === props.tab ? "tab-active tab-bordered" : ""
             } tab h-full flex-1 transition-all duration-200 ease-linear`}
         >
-            <i className={`bi ${props.icon} text-2xl`}></i>
+            <i className={`bi ${props.icon} text-2xl relative`}>{props.children}</i>
+            
         </div>
     );
 };

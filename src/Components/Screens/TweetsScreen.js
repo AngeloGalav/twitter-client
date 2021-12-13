@@ -12,7 +12,6 @@ import FilterTab from "../FilterTab";
 import { getTweetsAction } from "../../Actions/tweetActions";
 
 //altro
-import React, { useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
@@ -21,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import socketIOClient from "socket.io-client";
 import axios from "axios";
+import StreamingTab from "../StreamingTab";
 
 const TweetsScreen = () => {
 
@@ -45,7 +45,8 @@ const TweetsScreen = () => {
     const [selectedTab, setSelectedTab] = useState("tweets");
     const [mapLarge, setMapLarge] = useState(true);
     const [center, setCenter] = useState([41.9109, 12.4818]);
-    const [socketId, setSocketId] = useState(null)
+    const [socketId, setSocketId] = useState(null);
+    const [streamingStatuses, setStreamingStatuses] = useState([]);
 
 
     useEffect(() => {
@@ -54,7 +55,8 @@ const TweetsScreen = () => {
             console.log("Socket Connected " + socket.id);
             setSocketId(socket.id)
             socket.on("tweets", data => {
-                 console.log(data.text)
+                console.log(data)
+                 setStreamingStatuses(streamingStatuses => [...streamingStatuses, data]);
             });
           });
           socket.on('disconnect', () => {
@@ -81,6 +83,7 @@ const TweetsScreen = () => {
             axios.post("/api/pause", {socketId});
         } else {
             let filter = {};
+            setStreamingStatuses([])
             const endPoint = location.pathname.substring(location.pathname.lastIndexOf("/") + 1)
             if (endPoint === "Keyword") {
                 filter.track = keyword;
@@ -163,7 +166,7 @@ const TweetsScreen = () => {
                                 className="sticky left-0 w-full z-20 shadow-md"
                             >
                                 <div className="flex items-center justify-center w-full bg-neutral px-8">
-                                    <div class="tabs h-14 rounded-none w-full flex justify-center">
+                                    <div class="tabs h-14 rounded-none w-full flex flex-nowrap justify-center">
                                         <NavigationTab
                                             icon={"bi-card-list"}
                                             selectedTab={selectedTab}
@@ -184,6 +187,17 @@ const TweetsScreen = () => {
                                             setSelectedTab={handleChangeTab}
                                             tab="filters"
                                         />
+
+                                        <NavigationTab
+                                            icon={"bi-broadcast"}
+                                            selectedTab={selectedTab}
+                                            setSelectedTab={handleChangeTab}
+                                            tab="streaming"
+                                        >
+                                            {streaming && <span className="animate-ping absolute right-0 top-0 rounded-full w-1 h-1 bg-red-500"></span>}
+
+                                            </NavigationTab>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -215,12 +229,16 @@ const TweetsScreen = () => {
                                         found={statuses.length > 0}
                                     />
                                 </div>
-                            ) : (
+                            ) : selectedTab === "filters" ? (
                                 <div className="h-full">
                                     <FilterTab
                                     />
                                 </div>
-                            )}
+                            ) : (<div className="h-full">
+                                    <StreamingTab
+                                    streamingStatuses={streamingStatuses}
+                                    />
+                                </div>)}
                         </div>
                     </div>
 
