@@ -19,7 +19,7 @@ const initalState = {
     },
     popular: false,
     onlyItalian: false,
-    streaming: true
+    streaming: true,
 };
 
 export default function filterReducer(state = initalState, action) {

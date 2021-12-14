@@ -29,6 +29,7 @@ export default function userReducer(state = initalState, action) {
                 ...state,
                 isLoading: false,
                 statuses: [],
+                streamingStatuses: [],
                 wordCloud: null,
                 sentimentAnalysis: null,
                 coordinates: null

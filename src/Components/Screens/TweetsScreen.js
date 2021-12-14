@@ -46,7 +46,6 @@ const TweetsScreen = () => {
     const [mapLarge, setMapLarge] = useState(true);
     const [center, setCenter] = useState([41.9109, 12.4818]);
     const [socketId, setSocketId] = useState(null);
-    const [streamingStatuses, setStreamingStatuses] = useState([]);
 
 
     useEffect(() => {
@@ -55,8 +54,7 @@ const TweetsScreen = () => {
             console.log("Socket Connected " + socket.id);
             setSocketId(socket.id)
             socket.on("tweets", data => {
-                console.log(data)
-                 setStreamingStatuses(streamingStatuses => [...streamingStatuses, data]);
+                 dispatch({type: "UPDATE_STREAM", payload: {tweet: data}})
             });
           });
           socket.on('disconnect', () => {
@@ -83,7 +81,7 @@ const TweetsScreen = () => {
             axios.post("/api/pause", {socketId});
         } else {
             let filter = {};
-            setStreamingStatuses([])
+            dispatch({type: "EMPTY_STREAM"})
             const endPoint = location.pathname.substring(location.pathname.lastIndexOf("/") + 1)
             if (endPoint === "Keyword") {
                 filter.track = keyword;
@@ -108,12 +106,6 @@ const TweetsScreen = () => {
     }
 
     useEffect(() => {
-        dispatch({
-            type: "CHANGE_NEW_SEARCH",
-            payload: {
-                newSearch: false
-            }
-        })
         const { search } = window.location;
         const params =
             new URLSearchParams(search).toString() +
@@ -236,7 +228,6 @@ const TweetsScreen = () => {
                                 </div>
                             ) : (<div className="h-full">
                                     <StreamingTab
-                                    streamingStatuses={streamingStatuses}
                                     />
                                 </div>)}
                         </div>

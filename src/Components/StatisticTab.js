@@ -59,15 +59,34 @@ const StatisticTab = (props) => {
                         </h1>
                         <div className="w-full h-px bg-base-content bg-opacity-50 mt-2" />
                     </div>
+                    <div class="alert alert-info mt-4">
+                        <div class="flex-1">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                class="w-6 h-6 mx-2 stroke-current"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                            </svg>
+                            <label>
+                                Ricorda, le statistiche vengono generate sui
+                                tweet e non sono influenzate dallo streaming
+                            </label>
+                        </div>
+                    </div>
                     <div className="mt-8 px-4">
                         {sentimentData && (
                             <div>
-                                
                                 <div class="card text-center bg-neutral shadow-xl mt-2 p-4">
-
-                                <h2 className="text-3xl font-bold text-left mb-4">
-                                    Analisi dei sentimenti
-                                </h2>
+                                    <h2 className="text-3xl font-bold text-left mb-4">
+                                        Analisi dei sentimenti
+                                    </h2>
                                     <div class="px-10 pt-10">
                                         {!sentimentTab ? (
                                             <ReactStoreIndicator
@@ -132,12 +151,11 @@ const StatisticTab = (props) => {
                             </div>
                         )}
                     </div>
-                    
                     <div className="mt-8 px-4">
                         <div class="card text-center bg-neutral shadow-xl mt-2 p-4">
-                        <h2 className="text-3xl font-bold text-left mb-4">
-                            Wordcloud
-                        </h2>
+                            <h2 className="text-3xl font-bold text-left mb-4">
+                                Wordcloud
+                            </h2>
                             <Cloud wordCloud={wordCloud} />
                         </div>
                     </div>{" "}

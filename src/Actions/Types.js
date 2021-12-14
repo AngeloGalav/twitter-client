@@ -4,7 +4,8 @@ export const CHANGE_THEME = "CHANGE_THEME"
 export const TWEET_REQUEST = "TWEET_REQUEST"
 export const TWEET_SUCCESS = "TWEET_SUCCESS"
 export const TWEET_FAIL = "TWEET_FAIL"
-export const UPDATE_STATUSES = "UPDATE_STATUSES"
+export const UPDATE_STREAM = "UPDATE_STREAM"
+export const EMPTY_STREAM = "EMPTY_STREAM"
 
 
 //filters
