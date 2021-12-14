@@ -8,6 +8,7 @@ const punctuationRegex = /[.,\/#!$%\^&\*;:{}="'\-_`~()]/g;
 const newLineRegex = /\n/g;
 
 exports.createWordCloud = (req, res, next) => {
+
     if (req.data.statuses.length > 0) {
         const wordCloud = new Map();
 

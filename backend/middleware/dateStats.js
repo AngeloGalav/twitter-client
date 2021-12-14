@@ -25,8 +25,13 @@ exports.dateStats = (req, res, next) => {
 
 		console.log(dateStats);
 
-		req.data.dateStats = dateStats;
-	}
+		res.status(200).json({
+            ...req.data,
+            wordCloud: Object.fromEntries(wordCloud),
+        });
+    } else {
+        res.status(200).json({ ...req.data });
+    }
 
 	next();
 };

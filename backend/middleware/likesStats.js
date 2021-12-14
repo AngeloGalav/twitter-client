@@ -1,7 +1,7 @@
 //calcola quanti post hanno likes < 10, < 100, < 1000 etc in percentuale
 
 exports.likesStats = (req, res, next) => {
-    if (req.data.statuses.length > 0) {
+	if (req.data.statuses.length > 0) {
 
 		let likesStats = {};
 
@@ -19,11 +19,14 @@ exports.likesStats = (req, res, next) => {
 			likesStats[key] = Math.round(likesStats[key] * 100)/100;
 		}
 
-		console.log(likesStats);
+        res.status(200).json({
+            ...req.data,
+            likesStats: likesStats,
+        });
 
-		req.data.likesStats = likesStats
-
-	}
+    } else {
+        res.status(200).json({ ...req.data });
+    }
 
     next();
 };
