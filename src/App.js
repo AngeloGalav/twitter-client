@@ -8,6 +8,7 @@ import Cloud from "./Components/Cloud";
 //router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Footer from "./Components/Footer";
+import ContestScreen from "./Components/Screens/ContestScreen";
 
 function App() {
     return (
@@ -26,7 +27,9 @@ function App() {
 
                 <Route exact path="/tweets/:mainFilter" component={TweetsScreen} />
 
-                <Route exact path="/cloud" component={Cloud} />
+                <Route exact path="/contest" component={ContestScreen} />
+
+                {/* <Route exact path="/cloud" component={Cloud} /> */}
 
                 {/*Esiste anche questa altra sintassi per mostrare piu' di un componente ma si perde la props history in questo modo
           <Route exact path="/product/:model">
