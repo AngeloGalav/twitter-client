@@ -14,7 +14,7 @@ import { useHistory } from "react-router";
 const options = {
     enableTooltip: true,
     deterministic: false,
-    fontSizes: [12, 100],
+    fontSizes: [20, 100],
     fontFamily: "Abril Fatface",
     fontStyle: "normal",
     fontWeight: "normal",
@@ -30,44 +30,6 @@ const options = {
 
 
 const Cloud = ({ wordCloud }) => {
-    // const [response, setResponse] = useState([]);
-    // const [IsLoading, setIsLoading] = useState(true);
-    // const [onlyItaly, setOnlyItaly] = useState(false);
-    //const data = [/*{ value: 'JavaScript', count: 38 }*/];
-
-    // useEffect(() => {
-    //     async function getData() {
-    //         setIsLoading(true);
-    //         try {
-    //             let risp = [[]];
-    //             risp = await axios.get(
-    //                 `/api/trends?id=${onlyItaly ? "23424853" : "1"}`
-    //             );
-
-    //             console.log(risp.data["0"]["trends"]);
-    //             let temp_data = risp.data["0"]["trends"];
-    //             let data = [];
-
-    //             //per ora ne usiamo la metà, quindi 25, si può mettere quello che vogliamo
-    //             for (let i = 0; i < temp_data.length; i++) {
-    //                 data.push({
-    //                     text: temp_data[i].name,
-    //                     value: temp_data.length - i,
-    //                 });
-    //             }
-
-    //             setResponse(data);
-    //             setIsLoading(false);
-    //         } catch (error) {
-    //             console.log(error.message);
-    //             setResponse(null);
-    //             setIsLoading(false);
-    //         }
-
-
-    //     }
-    //     getData();
-    // }, [onlyItaly]);
 
     const [words, setWords] = useState([]);
     const history = useHistory();

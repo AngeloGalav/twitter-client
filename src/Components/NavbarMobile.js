@@ -256,7 +256,7 @@ const NavbarMobile = () => {
                         <i className="bi bi-chevron-left text-xl" />
                     </button>
 
-                    {width > 400 ? (
+                    {width > 420 ? (
                         <div className="flex-1 mt-5">
                             <div className="tabs w-full flex justify-center ">
                                 {filters.map((filter, i) => (

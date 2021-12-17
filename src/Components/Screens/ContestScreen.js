@@ -1,39 +1,58 @@
 //components
+import RankingColumn from "../RankingColumn";
+import Loading from "../Loading";
 import useWindowSize from "../../Utils/windowSize";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
-import RankingColumn from "../RankingColumn";
 import { Fade } from "react-reveal";
 import SwitchTheme from "../SwitchTheme";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+
+import notFound from "../../Media/undraw_walk_dreaming_u-58-a.svg"
+
+
 
 const ContestScreen = () => {
-    // eslint-disable-next-line
-    const [width, height] = useWindowSize();
 
-    const mockup = [
-        {
-            value: "book1",
-            votes: 40,
-            ranking: 1,
-        },
-        {
-            value: "book2",
-            votes: 40,
-            ranking: 2,
-        },
-        {
-            value: "book3",
-            votes: 400000,
-            ranking: 3,
-        },
-        {
-            value: "book4",
-            votes: 40,
-            ranking: 4,
-        },
-    ];
+    const location = useLocation();
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [ranking, setRanking] = useState([])
+    const [total, setTotal] = useState(0);
+    const [fav100, setFav100] = useState(0);
+    const [fav1000, setFav1000] = useState(0);
+     // eslint-disable-next-line
+     const [width, height] = useWindowSize();
+
+    useEffect(() => {
+        const fetchRanking = async () => {
+
+            const { search } = window.location;
+            const q = search.toString();
+            setIsLoading(true)
+            try {
+                const {data} = await axios.get("/api/contest" + q);
+                //if(!data) throw "Errore"
+                console.log(data)
+                setRanking(data.ranking)
+                setTotal(data.total);
+                setFav100(data.fav100);
+                setFav1000(data.fav1000);
+                setIsLoading(false)
+            } catch (error) {
+                setRanking([])
+                setFav100(0)
+                setTotal(0)
+                setFav1000(0)
+                setIsLoading(false)
+                console.log("Errore")
+            }
+        }
+
+        fetchRanking();
+    }, [])
     return (
         <div
             id="contest-screen-container"
@@ -44,14 +63,20 @@ const ContestScreen = () => {
             <SwitchTheme />
             </div>
             
-            <div className="py-4 text-primary-content relative">
-                <div className="absolute w-full h-full left-0 top-0 bg-primary filter brightness-50">
-                    
-                </div>
+            <div className="py-4 bg-primary text-primary-content">
             <h1 className="text-center text-5xl font-bold z-10 relative">Risultati</h1>
             </div>
             
-            <div
+            {isLoading ? (
+            <div className="min-h-screen flex justify-center items-center">
+                <Loading />
+            </div>
+            
+            ) : (<>
+
+            {ranking.length > 0 ? (
+                <>
+                 <div
                 style={{ minHeight: "800px" }}
                 className="container h-screen mx-auto flex flex-col items-center justify-center text-primary-content"
             >
@@ -62,27 +87,27 @@ const ContestScreen = () => {
                         height="30vh"
                         minHeight="15rem"
                         iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon-2.png"
-                        votes={mockup[2].votes}
+                        votes={ranking[0][1]}
                         position={3}
-                        partecipant={mockup[2].value}
+                        partecipant={ranking[0][0].split(" ").slice(0, 2).join(" ")}
                     />
 
                     <RankingColumn
                         height="50vh"
                         minHeight="25rem"
                         iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon.png"
-                        votes={mockup[0].votes}
+                        votes={ranking[1] ? ranking[1][1] : ""}
                         position={1}
-                        partecipant={mockup[0].value}
+                        partecipant={ranking[1] ? ranking[1][0].split(" ").slice(0, 2).join(" ") : ""}
                     />
 
                     <RankingColumn
                         height="40vh"
                         minHeight="20rem"
                         iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon-1.png"
-                        votes={mockup[1].votes}
+                        votes={ranking[2] ? ranking[2][1] : ""}
                         position={2}
-                        partecipant={mockup[1].value}
+                        partecipant={ranking[2] ? ranking[2][0].split(" ").slice(0, 2).join(" ") : ""}
                     />
                 </div>
 
@@ -116,35 +141,23 @@ const ContestScreen = () => {
                             <tr className="rounded-t-md p-8 overflow-hidden">
                                 <th></th>
                                 <th>Posizione</th>
-                                <th>Nome</th>
+                                <th>Partecipante</th>
                                 <th>Voti</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td>1</td>
-                                <td>Community Outreach Specialist</td>
-                                <td>Indigo</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>2</td>
-                                <td>Editor</td>
-                                <td>Purple</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>3</td>
-                                <td>Staff Accountant IV</td>
-                                <td>Yellow</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>4</td>
-                                <td>Accountant I</td>
-                                <td>Crimson</td>
-                            </tr>
+                            {ranking.map((ranking, i) => {
+                               if(i < 10) {
+                                return (
+                                    <tr>
+                                    <td></td>
+                                    <td>{i + 1}</td>
+                                    <td>{ranking[0]}</td>
+                                    <td>{ranking[1]}</td>
+                                </tr>
+                                )
+                            } 
+                            })}
                         </tbody>
                     </table>
                 </div>
@@ -159,7 +172,7 @@ const ContestScreen = () => {
                     <div class="shadow stats">
                         <div class="stat">
                             <div class="stat-title">Partecipanti totali</div>
-                            <div class="stat-value">89,400</div>
+                            <div class="stat-value">{total === 100 ? "100+" : total}</div>
                         </div>
                     </div>
                     </Fade>
@@ -171,7 +184,7 @@ const ContestScreen = () => {
                     <div class="shadow stats">
                         <div class="stat">
                             <div class="stat-title">Partecipanti con più di 100 voti</div>
-                            <div class="stat-value">89,400</div>
+                            <div class="stat-value">{fav100}</div>
                         </div>
                     </div>
                     </Fade>
@@ -182,12 +195,26 @@ const ContestScreen = () => {
                     <div class="shadow stats">
                         <div class="stat">
                             <div class="stat-title">Partecipanti con più di 1000 voti</div>
-                            <div class="stat-value">89,400</div>
+                            <div class="stat-value">{fav1000}</div>
                         </div>
                     </div>
                     </Fade>
                     </div>
                 </div>
+                </>
+            ) : ( <>
+            
+            <div className=" min-h-screen flex flex-col justify-center items-center container mx-auto">
+                <img className="w-full max-w-md" src={notFound} alt="" />
+                <p style={{fontSize: `${width < 768 ? "8vw" : "4vw"}`}} className=" -m-10 text-primary-content w-full text-center font-bold">Sembra che non ci sia nessun contest attivo per #{window.location.search.toString().substring(3)} :(</p>
+                    <Link className="btn btn-neutral text-neutral-content mt-16" to="/"> <i className="bi bi-house-fill text-2xl"></i></Link>
+            </div>
+
+            
+            </>)}
+               
+            </>)}
+            
                 
             
         </div>

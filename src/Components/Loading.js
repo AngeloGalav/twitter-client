@@ -3,7 +3,7 @@ import React from "react";
 const Loading = () => {
     return (
         <div
-            class="inset-0 bg-base-100 flex w-full h-full items-center justify-center duration-300 transition-opacity"
+            class="inset-0 flex w-full h-full items-center justify-center duration-300 transition-opacity"
             style={{zIndex: "10", minHeight: "30rem"}}
         >
             <div class="flex-col w-24 h-24">
