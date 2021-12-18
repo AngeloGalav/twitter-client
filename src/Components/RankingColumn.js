@@ -16,9 +16,11 @@ const RankingColumn = (props) => {
             <p className="smartphone:hidden text-5xl break-all font-bold text-center">
                 #{props.position}
             </p>
-            <p className="absolute -top-16 text-2xl smartphone:text-3xl font-bold text-center break-all z-10">
+            <p className="absolute -top-24 ipad:-top-16 text-2xl smartphone:text-3xl rounded-md font-bold text-center break-all z-10">
                 {props.partecipant ? props.partecipant : "N/A"}
             </p>
+                
+            
         </div>
     );
 };

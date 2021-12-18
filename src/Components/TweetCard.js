@@ -34,7 +34,7 @@ const TweetCard = ({ tweet }) => {
                     </div>
 
                     {/* Text */}
-                    <div className="my-2 h-20">
+                    <div className={`my-2 ${tweet.image && "h-20"}`}>
                         <Typewriter
                             class="text-base-content block text-base leading-snug my-3"
                             options={{
@@ -49,12 +49,12 @@ const TweetCard = ({ tweet }) => {
 
                     {/* Image */}
 
-                    <div className="w-full border rounded-2xl overflow-hidden bg-blue-200">
+                    {tweet.image && <div className="w-full border rounded-2xl overflow-hidden bg-blue-200">
                         <img
                             class="w-full h-full object-cover object-center"
                             src={tweet.image}
                         />
-                    </div>
+                    </div>}
                          {/* Data */}
                     <p class="text-base-content text-opacity-50 py-2 text-sm w-full">
                         Pubblicato il{" "}

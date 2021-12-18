@@ -240,7 +240,7 @@ const TweetsScreen = () => {
                         <button
                             style={{ zIndex: "9999" }}
                             onClick={() => setMapLarge((mapLarge) => !mapLarge)}
-                            className="btn btn-secondary absolute laptop:hidden btn-xs bottom-4 shadow-md"
+                            className={`btn btn-secondary absolute laptop:hidden btn-xs ${mapLarge ? "bottom-16" : "bottom-4"} shadow-md`}
                         >
                             {mapLarge ? "Riduci" : "Espandi"} &nbsp;{" "}
                             <i class="bi bi-map"></i>

@@ -77,7 +77,7 @@ export const Tweet = ({ tweet, setCenter }) => {
                                 </p>
                             )}
                             <span
-                                className="my-2"
+                                className="my-2 break-all"
                                 dangerouslySetInnerHTML={{
                                     __html: parseText(tweet.text),
                                 }}

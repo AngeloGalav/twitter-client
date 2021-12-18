@@ -33,6 +33,8 @@ const HomeScreen = () => {
         },
     });
 
+    const [modalOpen, setModalOpen] = useState(false);
+
     const updateOffset = () => setY(window.scrollY);
 
     //Effetti
@@ -48,10 +50,8 @@ const HomeScreen = () => {
 
     return (
         <div id="home-screen-container">
-
             {/* Navbar */}
             <Navbar width={width} />
-
 
             {/* Hero section */}
             <Hero />
@@ -84,7 +84,12 @@ const HomeScreen = () => {
                                     Come a casa tua
                                 </h1>
                                 <p className="text-base font-normal max-w-md mx-auto laptop:mx-0">
-                                Con <span className="font-bold">HI</span><span className="font-normal text-sm">TWEET</span> ti sentirai come su Twitter... ma con qualcosa in più!
+                                    Con <span className="font-bold">HI</span>
+                                    <span className="font-normal text-sm">
+                                        TWEET
+                                    </span>{" "}
+                                    ti sentirai come su Twitter... ma con
+                                    qualcosa in più!
                                 </p>
                             </Fade>
                         </div>
@@ -104,8 +109,10 @@ const HomeScreen = () => {
                                     title={"Searching"}
                                     icon={"bi-search"}
                                 >
-                                    Sfrutta la potente barra di ricerca per trovare quello che vuoi, specificando subito se si tratta di una keyword, uno '@'_username o un '#'_hashtag
-                                                           
+                                    Sfrutta la potente barra di ricerca per
+                                    trovare quello che vuoi, specificando subito
+                                    se si tratta di una keyword, uno
+                                    '@'_username o un '#'_hashtag
                                 </FunctionalityCard>
                             </Zoom>
 
@@ -114,7 +121,9 @@ const HomeScreen = () => {
                                     title={"Statistics"}
                                     icon={"bi-graph-up"}
                                 >
-                                    Costruiamo automaticamente statistiche analizzando le informazioni contenute nei vari tweet per capire cosa pensa la gente.
+                                    Costruiamo automaticamente statistiche
+                                    analizzando le informazioni contenute nei
+                                    vari tweet per capire cosa pensa la gente.
                                 </FunctionalityCard>
                             </Zoom>
                         </div>
@@ -125,24 +134,116 @@ const HomeScreen = () => {
                                     title={"Filtering"}
                                     icon={"bi-geo-alt-fill"}
                                 >
-                                    Non sprecare tempo, filtra in base ai tuoi interessi, effettua una ricerca mirata a soddisfare ogni tua necessità e mostrartela sulla mappa.
+                                    Non sprecare tempo, filtra in base ai tuoi
+                                    interessi, effettua una ricerca mirata a
+                                    soddisfare ogni tua necessità e mostrartela
+                                    sulla mappa.
                                 </FunctionalityCard>
                             </Zoom>
 
                             <Zoom>
                                 <FunctionalityCard
-                                    title={"NEW user stories"}
-                                    icon={"bi-box"}
+                                    title={"Contest"}
+                                    icon={"bi-trophy"}
                                 >
-                                    "Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua."
+                                    Crea un contest o poni una domanda ai tuoi
+                                    followers, e scopri le loro preferenze
+                                    direttamente quì!
+                                    <br />
+                                    <button
+                                        onClick={() => setModalOpen(true)}
+                                        className="btn btn-secondary mt-5"
+                                    >
+                                        Info
+                                    </button>
                                 </FunctionalityCard>
                             </Zoom>
                         </div>
                     </div>
                 </section>
             </main>
+            {modalOpen && (
+                <div className="fixed w-screen bg-black bg-opacity-25 h-screen top-0 left-0 z-50 flex justify-center items-center p-2">
+                    <div className="max-w-md flex-1 rounded-md shadow-xl bg-base-100 py-8 px-4 overflow-y-auto max-h-80">
+                        <button
+                            onClick={() => setModalOpen(false)}
+                            className="text-base-content"
+                        >
+                            {" "}
+                            <i class="bi bi-x-lg text-xl"></i>
+                        </button>
+                        <h1 className="text-2xl font-bold text-center">
+                            Istruzioni per i contest o trivia
+                        </h1>
+                        <div className="mt-4">
+                            <p>
+                                La creazione di un contest o di un trivia
+                                avviene tramite la scelta di un hashtag speciale
+                                che termini con{" "}
+                                <span className=" font-bold text-primary">
+                                    swe11
+                                </span>
+                                .
+                            </p>
+                            <p>
+                                Per prima cosa creare un tweet in cui mettere{" "}
+                                <span className="underline">
+                                    tutti i link ai tweet partecipanti
+                                </span>
+                                . Ogni tweet partecipante deve avere l'hashtag
+                                che si è scelto per il contest o il trivia.{" "}
+                                <span className="font-bold">
+                                    Il tweet con più like sarà il vincitore!
+                                </span>
+                            </p>
+                            <p>
+                                Sotto potete vedere alcuni esempi di come devono
+                                essere i tweet partecipanti al contest.
+                            </p>
+                            <div class="alert alert-warning mt-4">
+                                <div class="flex-1">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        class="w-6 h-6 mx-2 stroke-current"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                        ></path>
+                                    </svg>
+                                    <label>
+                                        Attezione, si consiglia di utilizzare
+                                        descrizioni brevi per i tweet
+                                        partecipanti!
+                                    </label>
+                                </div>
+                            </div>
+                            <br />
+                            <TweetCard 
+                                tweet={{
+                                    text: `Il signore degli anelli<br/>#Contestswe11$La mia risposta al trivia<br/>#Triviaswe11`,
+                                    created_at: new Date(),
+                                    retweet_count: 0,
+                                    favorite_count: 0,
+                                    comment_count: 0,
+                                    user: {
+                                        profile_image_url:
+                                            "https://pbs.twimg.com/media/Dw-EQ2PU0AA2OKP.jpg",
+                                        name: "HITWEET",
+                                        screen_name: "HI_TWEET",
+                                    },
+                                }}
+                            />
+
+                            
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -16,15 +16,17 @@ import notFound from "../../Media/undraw_walk_dreaming_u-58-a.svg"
 
 const ContestScreen = () => {
 
-    const location = useLocation();
-
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [ranking, setRanking] = useState([])
     const [total, setTotal] = useState(0);
+    const [fav1, setFav1] = useState(0);
     const [fav100, setFav100] = useState(0);
-    const [fav1000, setFav1000] = useState(0);
      // eslint-disable-next-line
      const [width, height] = useWindowSize();
+
+     function truncate(str, n){
+        return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+      };
 
     useEffect(() => {
         const fetchRanking = async () => {
@@ -38,14 +40,14 @@ const ContestScreen = () => {
                 console.log(data)
                 setRanking(data.ranking)
                 setTotal(data.total);
+                setFav1(data.fav1);
                 setFav100(data.fav100);
-                setFav1000(data.fav1000);
                 setIsLoading(false)
             } catch (error) {
                 setRanking([])
-                setFav100(0)
+                setFav1(0)
                 setTotal(0)
-                setFav1000(0)
+                setFav100(0)
                 setIsLoading(false)
                 console.log("Errore")
             }
@@ -56,15 +58,15 @@ const ContestScreen = () => {
     return (
         <div
             id="contest-screen-container"
-            className=" bg-primary-focus bg-opacity-50 pb-20"
+            className=" bg-primary bg-opacity-50 pb-20"
         >
             <div className=" hidden w-0 h-0 overflow-hidden
             ">
             <SwitchTheme />
             </div>
             
-            <div className="py-4 bg-primary text-primary-content">
-            <h1 className="text-center text-5xl font-bold z-10 relative">Risultati</h1>
+            <div className="py-2 bg-neutral shadow">
+            <h1 className="text-center text-5xl font-bold z-10 relative text-transparent bg-clip-text bg-gradient-to-b from-primary to-accent">Risultati</h1>
             </div>
             
             {isLoading ? (
@@ -82,32 +84,34 @@ const ContestScreen = () => {
             >
                 <Fade>
                 
-                <div className="flex items-end w-full justify-center">
+                <div className="flex items-end w-full justify-center gap-2">
                     <RankingColumn
                         height="30vh"
                         minHeight="15rem"
                         iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon-2.png"
-                        votes={ranking[0][1]}
+                        votes={ranking[2] ? ranking[2][1] : ""}
                         position={3}
-                        partecipant={ranking[0][0].split(" ").slice(0, 2).join(" ")}
+                        partecipant={ranking[2] ? truncate(ranking[2][0], 18) : ""}
                     />
 
                     <RankingColumn
                         height="50vh"
                         minHeight="25rem"
                         iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon.png"
-                        votes={ranking[1] ? ranking[1][1] : ""}
+                        votes={ranking[0][1]}
                         position={1}
-                        partecipant={ranking[1] ? ranking[1][0].split(" ").slice(0, 2).join(" ") : ""}
+                        partecipant={truncate(ranking[0][0], 18)}
+                        
                     />
 
                     <RankingColumn
                         height="40vh"
                         minHeight="20rem"
                         iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon-1.png"
-                        votes={ranking[2] ? ranking[2][1] : ""}
+                        votes={ranking[1] ? ranking[1][1] : ""}
                         position={2}
-                        partecipant={ranking[2] ? ranking[2][0].split(" ").slice(0, 2).join(" ") : ""}
+                        partecipant={ranking[1] ? truncate(ranking[1][0], 18) : ""}
+                        
                     />
                 </div>
 
@@ -117,14 +121,19 @@ const ContestScreen = () => {
                 <ScrollLink
                     activeClass="active"
                     to="top-10-table"
+                    className="relative"
                     spy={true}
                     smooth={true}
                     offset={-140}
                     duration={800}
                 >
-                    <button className="btn btn-secondary">
+                    <div className=" bg-gradient-to-r from-accent to-primary absolute -inset-1 rounded-lg filter blur">
+                    
+                    </div>
+                    <button className="btn btn-secondary z-10 relative">
                         Vai a Top 10
                     </button>
+                   
                 </ScrollLink>
 
 
@@ -167,7 +176,7 @@ const ContestScreen = () => {
 
             
                 <div class=" flex flex-col ipad:flex-row justify-center items-center mt-12 gap-4 max-w-4xl mx-auto container px-4">
-                    <div className="flex-1 rounded-md overflow-hidden shadow-xl w-72">
+                    <div className="flex-1 rounded-md overflow-hidden shadow-xl w-full">
                     <Fade>
                     <div class="shadow stats">
                         <div class="stat">
@@ -179,23 +188,23 @@ const ContestScreen = () => {
                     </div>
               
 
-                    <div className="flex-1 rounded-md overflow-hidden shadow-xl w-72">
+                    <div className="flex-1 rounded-md overflow-hidden shadow-xl w-full">
                     <Fade>
                     <div class="shadow stats">
                         <div class="stat">
-                            <div class="stat-title">Partecipanti con più di 100 voti</div>
-                            <div class="stat-value">{fav100}</div>
+                            <div class="stat-title">Partecipanti con almeno un voto</div>
+                            <div class="stat-value">{fav1}</div>
                         </div>
                     </div>
                     </Fade>
                     </div>
 
-                    <div className="flex-1 rounded-md overflow-hidden shadow-xl w-72">
+                    <div className="flex-1 rounded-md overflow-hidden shadow-xl w-full">
                     <Fade>
                     <div class="shadow stats">
                         <div class="stat">
-                            <div class="stat-title">Partecipanti con più di 1000 voti</div>
-                            <div class="stat-value">{fav1000}</div>
+                            <div class="stat-title">Partecipanti con più di 100 voti</div>
+                            <div class="stat-value">{fav100}</div>
                         </div>
                     </div>
                     </Fade>

@@ -248,7 +248,7 @@ const NavbarMobile = () => {
             >
                 <div
                     style={{ minHeight: "calc(100% - 5rem)" }}
-                    className=" px-4 smartphone:px-8 py-8 top-20 w-full absolute rounded-t-3xl bg-base-100 text-base-content"
+                    className="px-4 smartphone:px-8 py-8 top-20 w-full absolute rounded-t-3xl bg-base-100 text-base-content"
                 >
                     <button
                         onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
@@ -256,9 +256,9 @@ const NavbarMobile = () => {
                         <i className="bi bi-chevron-left text-xl" />
                     </button>
 
-                    {width > 420 ? (
+                    {width > 400 ? (
                         <div className="flex-1 mt-5">
-                            <div className="tabs w-full flex justify-center ">
+                            <div className="tabs flex justify-center ">
                                 {filters.map((filter, i) => (
                                     <a
                                     style={{maxWidth: "10rem"}}

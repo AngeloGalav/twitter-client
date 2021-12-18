@@ -118,19 +118,19 @@ router.get("/Contest", async (req, res, next) => {
         const tweet = await client.get("search/tweets.json", {q: params.q, count: 100});
         if (tweet.statuses.length > 0) {
             let data = new Map();
+            let fav1 = 0;
             let fav100 = 0;
-            let fav1000 = 0;
             const HashtagRegex = /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+/g;
             tweet.statuses.forEach((tweet, i) => {
                 const partecipant = tweet.text.replace(HashtagRegex, "");
                 if (!data.has(partecipant)) {
                     data.set(partecipant, tweet.favorite_count)
                 }
+                if (tweet.favorite_count > 0) {
+                    fav1++;
+                }
                 if (tweet.favorite_count > 100) {
                     fav100++;
-                }
-                if (tweet.favorite_count > 1000) {
-                    fav1000++;
                 }
             })
 
@@ -138,8 +138,8 @@ router.get("/Contest", async (req, res, next) => {
             const total = tweet.statuses.length;
             res.status(200).json({ranking: dataSort,
                 total,
-                fav100,
-                fav1000
+                fav1,
+                fav100
             })
         } else {
             throw "Nessun tweet trovato"
