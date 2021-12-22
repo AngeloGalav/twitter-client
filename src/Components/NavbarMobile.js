@@ -39,7 +39,7 @@ const NavbarMobile = () => {
         if (filters[tabFocus] !== "Contest") {
             history.push(`/tweets/${filters[tabFocus]}?q=${filters[tabFocus] !== "Keyword" ? data.userInput.substring(1) :  data.userInput}`);
         } else {
-            history.push(`/contest?q=${data.userInput.substring(1)}`)
+            history.push(`/contest?q=${data.userInput.substring(1)} from:${data.userInputContest.substring(1)}`)
         }
        
         history.go(0);
@@ -256,7 +256,7 @@ const NavbarMobile = () => {
                         <i className="bi bi-chevron-left text-xl" />
                     </button>
 
-                    {width > 400 ? (
+                    {width > 420 ? (
                         <div className="flex-1 mt-5">
                             <div className="tabs flex justify-center ">
                                 {filters.map((filter, i) => (
@@ -312,6 +312,22 @@ const NavbarMobile = () => {
                                             : "input-primary"
                                     } shadow-md input-bordered rounded-full`}
                                 />
+                                 {tabFocus == 3 && <input
+                                    type="text"
+                                    placeholder={`Inserisci l'Username dell'organizzatore`}
+                                    {...register("userInputContest", {
+                                        required: true,
+                                        pattern: {
+                                            value: new RegExp("^@[a-zA-Z0-9_]{1,15}$"),
+                                            message: "Inserisci un username come @Twitter"
+                                          }
+                                    })}
+                                    className={`w-full pr-16 mt-5 h-14 input ${
+                                        errors.userInputContest
+                                            ? "input-error"
+                                            : "input-primary"
+                                    } shadow-md input-bordered rounded-full`}
+                                />}
                                 <label
                                     htmlFor="submit-search-btn"
                                     className={`absolute top-1 h-12 w-12 right-1 btn ${

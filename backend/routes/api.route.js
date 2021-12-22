@@ -115,27 +115,30 @@ router.get("/Username", async (req, res, next) => {
 router.get("/Contest", async (req, res, next) => {
     try {
         var params = req.query;
-        const tweet = await client.get("search/tweets.json", {q: params.q, count: 100});
+        const tweet = await client.get("search/tweets.json", {q: "%23"+params.q, count: 100});
         if (tweet.statuses.length > 0) {
             let data = new Map();
             let fav1 = 0;
             let fav100 = 0;
+            let total = 0;
             const HashtagRegex = /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+/g;
             tweet.statuses.forEach((tweet, i) => {
                 const partecipant = tweet.text.replace(HashtagRegex, "");
-                if (!data.has(partecipant)) {
+                if (!data.has(partecipant) && partecipant) {
                     data.set(partecipant, tweet.favorite_count)
                 }
-                if (tweet.favorite_count > 0) {
+                if (tweet.favorite_count > 0 && partecipant) {
                     fav1++;
                 }
-                if (tweet.favorite_count > 100) {
+                if (tweet.favorite_count > 100 && partecipant) {
                     fav100++;
+                }
+                if (partecipant) {
+                    total++
                 }
             })
 
             const dataSort = [...data.entries()].sort((a, b) => b[1] - a[1]);
-            const total = tweet.statuses.length;
             res.status(200).json({ranking: dataSort,
                 total,
                 fav1,

@@ -215,7 +215,7 @@ const ContestScreen = () => {
             
             <div className=" min-h-screen flex flex-col justify-center items-center container mx-auto">
                 <img className="w-full max-w-md" src={notFound} alt="" />
-                <p style={{fontSize: `${width < 768 ? "8vw" : "4vw"}`}} className=" -m-10 text-primary-content w-full text-center font-bold">Sembra che non ci sia nessun contest attivo per #{window.location.search.toString().substring(3)} :(</p>
+                <p style={{fontSize: `${width < 768 ? "8vw" : "4vw"}`}} className=" -m-10 text-primary-content w-full text-center font-bold">Sembra che non ci sia nessun contest attivo per #{window.location.search.toString().split('%')[0].substring(3) + " creato da @" + window.location.search.toString().split('%')[1].substring(7)} :(</p>
                     <Link className="btn btn-neutral text-neutral-content mt-16" to="/"> <i className="bi bi-house-fill text-2xl"></i></Link>
             </div>
 
