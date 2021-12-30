@@ -1,7 +1,7 @@
 var sentiment = require("multilang-sentiment");
 
 exports.sentimentAnalysis = (req, res, next) => {
-    if (req.data.statuses.length > 0) {
+    if (req.data.statuses.length > 0 && req.genStats) {
         let sentimentAnalysis = {
             score: 0,
             comparative: 0,

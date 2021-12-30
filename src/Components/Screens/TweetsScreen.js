@@ -35,7 +35,9 @@ const TweetsScreen = () => {
         selectionRange,
         popular,
         onlyItalian,
-        streaming
+        streaming,
+        twitterMode,
+        tweetCount,
     } = useSelector((state) => state.filterReducer);
     const dispatch = useDispatch();
 
@@ -118,6 +120,8 @@ const TweetsScreen = () => {
                 endDate: selectionRange.endDate.toISOString().split("T")[0],
                 popular: popular,
                 onlyItalian: onlyItalian,
+                genStats: !twitterMode,
+                tweetCount: tweetCount
             }).toString();
 
         dispatch(getTweetsAction(params, location))
@@ -218,7 +222,7 @@ const TweetsScreen = () => {
                                     <StatisticTab
                                         wordCloud={wordCloud}
                                         sentimentAnalysis={sentimentAnalysis}
-                                        found={statuses.length > 0}
+                                        found={statuses.length > 0 && !twitterMode}
                                     />
                                 </div>
                             ) : selectedTab === "filters" ? (

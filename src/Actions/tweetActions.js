@@ -44,7 +44,8 @@ export const getTweetsAction = (params, location) => async (dispatch) => {
                 statuses: data.statuses || [],
                 wordCloud: data.wordCloud,
                 sentimentAnalysis: data.sentimentAnalysis,
-                coordinates: Object.fromEntries(coordinates)
+                coordinates: Object.fromEntries(coordinates),
+                generalStats: data.generalStats
             },
         });
 

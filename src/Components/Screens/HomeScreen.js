@@ -164,7 +164,7 @@ const HomeScreen = () => {
             </main>
             {modalOpen && (
                 <div className="fixed w-screen bg-black bg-opacity-25 h-screen top-0 left-0 z-50 flex justify-center items-center p-2">
-                    <div className="max-w-md flex-1 rounded-md shadow-xl bg-base-100 py-8 px-4 overflow-y-auto max-h-80">
+                    <div style={{maxHeight: 'calc(100vh - 20%)', minHeight: "15rem"}} className=" max-w-xl flex-1 rounded-md shadow-xl bg-base-100 py-8 px-4 overflow-y-auto">
                         <button
                             onClick={() => setModalOpen(false)}
                             className="text-base-content"

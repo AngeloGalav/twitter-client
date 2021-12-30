@@ -6,6 +6,8 @@ import {
     CHANGE_POPULAR,
     CHANGE_ONLY_ITALIAN,
     CHANGE_STREAMING,
+    CHANGE_TWEET_MODE,
+    CHANGE_TWEET_COUNT
 } from "../Actions/Types";
 
 const initalState = {
@@ -19,7 +21,9 @@ const initalState = {
     },
     popular: false,
     onlyItalian: false,
-    streaming: true,
+    streaming: false,
+    twitterMode: false,
+    tweetCount: 15
 };
 
 export default function filterReducer(state = initalState, action) {
@@ -63,6 +67,17 @@ export default function filterReducer(state = initalState, action) {
             return {
                 ...state,
                 streaming: action.payload.streaming
+            }
+        case CHANGE_TWEET_MODE:
+            return {
+                ...state,
+                twitterMode: action.payload.twitterMode,
+                tweetCount: 15
+            }
+        case CHANGE_TWEET_COUNT:
+            return {
+                ...state,
+                tweetCount: action.payload.tweetCount,
             }
         default:
             return state;

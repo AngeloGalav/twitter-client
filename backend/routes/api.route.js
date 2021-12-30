@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Twitter = require("twitter");
 const {createWordCloud} = require("../middleware/createWordCloud")
 const {sentimentAnalysis} = require("../middleware/sentimentAnalysis")
+const {generalStats} = require("../middleware/generalStats")
 
 // ci logghiamo in modalita application,
 // in modo che possiamo leggere un sacco di tweet alla volta
@@ -33,16 +34,18 @@ router.get("/Keyword", async (req, res, next) => {
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)
             : (filterObj = filterObj);
+        filterObj.count = params.tweetCount;
         const tweet = await client.get("search/tweets.json", filterObj);
 
         req.data = tweet
+        req.genStats = params.genStats === 'true'
         return next()
         //res.status(200).json({ ...tweet });
     } catch (error) {
         console.log(error);
         next(error);
     }
-}, sentimentAnalysis, createWordCloud);
+},generalStats, sentimentAnalysis, createWordCloud);
 
 //ricerca per hashtag
 router.get("/Hashtag", async (req, res, next) => {
@@ -61,16 +64,18 @@ router.get("/Hashtag", async (req, res, next) => {
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)
             : (filterObj = filterObj);
+        filterObj.count = params.tweetCount;
         const tweet = await client.get("search/tweets.json", filterObj);
 
         req.data = tweet
+        req.genStats = params.genStats === 'true'
         return next()
         
     } catch (error) {
         console.log(error);
         next(error);
     }
-}, sentimentAnalysis, createWordCloud);
+},generalStats, sentimentAnalysis, createWordCloud);
 
 //ricerca per username
 router.get("/Username", async (req, res, next) => {
@@ -89,16 +94,18 @@ router.get("/Username", async (req, res, next) => {
         params.position != "null" && params.radius != "null"
             ? (filterObj.geocode = `${params.position},${params.radius}km`)
             : (filterObj = filterObj);
+        filterObj.count = params.tweetCount;
         const tweet = await client.get("search/tweets.json", filterObj);
 
         req.data = tweet
+        req.genStats = params.genStats === 'true'
         return next()
 
     } catch (error) {
         console.log(error);
         next(error);
     }
-}, sentimentAnalysis, createWordCloud);
+},generalStats, sentimentAnalysis, createWordCloud);
 
 // router.get("/trends", async (req, res, next) => {
 //     try {

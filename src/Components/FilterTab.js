@@ -38,10 +38,22 @@ const FilterTab = (props) => {
         popular,
         onlyItalian,
         streaming,
+        twitterMode,
+        tweetCount,
     } = useSelector((state) => state.filterReducer);
 
     const [address, setAddress] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if (twitterMode) {
+            let options = document.getElementById('tweet-count').getElementsByTagName('option')
+            for (let i = 0; i < options.length; i++) {
+                const option = options[i];
+                option.selected = option.value === tweetCount
+            }
+        }
+    }, [twitterMode])
 
     //trasforma [lat, lng] in un indirizzo leggibile
     useEffect(() => {
@@ -485,6 +497,48 @@ const FilterTab = (props) => {
                             </div>
                         </div>
                     )}
+
+                    <div className="mt-8 px-4 flex justify-between items-center gap-10">
+                        <div>
+                            <h3 className="text-xl font-bold">Twitter mode</h3>
+                            <p className="text-sm mt-2">
+                                Scegli se visualizzare più tweet rinunciando
+                                alle statistiche
+                            </p>
+                        </div>
+                        <div>
+                            <Switch
+                                onChange={() =>
+                                    dispatch({
+                                        type: "CHANGE_TWEET_MODE",
+                                        payload: { twitterMode: !twitterMode },
+                                    })
+                                }
+                                checked={twitterMode}
+                                uncheckedIcon={false}
+                                checkedIcon={false}
+                                onColor="#1DA1F2"
+                            />
+                        </div>
+                    </div>
+                    
+                    {twitterMode &&  <div className="mt-2 px-4 flex flex-col gap-2">
+                        <label className=" text-sm" htmlFor="tweet-count">Numero di tweets</label>
+
+                        <select onChange={(e) =>
+                                    dispatch({
+                                        type: "CHANGE_TWEET_COUNT",
+                                        payload: { tweetCount: e.target.value },
+                                    })
+                                } name="tweet-count" className="bg-base-100 border w-1/4 text-center" id="tweet-count">
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+
+                        </select>
+                    </div>}
+                    
 
                     <div className="px-4 my-20">
                         <button

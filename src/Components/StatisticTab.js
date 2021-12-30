@@ -7,12 +7,21 @@ import { Doughnut } from "react-chartjs-2";
 import ReactStoreIndicator from "react-score-indicator";
 import notFoundTweets from "../Media/undraw_void_-3-ggu.svg";
 import { useSelector } from "react-redux";
+import { Fade } from "react-reveal";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+function getFlagEmoji(countryCode) {
+    const codePoints = countryCode
+      .toUpperCase()
+      .split('')
+      .map(char =>  127397 + char.charCodeAt());
+    return String.fromCodePoint(...codePoints);
+  }
+
 const StatisticTab = (props) => {
     //redux stuff
-    const { sentimentAnalysis, wordCloud } = useSelector(
+    const { sentimentAnalysis, wordCloud, generalStats } = useSelector(
         (state) => state.tweetReducer
     );
 
@@ -75,8 +84,8 @@ const StatisticTab = (props) => {
                                 ></path>
                             </svg>
                             <label>
-                                Ricorda, le statistiche vengono generate sui
-                                tweet e non sono influenzate dallo streaming
+                                Ricorda, le statistiche vengono generate <u>su un campione di tweet</u>
+                                {" "}e non sono influenzate dallo streaming
                             </label>
                         </div>
                     </div>
@@ -157,6 +166,59 @@ const StatisticTab = (props) => {
                                 Wordcloud
                             </h2>
                             <Cloud wordCloud={wordCloud} />
+                        </div>
+                    </div>{" "}
+                    <div className="mt-8 px-4">
+                        <div class="card text-center bg-neutral shadow-xl mt-2 p-4">
+                            <h2 className="text-3xl font-bold text-left mb-4">
+                                Generali
+                            </h2>
+                        <div class="flex flex-col ipad:flex-row justify-center items-center gap-4 max-w-4xl mx-auto container px-4">
+                                <div className="flex-1 rounded-md overflow-hidden shadow-xl w-full">
+                                    <Fade>
+                                        <div class="shadow stats">
+                                            <div class="stat">
+                                                <div class="stat-title">
+                                                    Numero di favoriti medio
+                                                </div>
+                                                <div class="stat-value">
+                                                    {generalStats.avgLikes}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Fade>
+                                </div>
+
+                                <div className="flex-1 rounded-md overflow-hidden shadow-xl w-full">
+                                    <Fade>
+                                        <div class="shadow stats">
+                                            <div class="stat">
+                                                <div class="stat-title">
+                                                    Nazionalità più attiva
+                                                </div>
+                                                <div class="stat-value">
+                                                {getFlagEmoji(generalStats.mostActiveLanguage)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Fade>
+                                </div>
+
+                                <div className="flex-1 rounded-md overflow-hidden shadow-xl w-full">
+                                    <Fade>
+                                        <div class="shadow stats">
+                                            <div class="stat">
+                                                <div class="stat-title">
+                                                    Numero di retweets medio
+                                                </div>
+                                                <div class="stat-value">
+                                                    {generalStats.avgRetweets}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Fade>
+                                </div>
+                            </div>
                         </div>
                     </div>{" "}
                 </>

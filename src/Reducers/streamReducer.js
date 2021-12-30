@@ -9,7 +9,7 @@ export default function userReducer(state = initalState, action) {
         case UPDATE_STREAM:
             return {
                 ...state,
-                streamingStatuses: [...state.streamingStatuses, action.payload.tweet]
+                streamingStatuses: (state.streamingStatuses.length < 100 ? [...state.streamingStatuses, action.payload.tweet] : [...state.streamingStatuses.slice(Math.ceil(state.streamingStatuses.length / 2), state.streamingStatuses.length), action.payload.tweet])
             }
         case EMPTY_STREAM:
             return {
