@@ -20,7 +20,11 @@ var client = new Twitter({
 router.get("/Keyword", async (req, res, next) => {
     try {
         var params = req.query;
-        if (!params) return;
+
+        if (!params.startDate || !params.endDate || !params.q) {
+            return next(new Error("Richiesta non corretta"))
+        }
+
         let filterObj = {};
         filterObj.q =
             params.q + ` since:${params.startDate} until:${params.endDate}`;
@@ -51,7 +55,6 @@ router.get("/Keyword", async (req, res, next) => {
 router.get("/Hashtag", async (req, res, next) => {
     try {
         var params = req.query;
-        if (!params) return;
         let filterObj = {};
         filterObj.q = `%23${params.q} since:${params.startDate} until:${params.endDate}`;
         filterObj.result_type = `${
@@ -81,7 +84,6 @@ router.get("/Hashtag", async (req, res, next) => {
 router.get("/Username", async (req, res, next) => {
     try {
         var params = req.query;
-        if (!params) return;
         let filterObj = {};
         filterObj.q = `from:${params.q} since:${params.startDate} until:${params.endDate}`;
         filterObj.result_type = `${
@@ -122,6 +124,9 @@ router.get("/Username", async (req, res, next) => {
 router.get("/Contest", async (req, res, next) => {
     try {
         var params = req.query;
+        if (!params.q || !params.q.includes("from:") || !params.q.includes("swe11")) {
+            return next(new Error("Richiesta non corretta"))
+        }
         const tweet = await client.get("search/tweets.json", {q: "%23"+params.q, count: 100});
         if (tweet.statuses.length > 0) {
             let data = new Map();
@@ -152,7 +157,7 @@ router.get("/Contest", async (req, res, next) => {
                 fav100
             })
         } else {
-            throw "Nessun tweet trovato"
+            next(new Error("Nessun tweet trovato"))
         }
 
     } catch (error) {
