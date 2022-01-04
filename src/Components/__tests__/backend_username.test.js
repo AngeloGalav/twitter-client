@@ -8,10 +8,10 @@ const oneWeekAgo = new Date(
 ).toISOString(0).split("T")[0];
 const defaultParams = `startDate=${oneWeekAgo}&endDate=${today}&position=null&radius=null&tweetCount=15`
 
-describe('Fetch keyword', () => {
+describe('Fetch username', () => {
     it("should return error cuz no params", async () => {
         try {
-            await axios.get("http://localhost:3001/api/Keyword", {
+            await axios.get("http://localhost:3001/api/Username", {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(true).toBe(false)
@@ -22,7 +22,7 @@ describe('Fetch keyword', () => {
 
     it("should return error cuz no date", async () => {
         try {
-            await axios.get("http://localhost:3001/api/Keyword?q=ciao&position=null&radius=null&tweetCount=15", {
+            await axios.get("http://localhost:3001/api/Username?q=ciao&position=null&radius=null&tweetCount=15", {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(true).toBe(false)
@@ -33,7 +33,7 @@ describe('Fetch keyword', () => {
 
     it("should return error cuz no query", async () => {
         try {
-            await axios.get(`http://localhost:3001/api/Keyword?${defaultParams}`, {
+            await axios.get(`http://localhost:3001/api/Username?${defaultParams}`, {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(true).toBe(false)
@@ -44,7 +44,7 @@ describe('Fetch keyword', () => {
 
     it("should return some tweets", async () => {
         try {
-            const {data} = await axios.get(`http://localhost:3001/api/Keyword?q=ciao&${defaultParams}`, {
+            const {data} = await axios.get(`http://localhost:3001/api/Username?q=ciao&${defaultParams}`, {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(data.statuses.length).toBeGreaterThanOrEqual(0);
@@ -55,7 +55,7 @@ describe('Fetch keyword', () => {
 
     it("should return only italians", async () => {
         try {
-            const {data} = await axios.get(`http://localhost:3001/api/Keyword?q=ciao&${defaultParams}&onlyItalian=true`, {
+            const {data} = await axios.get(`http://localhost:3001/api/Username?q=ciao&${defaultParams}&onlyItalian=true`, {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(data.statuses.length).toBeGreaterThanOrEqual(0);
@@ -71,7 +71,7 @@ describe('Fetch keyword', () => {
 
     it("should generate statistics", async() => {
         try {
-            const {data} = await axios.get(`http://localhost:3001/api/Keyword?q=ciao&${defaultParams}&genStats=true`, {
+            const {data} = await axios.get(`http://localhost:3001/api/Username?q=ciao&${defaultParams}&genStats=true`, {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(data.statuses.length).toBeGreaterThanOrEqual(0);
@@ -87,7 +87,7 @@ describe('Fetch keyword', () => {
 
     it("should not generate statistics", async() => {
         try {
-            const {data} = await axios.get(`http://localhost:3001/api/Keyword?q=ciao&${defaultParams}&genStats=false`, {
+            const {data} = await axios.get(`http://localhost:3001/api/Username?q=ciao&${defaultParams}&genStats=false`, {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(data.statuses.length).toBeGreaterThanOrEqual(0);
