@@ -51,7 +51,7 @@ const TweetsScreen = () => {
 
 
     useEffect(() => {
-        const socket = socketIOClient('http://localhost:3001/');
+        const socket = socketIOClient('/');
         socket.on('connect', () => {
             console.log("Socket Connected " + socket.id);
             setSocketId(socket.id)

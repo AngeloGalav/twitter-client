@@ -48,14 +48,7 @@ const AboutScreen = () => {
                             Chi siamo
                         </h1>
                         <p>
-                            Airbnb was born in 2007 when two Hosts welcomed
-                            three guests to their San Francisco home, and has
-                            since grown to 4 million Hosts who have welcomed
-                            more than 1 billion guest arrivals in almost every
-                            country across the globe. Every day, Hosts offer
-                            unique stays and one-of-a-kind activities that make
-                            it possible for guests to experience the world in a
-                            more authentic, connected way.
+                            HITWEET è un progetto universitario nato per il corso di Ingegneria del Software del corso di laurea in Informatica nell'univiersità di Bologna. Consiste in un client Twitter che permette di cercare tweets da twitter, visualizzarli su mappa, ricavarne statistiche interessanti come analisi dei sentimenti o word cloud. O ancora, visualizzare i tweet che vengono inviati in tempo reale con l'opzione streaming e per finire creare contest o trivia tramite Twitter e vederne i risultati e le classifiche dei vincitori. Lo scopo principale del progetto tuttavia, non era realizzare questo lavoro ma imparare il processo di sviluppo agile e lavorare in gruppo.
                         </p>
                     </div>
                 </div>
@@ -80,9 +73,9 @@ const AboutScreen = () => {
                                         Product owner
                                     </span>
                                 </h2>
-                                <p className="text-lg font-normal mt-2">
+                                {/* <p className="text-lg font-normal mt-2">
                                     Co-founder and Chief Executive Officer
-                                </p>
+                                </p> */}
                             </div>
 
                             <div class="max-w-md flex-1">
@@ -99,10 +92,10 @@ const AboutScreen = () => {
                                         Scrum master
                                     </span>
                                 </h2>
-                                <p className="text-lg font-normal mt-2">
+                                {/* <p className="text-lg font-normal mt-2">
                                     Co-Founder, Chief Strategy Officer, Chairman
                                     of Airbnb China
-                                </p>
+                                </p> */}
                             </div>
                         </div>
 
@@ -121,9 +114,9 @@ const AboutScreen = () => {
                                         Developer
                                     </span>
                                 </h2>
-                                <p className="text-lg font-normal mt-2">
+                                {/* <p className="text-lg font-normal mt-2">
                                     Co-founder and Chief Executive Officer
-                                </p>
+                                </p> */}
                             </div>
 
                             <div class="max-w-md flex-1">
@@ -140,10 +133,10 @@ const AboutScreen = () => {
                                         Developer
                                     </span>
                                 </h2>
-                                <p className="text-lg font-normal mt-2">
+                                {/* <p className="text-lg font-normal mt-2">
                                     Co-Founder, Chief Strategy Officer, Chairman
                                     of Airbnb China
-                                </p>
+                                </p> */}
                             </div>
 
                             <div class="max-w-md flex-1">
@@ -160,10 +153,10 @@ const AboutScreen = () => {
                                         Developer
                                     </span>
                                 </h2>
-                                <p className="text-lg font-normal mt-2">
+                                {/* <p className="text-lg font-normal mt-2">
                                     Co-Founder, Chief Strategy Officer, Chairman
                                     of Airbnb China
-                                </p>
+                                </p> */}
                             </div>
                         </div>
                     </div>

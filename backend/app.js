@@ -4,6 +4,7 @@ const http = require('http');
 const socketio = require('socket.io');
 const morgan = require('morgan');
 const sendEmail = require('./utils/sendEmail');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -19,6 +20,7 @@ const io = socketio(server, {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', async (req, res, next) => {
   res.send({ message: 'Awesome it works 🐻' });
@@ -42,6 +44,10 @@ app.post("/api/contacts", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.use((req, res, next) => {
