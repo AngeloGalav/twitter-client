@@ -16,7 +16,7 @@ const parseText = (text) => {
     let textHashtagLink = textLink.replace(
         hashtagRegex,
         (hashtag) =>
-            `<a class="text-base-content underline font-medium" href=http://localhost:3000/tweets/Hashtag?q=${hashtag.substring(
+            `<a class="text-base-content underline font-medium" href=./tweets/Hashtag?q=${hashtag.substring(
                 1
             )}>${hashtag}</a>`
     );
@@ -24,7 +24,7 @@ const parseText = (text) => {
     return textHashtagLink.replace(
         userNameRegex,
         (userName) =>
-            `<a class="text-base-content underline font-medium" href=http://localhost:3000/tweets/Username?q=${userName
+            `<a class="text-base-content underline font-medium" href=./tweets/Username?q=${userName
                 .replace("@", "")
                 .replace(" ", "")}>${userName}</a>`
     );
