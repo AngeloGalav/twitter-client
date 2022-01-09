@@ -98,10 +98,10 @@ const StatisticTab = (props) => {
                                         {!sentimentTab ? (
                                             <ReactStoreIndicator
                                                 value={
-                                                    Math.round(
+                                                    Math.min(Math.round(
                                                         sentimentAnalysis.comparative *
                                                             2
-                                                    ) / 2
+                                                    ) / 2, 10)
                                                 }
                                                 maxValue={10}
                                                 fadedOpacity={20}
@@ -166,7 +166,7 @@ const StatisticTab = (props) => {
                             <Cloud wordCloud={wordCloud} />
                         </div>
                     </div>{" "}
-                    <div className="mt-8 px-4">
+                    <div className="mt-8 px-4 mb-10">
                         <div class="card text-center bg-neutral shadow-xl mt-2 p-4">
                             <h2 className="text-3xl font-bold text-left mb-4">
                                 Generali
@@ -223,7 +223,7 @@ const StatisticTab = (props) => {
             ) : (
                 <div
                     style={{ height: "calc(100% - 2rem)" }}
-                    className="flex flex-col mt-8 px-4 gap-20 laptop:gap-0 items-center"
+                    className="flex flex-col mt-8 px-4 py-4 gap-20 laptop:gap-0 items-center"
                 >
                     <p className="w-full text-left text-base">
                         Niente da vedere quì ...{" "}

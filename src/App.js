@@ -9,6 +9,7 @@ import Cloud from "./Components/Cloud";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Footer from "./Components/Footer";
 import ContestScreen from "./Components/Screens/ContestScreen";
+import NotFoundScreen from "./Components/Screens/NotFoundScreen";
 
 function App() {
     return (
@@ -28,6 +29,8 @@ function App() {
                 <Route exact path="/tweets/:mainFilter" component={TweetsScreen} />
 
                 <Route exact path="/contest" component={ContestScreen} />
+
+                <Route component={NotFoundScreen} />
 
                 {/* <Route exact path="/cloud" component={Cloud} /> */}
 

@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMapEvents, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { useDispatch, useSelector } from "react-redux";
 
 const UserMarker = (props) => {
-
-    const {
-        position,
-    } = useSelector((state) => state.filterReducer);
+    const { position } = useSelector((state) => state.filterReducer);
     const dispatch = useDispatch();
-
+    // eslint-disable-next-line
     const map = useMapEvents({
         click(e) {
             dispatch({
                 type: "CHANGE_POSITION",
                 payload: {
-                    position: e.latlng
-                }
-            })
+                    position: e.latlng,
+                },
+            });
             //props.setPosition(e.latlng);
         },
     });

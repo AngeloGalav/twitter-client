@@ -70,7 +70,7 @@ export const TweetList = ({ setCenter }) => {
                     </ul>
                 </>
             ) : (
-                <div style={{height: "calc(100% - 2rem)"}} className="flex flex-col mt-8 px-4 gap-20 laptop:gap-0 items-center">
+                <div style={{height: "calc(100% - 2rem)"}} className="flex flex-col mt-8 px-4 gap-20 py-4 laptop:gap-0 items-center">
                     <p className="w-full text-left text-base">Nessun risultato trovato ... <i class="bi bi-emoji-frown"></i></p>
                     <div className="w-full h-full flex justify-center items-center">
                     <img className="max-w-md mx-auto w-full" src={notFoundTweets} alt="" />

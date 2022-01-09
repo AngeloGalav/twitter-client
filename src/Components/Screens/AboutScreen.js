@@ -47,7 +47,7 @@ const AboutScreen = () => {
                             Chi siamo
                         </h1>
                         <p>
-                            HITWEET è un progetto universitario nato per il corso di Ingegneria del Software del corso di laurea in Informatica nell'univiersità di Bologna. Consiste in un client Twitter che permette di cercare tweets da twitter, visualizzarli su mappa, ricavarne statistiche interessanti come analisi dei sentimenti o word cloud. O ancora, visualizzare i tweet che vengono inviati in tempo reale con l'opzione streaming e per finire creare contest o trivia tramite Twitter e vederne i risultati e le classifiche dei vincitori. Lo scopo principale del progetto tuttavia, non era realizzare questo lavoro ma imparare il processo di sviluppo agile e lavorare in gruppo.
+                            <span className="font-bold">HI</span>TWEET è un progetto universitario nato per il corso di Ingegneria del Software della laurea in Informatica nell'univiersità di Bologna. Consiste in un client Twitter che permette di cercare tweet da twitter, visualizzarli su mappa, ricavarne statistiche interessanti come analisi dei sentimenti, word cloud ecc. O ancora, permette di visualizzare i tweet che vengono inviati in tempo reale con l'opzione streaming e per finire creare contest o trivia tramite Twitter e vederne i risultati e le classifiche dei vincitori. Lo scopo principale del progetto tuttavia, non era realizzare questo lavoro ma imparare il processo di sviluppo agile e lavorare in gruppo.
                         </p>
                     </div>
                 </div>
@@ -62,7 +62,7 @@ const AboutScreen = () => {
                                 <figure className="rounded-md overflow-hidden h-96">
                                     <img
                                         className=" object-cover w-full h-full"
-                                        src="https://news.airbnb.com/wp-content/uploads/sites/4/2016/10/140602_AirBnb_Brian_3837_SquareCrop.jpg?fit=950%2C950"
+                                        src="https://media.istockphoto.com/vectors/programming-design-concept-vector-id947663966?k=20&m=947663966&s=612x612&w=0&h=JUMJJkuDL6c9vReaJVL3Y4pDvJtqMzSVVYiJ6CSE-8A="
                                         alt=""
                                     />
                                 </figure>
@@ -72,16 +72,16 @@ const AboutScreen = () => {
                                         Product owner
                                     </span>
                                 </h2>
-                                {/* <p className="text-lg font-normal mt-2">
-                                    Co-founder and Chief Executive Officer
-                                </p> */}
+                                <p className="text-lg font-normal mt-2">
+                                    Responsabile della gestione dei servizi messi a disposizione dall'istituto.
+                                </p>
                             </div>
 
                             <div class="max-w-md flex-1">
                                 <figure className="rounded-md overflow-hidden h-96">
                                     <img
                                         className=" object-cover w-full h-full"
-                                        src="https://picsum.photos/id/1005/400/250"
+                                        src="https://i.pinimg.com/originals/e9/76/32/e97632ec437ea45fcde27d1f85b32fbc.png"
                                         alt=""
                                     />
                                 </figure>
@@ -91,10 +91,9 @@ const AboutScreen = () => {
                                         Scrum master
                                     </span>
                                 </h2>
-                                {/* <p className="text-lg font-normal mt-2">
-                                    Co-Founder, Chief Strategy Officer, Chairman
-                                    of Airbnb China
-                                </p> */}
+                                <p className="text-lg font-normal mt-2">
+                                    Responsabile del processo di sviluppo agile e supervisore del metodo scrum.
+                                </p>
                             </div>
                         </div>
 
@@ -103,7 +102,7 @@ const AboutScreen = () => {
                                 <figure className="rounded-md overflow-hidden h-96">
                                     <img
                                         className=" object-cover w-full h-full"
-                                        src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Pierre-Person.jpg"
+                                        src="https://media.istockphoto.com/vectors/work-problem-vector-illustration-cartoon-busy-people-working-hard-in-vector-id1221802324?k=20&m=1221802324&s=612x612&w=0&h=xZfSieEDAqLzOkoVu96ooBgHBVXxZBTxLqyBY7-0YDo="
                                         alt=""
                                     />
                                 </figure>
@@ -113,16 +112,16 @@ const AboutScreen = () => {
                                         Developer
                                     </span>
                                 </h2>
-                                {/* <p className="text-lg font-normal mt-2">
-                                    Co-founder and Chief Executive Officer
-                                </p> */}
+                                <p className="text-lg font-normal mt-2">
+                                    Tech-lead e responsabile dello sviluppo dell'app React.
+                                </p>
                             </div>
 
                             <div class="max-w-md flex-1">
                                 <figure className="rounded-md overflow-hidden h-96">
                                     <img
                                         className=" object-cover w-full h-full"
-                                        src="https://cdn.pixabay.com/photo/2015/08/25/10/40/ben-knapen-906550_960_720.jpg"
+                                        src="https://thumbs.dreamstime.com/b/man-developer-coding-chatting-laptop-vector-illustration-guy-freelancer-program-code-flat-style-programming-website-concept-216533215.jpg"
                                         alt=""
                                     />
                                 </figure>
@@ -132,17 +131,16 @@ const AboutScreen = () => {
                                         Developer
                                     </span>
                                 </h2>
-                                {/* <p className="text-lg font-normal mt-2">
-                                    Co-Founder, Chief Strategy Officer, Chairman
-                                    of Airbnb China
-                                </p> */}
+                                <p className="text-lg font-normal mt-2">
+                                Sviluppatore di funzionalità riguardanti ricerca e statistiche.
+                                </p>
                             </div>
 
                             <div class="max-w-md flex-1">
                                 <figure className="rounded-md overflow-hidden h-96">
                                     <img
                                         className="object-cover w-full h-full"
-                                        src="https://st3.depositphotos.com/1037987/15097/i/600/depositphotos_150975580-stock-photo-portrait-of-businesswoman-in-office.jpg"
+                                        src="https://assets.materialup.com/uploads/3c4c9c12-9ff6-4fd4-8b8b-a9f93c5effe4/preview.jpg"
                                         alt=""
                                     />
                                 </figure>
@@ -152,10 +150,9 @@ const AboutScreen = () => {
                                         Developer
                                     </span>
                                 </h2>
-                                {/* <p className="text-lg font-normal mt-2">
-                                    Co-Founder, Chief Strategy Officer, Chairman
-                                    of Airbnb China
-                                </p> */}
+                                <p className="text-lg font-normal mt-2">
+                                Sviluppatore di funzionalità riguardanti wordCloud e Tester.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -193,7 +190,7 @@ const AboutScreen = () => {
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-center w-full">
-                                    <input type="submit" class={`mt-16 font-semibold leading-none py-4 px-10 btn ${errorMail ? "btn-error" : "btn-secondary"}`} value="Invia" />
+                                    <input type="submit" class={`mt-16 font-semibold leading-none py-4 px-10 btn ${errors.message || errors.name || errors.email ? "btn-error text-white" : "btn-secondary"}`} value="Invia" />
                                 </div>
                             </form>
                         </div>

@@ -28,8 +28,6 @@ exports.generalStats = (req, res, next) => {
         }
 
     
-
-        console.log(req.data.generalStats)
         next();
     } else {
         next();

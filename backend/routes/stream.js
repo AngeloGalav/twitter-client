@@ -13,19 +13,6 @@ module.exports = (app, io) => {
 
     app.locals.connectedSockets = new Map();
 
-    setInterval(() => {
-
-       let currentSockets =  Object.fromEntries(app.locals.connectedSockets)
-       if (Object.keys(currentSockets).length > 0) {
-        console.log("Current sockets connected:")
-        Object.keys(currentSockets).forEach(socket => console.log(socket + "\n"))
-       } else {
-           console.log("There aren't sockets connected currently")
-       }
-       
-       
-    }, 2000);
-
     /**
      * Resumes twitter stream.
      */
@@ -52,7 +39,6 @@ module.exports = (app, io) => {
             return res.status(400).json({message: "no socket id"})
         }
         let filter = req.body.filter;
-        console.log(req.body)
         if (filter.follow) {
             try {
                 const userId = await twitter.get("users/lookup", {screen_name: filter.follow.split("@")[1]})

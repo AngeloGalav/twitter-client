@@ -1,7 +1,6 @@
 import React from "react";
 import ReactWordcloud from "react-wordcloud";
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 // import axios from "axios";
 // import Loading from "./Loading";
@@ -14,16 +13,16 @@ import { useHistory } from "react-router";
 const options = {
     enableTooltip: true,
     deterministic: false,
-    fontSizes: [20, 100],
-    fontFamily: "Abril Fatface",
+    fontSizes: [12, 80],
     fontStyle: "normal",
     fontWeight: "normal",
     padding: 2,
     rotations: 0,
     rotationAngles: [0, 0],
     scale: "sqrt",
-    spiral: "rectangular",
+  spiral: "archimedean",
     transitionDuration: 1000,
+    enableOptimizations: true
 };
 
 
@@ -67,7 +66,6 @@ const Cloud = ({ wordCloud }) => {
     return (
         <div>
             <div
-                style={{ fontFamily: "Abril Fatface" }}
                 className="w-full h-full"
             >
                 <ReactWordcloud words={words} options={options} callbacks={callbacks}/>

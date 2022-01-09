@@ -15,7 +15,7 @@ export const Tweet = ({ tweet, setCenter }) => {
         let textHashtagLink = textLink.replace(
             hashtagRegex,
             (hashtag) =>
-                `<a class="text-primary hover:underline" href=./tweets/Hashtag?q=${hashtag.substring(
+                `<a class="text-primary hover:underline" href=/tweets/Hashtag?q=${hashtag.substring(
                     1
                 )}>${hashtag}</a>`
         );
@@ -23,7 +23,7 @@ export const Tweet = ({ tweet, setCenter }) => {
         return textHashtagLink.replace(
             userNameRegex,
             (userName) =>
-                `<a class="text-primary hover:underline " href=./tweets/Username?q=${userName
+                `<a class="text-primary hover:underline " href=/tweets/Username?q=${userName
                     .replace("@", "")
                     .replace(" ", "")}>${userName}</a>`
         );
