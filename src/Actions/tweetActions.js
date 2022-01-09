@@ -51,7 +51,6 @@ export const getTweetsAction = (params, location) => async (dispatch) => {
 
         return Promise.resolve();
     } catch (error) {
-        console.log(error);
         dispatch({
             type: TWEET_FAIL,
         });

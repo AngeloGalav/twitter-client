@@ -33,7 +33,6 @@ const ContestScreen = () => {
             try {
                 const { data } = await axios.get("/api/contest" + q);
                 //if(!data) throw "Errore"
-                console.log(data);
                 setRanking(data.ranking);
                 setTotal(data.total);
                 setFav1(data.fav1);
@@ -45,7 +44,6 @@ const ContestScreen = () => {
                 setTotal(0);
                 setFav100(0);
                 setIsLoading(false);
-                console.log("Errore");
             }
         };
 

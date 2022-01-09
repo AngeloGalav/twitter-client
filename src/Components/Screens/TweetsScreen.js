@@ -53,7 +53,6 @@ const TweetsScreen = () => {
     useEffect(() => {
         const socket = socketIOClient('/');
         socket.on('connect', () => {
-            console.log("Socket Connected " + socket.id);
             setSocketId(socket.id)
             socket.on("tweets", data => {
                  dispatch({type: "UPDATE_STREAM", payload: {tweet: data}})
@@ -62,7 +61,6 @@ const TweetsScreen = () => {
           socket.on('disconnect', () => {
             socket.off("tweets")
             socket.removeAllListeners("tweets");
-            console.log("Socket Disconnected");
           });
         return () => {
             socket.disconnect();
@@ -78,7 +76,6 @@ const TweetsScreen = () => {
     }, [socketId, isLoading])
 
     const handleStreaming = async keyword => {
-        console.log(socketId)
         if (!streaming) {
             axios.post("/api/pause", {socketId});
         } else {
@@ -101,7 +98,7 @@ const TweetsScreen = () => {
                 await axios.post("/api/setFilter", {filter, socketId});
                 await axios.post("/api/resume", {socketId});
             } catch (error) {
-                console.log(error)
+                console.log(error.response.data.error)
             }
             
         }

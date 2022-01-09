@@ -108,7 +108,7 @@ const NavbarDesktop = () => {
                             </button>
                         </div>
                     ) : (
-                        <div className="flex-1 laptop:flex justify-center hidden">
+                        <div className="w-full flex-nowrap laptop:flex justify-center hidden">
                             <div className="tabs">
                             {filters.map((filter, i) => 
                         <a

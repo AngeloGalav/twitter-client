@@ -26,7 +26,6 @@ const AboutScreen = () => {
             setErrorMail(true)
         }
     }
-    console.log(errors);
 
     return (
         <div id="about-screen-container">

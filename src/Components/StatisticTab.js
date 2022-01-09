@@ -54,8 +54,6 @@ const StatisticTab = (props) => {
                 ],
             });
         }
-
-        console.log(sentimentAnalysis);
     }, []);
 
     return (
