@@ -9,8 +9,8 @@ const sendEmail = (options) => {
       ciphers: "SSLv3",
     },
     auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
+      user: "team11swe2021@outlook.it",
+      pass: "}&J}+fU8tTbXRHe9",
     },
   });
 

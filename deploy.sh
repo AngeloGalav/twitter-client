@@ -1,8 +1,9 @@
+npm run build
 cd backend
 if [ -d "../build" ]; then
     echo "Moving files from frontend build directory..."
-    # rm -rf build
-    # mv ../build .
+    rm -rf build
+    mv ../build .
 else
     echo "frontend build directory not found..."
 fi

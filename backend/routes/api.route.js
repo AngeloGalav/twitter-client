@@ -7,9 +7,9 @@ const {generalStats} = require("../middleware/generalStats")
 // ci logghiamo in modalita application,
 // in modo che possiamo leggere un sacco di tweet alla volta
 var client = new Twitter({
-    consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-    bearer_token: process.env.TWITTER_BEARER_TOKEN,
+    consumer_key: "9Do51SWwjcRQpBGheiEaZAORh",
+    consumer_secret: "AWG7X1Hr24bYHqDudjuroI7o8DjAq8r42bcOxI87snnkn4QGOY",
+    bearer_token:"AAAAAAAAAAAAAAAAAAAAAEubVAEAAAAAKCxUBGiiiPqLoSw39uwOc6xLXEI%3DsgF83neaDxkh08z9yuJ3RQwE2PTUY0Tr5Xr8FX4c3TKcIarxqa"
 });
 
 

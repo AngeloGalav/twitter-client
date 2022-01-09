@@ -2,10 +2,10 @@ const Twitter = require('twitter');
 
 module.exports = (app, io) => {
     let twitter = new Twitter({
-        consumer_key: process.env.TWITTER_CONSUMER_KEY,
-        consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-        access_token_key: process.env.TWITTER_ACCESS_TOKEN,
-        access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+        consumer_key: "9Do51SWwjcRQpBGheiEaZAORh",
+        consumer_secret: "AWG7X1Hr24bYHqDudjuroI7o8DjAq8r42bcOxI87snnkn4QGOY",
+        access_token_key: "1448259020637212676-gwtgt8NcUwhLXvnYEaWv7OEAHGUN2t",
+        access_token_secret: "2KYT1M7hfep9jASg1XCAFLlRqWkVDGmE4IVRycqN06JK1"
     });
 
     // let socketConnection;
