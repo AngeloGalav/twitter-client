@@ -11,21 +11,12 @@ const app = express();
 
 const server = http.createServer(app);
 
-const io = socketio(server, {
-  cors: {
-    origin: "http://localhost:3000",
-}
-});
+const io = socketio(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('/', async (req, res, next) => {
-  res.send({ message: 'Awesome it works 🐻' });
-});
-
 
 app.use('/api', require('./routes/api.route'));
 
@@ -63,7 +54,7 @@ app.use((err, req, res, next) => {
   console.log(err.message)
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 //app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`));
 server.listen(PORT, () => {

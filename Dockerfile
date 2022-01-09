@@ -8,8 +8,8 @@ RUN npm install
 
 COPY backend/* ./
 
-ENV PORT=3001
+ENV PORT=8000
 
-EXPOSE 3001
+EXPOSE 8000
 
 CMD ["npm", "run", "start"]

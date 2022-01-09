@@ -3,7 +3,7 @@ import axios from 'axios'
 describe('Fetch Contest', () => {
     it("no params should return error", async () => {
         try {
-            await axios.get("http://localhost:3001/api/Contest", {
+            await axios.get("http://localhost:8000/api/Contest", {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(true).toBe(false)
@@ -14,7 +14,7 @@ describe('Fetch Contest', () => {
 
     it("bad hashtag should return error", async () => {
         try {
-            await axios.get("http://localhost:3001/api/Contest?q=sw1 from:username", {
+            await axios.get("http://localhost:8000/api/Contest?q=sw1 from:username", {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(true).toBe(false)
@@ -25,7 +25,7 @@ describe('Fetch Contest', () => {
 
     it("no username should return error", async () => {
         try {
-            await axios.get("http://localhost:3001/api/Contest?q=testswe11", {
+            await axios.get("http://localhost:8000/api/Contest?q=testswe11", {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(true).toBe(false)
@@ -36,7 +36,7 @@ describe('Fetch Contest', () => {
 
     it("good request should return tweets", async () => {
         try {
-            const { data } = await axios.get("http://localhost:3001/api/Contest?q=testswe11 from:username", {
+            const { data } = await axios.get("http://localhost:8000/api/Contest?q=testswe11 from:username", {
                 adapter: require('axios/lib/adapters/http'), //inserire sempre questo
             }) // no params
             expect(data.ranking).toBeDefined()
