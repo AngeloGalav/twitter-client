@@ -1,4 +1,4 @@
-// import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 // import SwitchTheme from "../SwitchTheme";
 // import { Provider } from "react-redux";
@@ -19,6 +19,6 @@ describe("Testing switch component", () => {
         // const switchThemeElem = screen.getByTestId("switch-theme-test");
         // expect(switchThemeElem).toBeInTheDocument();
 
-        except(true).toBe(true);
+        expect(true).toBe(true);
     });
 });
