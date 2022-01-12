@@ -26,6 +26,12 @@ router.get("/Keyword", async (req, res, next) => {
         }
 
         let filterObj = {};
+
+        //controlla la data che non sia oggi perche twitter e' una merda
+        let today = new Date()
+        today = today.toISOString().split('T')[0]
+        if (params.endDate === today) params.endDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]
+
         filterObj.q =
             params.q + ` since:${params.startDate} until:${params.endDate}`;
         filterObj.result_type = `${
@@ -56,6 +62,12 @@ router.get("/Hashtag", async (req, res, next) => {
     try {
         var params = req.query;
         let filterObj = {};
+
+        //controlla la data che non sia oggi perche twitter e' una merda
+        let today = new Date()
+        today = today.toISOString().split('T')[0]
+        if (params.endDate === today) params.endDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]
+
         filterObj.q = `%23${params.q} since:${params.startDate} until:${params.endDate}`;
         filterObj.result_type = `${
             params.popular === "true" ? "popular" : "mixed"
@@ -85,6 +97,12 @@ router.get("/Username", async (req, res, next) => {
     try {
         var params = req.query;
         let filterObj = {};
+
+        //controlla la data che non sia oggi perche twitter e' una merda
+        let today = new Date()
+        today = today.toISOString().split('T')[0]
+        if (params.endDate === today) params.endDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]
+
         filterObj.q = `from:${params.q} since:${params.startDate} until:${params.endDate}`;
         filterObj.result_type = `${
             params.popular === "true" ? "popular" : "mixed"

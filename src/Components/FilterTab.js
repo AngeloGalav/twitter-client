@@ -47,13 +47,15 @@ const FilterTab = (props) => {
 
     useEffect(() => {
         if (twitterMode) {
-            let options = document.getElementById('tweet-count').getElementsByTagName('option')
+            let options = document
+                .getElementById("tweet-count")
+                .getElementsByTagName("option");
             for (let i = 0; i < options.length; i++) {
                 const option = options[i];
-                option.selected = option.value === tweetCount
+                option.selected = option.value === tweetCount;
             }
         }
-    }, [twitterMode])
+    }, [twitterMode]);
 
     //trasforma [lat, lng] in un indirizzo leggibile
     useEffect(() => {
@@ -97,20 +99,20 @@ const FilterTab = (props) => {
         }
     };
 
-    const handleDateSelect = (ranges) => {
-        const newDate = {
-            startDate: new Date(ranges.startDate),
-            endDate: new Date(ranges.endDate),
-        };
-        //props.setSelectionRange(newDate);
+    // const handleDateSelect = (ranges) => {
+    //     const newDate = {
+    //         startDate: new Date(ranges.startDate),
+    //         endDate: new Date(ranges.endDate),
+    //     };
+    //     //props.setSelectionRange(newDate);
 
-        dispatch({
-            type: "CHANGE_SELECTION_RANGE",
-            payload: {
-                selectionRange: newDate,
-            },
-        });
-    };
+    //     dispatch({
+    //         type: "CHANGE_SELECTION_RANGE",
+    //         payload: {
+    //             selectionRange: newDate,
+    //         },
+    //     });
+    // };
 
     return (
         <div className="h-full noScrollBar laptop:overflow-y-auto">
@@ -275,7 +277,7 @@ const FilterTab = (props) => {
                                 onChange={
                                     (value) =>
                                         dispatch({
-                                            type: "CHANGE_DATE",
+                                            type: "CHANGE_SELECTION_RANGE",
                                             payload: {
                                                 selectionRange: {
                                                     startDate: new Date(
@@ -318,7 +320,7 @@ const FilterTab = (props) => {
                                 onChange={
                                     (value) =>
                                         dispatch({
-                                            type: "CHANGE_DATE",
+                                            type: "CHANGE_SELECTION_RANGE",
                                             payload: {
                                                 selectionRange: {
                                                     startDate:
@@ -520,24 +522,31 @@ const FilterTab = (props) => {
                             />
                         </div>
                     </div>
-                    
-                    {twitterMode &&  <div className="mt-2 px-4 flex flex-col gap-2">
-                        <label className=" text-sm" htmlFor="tweet-count">Numero di tweets</label>
 
-                        <select onChange={(e) =>
+                    {twitterMode && (
+                        <div className="mt-2 px-4 flex flex-col gap-2">
+                            <label className=" text-sm" htmlFor="tweet-count">
+                                Numero di tweets
+                            </label>
+
+                            <select
+                                onChange={(e) =>
                                     dispatch({
                                         type: "CHANGE_TWEET_COUNT",
                                         payload: { tweetCount: e.target.value },
                                     })
-                                } name="tweet-count" className="bg-base-100 border w-1/4 text-center" id="tweet-count">
-                        <option value="15">15</option>
-                        <option value="30">30</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-
-                        </select>
-                    </div>}
-                    
+                                }
+                                name="tweet-count"
+                                className="bg-base-100 border w-1/4 text-center"
+                                id="tweet-count"
+                            >
+                                <option value="15">15</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    )}
 
                     <div className="px-4 my-20">
                         <button
