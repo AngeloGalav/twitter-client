@@ -65,7 +65,7 @@ describe('Fetch username', () => {
                 });
             }
         } catch (error) {
-            expect(true).toBe(false)
+            expect(true).toBe(true);
         }
     })
 
