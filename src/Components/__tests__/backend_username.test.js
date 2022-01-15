@@ -53,21 +53,22 @@ describe('Fetch username', () => {
         }
     })
 
-    it("should return only italians", async () => {
-        try {
-            const {data} = await axios.get(`http://localhost:8000/api/Username?q=ciao&${defaultParams}&onlyItalian=true`, {
-                adapter: require('axios/lib/adapters/http'), //inserire sempre questo
-            }) // no params
-            expect(data.statuses.length).toBeGreaterThanOrEqual(0);
-            if (data.statuses.length > 0) {
-                data.statuses.forEach(tweet => {
-                    expect(tweet.lang).toBe("it")
-                });
-            }
-        } catch (error) {
-            expect(true).toBe(true);
-        }
-    })
+    // it("should return only italians", async () => {
+    //     try {
+    //         const {data} = await axios.get(`http://localhost:8000/api/Username?q=ciao&${defaultParams}&onlyItalian=true`, {
+    //             adapter: require('axios/lib/adapters/http'), //inserire sempre questo
+    //         }) // no params
+    //         expect(data.statuses.length).toBeGreaterThanOrEqual(0);
+    //         if (data.statuses.length > 0) {
+    //             data.statuses.forEach(tweet => {
+    //                 expect(tweet.lang).toBe("it")
+    //             });
+    //         }
+    //     } catch (error) {
+    //         expect(true).toBe(true);
+    //     }
+    // })
+    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
 
     it("should generate statistics", async() => {
         try {
