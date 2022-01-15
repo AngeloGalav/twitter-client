@@ -24,5 +24,13 @@
     "jest": "^27.4.3",
     "nodemon": "^2.0.14",
     "socket.io": "^4.4.0"
+  },
+  "jest" : {
+    "testResultsProcessor": "jest-sonar-reporter"
+  },
+  "jestSonar": {
+    "reportPath": "coverage",
+    "reportFile": "clover.xml",
+    "indent": 4
   }
 }
