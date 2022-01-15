@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Footer from "./Components/Footer";
 import ContestScreen from "./Components/Screens/ContestScreen";
 import NotFoundScreen from "./Components/Screens/NotFoundScreen";
+import TriviaScreen from "./Components/Screens/TriviaScreen";
 
 function App() {
     return (
@@ -29,6 +30,8 @@ function App() {
                 <Route exact path="/tweets/:mainFilter" component={TweetsScreen} />
 
                 <Route exact path="/contest" component={ContestScreen} />
+
+                <Route exact path="/trivia" component={TriviaScreen} />
 
                 <Route component={NotFoundScreen} />
 

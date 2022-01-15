@@ -12,11 +12,11 @@ import axios from "axios";
 
 import notFound from "../../Media/undraw_walk_dreaming_u-58-a.svg";
 
-const ContestScreen = () => {
+const TriviaScreen = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [ranking, setRanking] = useState([]);
     const [total, setTotal] = useState(0);
-    const [fav1, setFav1] = useState(0);
+    const [solution, setSolution] = useState(null);
     const [favTotal, setFavTotal] = useState(0);
     // eslint-disable-next-line
     const [width, height] = useWindowSize();
@@ -31,16 +31,16 @@ const ContestScreen = () => {
             const q = search.toString();
             setIsLoading(true);
             try {
-                const { data } = await axios.get("/api/contest" + q);
+                const { data } = await axios.get("/api/trivia" + q);
                 //if(!data) throw "Errore"
                 setRanking(data.ranking);
                 setTotal(data.total);
-                setFav1(data.fav1);
+                setSolution(data.solution);
                 setFavTotal(data.favTotal);
                 setIsLoading(false);
             } catch (error) {
                 setRanking([]);
-                setFav1(0);
+                setSolution(0);
                 setTotal(0);
                 setFavTotal(0);
                 setIsLoading(false);
@@ -51,7 +51,7 @@ const ContestScreen = () => {
     }, []);
     return (
         <div
-            id="contest-screen-container"
+            id="trivia-screen-container"
             className=" bg-primary bg-opacity-50 pb-20"
         >
             <div
@@ -84,7 +84,7 @@ const ContestScreen = () => {
                                         <RankingColumn
                                             height="30vh"
                                             minHeight="15rem"
-                                            iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon-2.png"
+                                            solution={solution===ranking[2][0]}
                                             votes={
                                                 ranking[2] ? ranking[2][1] : ""
                                             }
@@ -102,7 +102,7 @@ const ContestScreen = () => {
                                         <RankingColumn
                                             height="50vh"
                                             minHeight="25rem"
-                                            iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon.png"
+                                            solution={solution===ranking[0][0]}
                                             votes={ranking[0][1]}
                                             position={1}
                                             partecipant={truncate(
@@ -114,7 +114,7 @@ const ContestScreen = () => {
                                         <RankingColumn
                                             height="40vh"
                                             minHeight="20rem"
-                                            iconMedal="https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-medal-awards-justicon-flat-justicon-1.png"
+                                            solution={solution===ranking[1][0]}
                                             votes={
                                                 ranking[1] ? ranking[1][1] : ""
                                             }
@@ -165,7 +165,7 @@ const ContestScreen = () => {
                                                 <tr className="rounded-t-md p-8 overflow-hidden">
                                                     <th></th>
                                                     <th>Posizione</th>
-                                                    <th>Partecipante</th>
+                                                    <th>Risposta</th>
                                                     <th>Voti</th>
                                                 </tr>
                                             </thead>
@@ -173,7 +173,7 @@ const ContestScreen = () => {
                                                 {ranking.map((ranking, i) => {
                                                     if (i < 10) {
                                                         return (
-                                                            <tr>
+                                                            <tr className={`${solution===ranking[0] ? "text-success" : "text-base-content"}`}>
                                                                 <td></td>
                                                                 <td>{i + 1}</td>
                                                                 <td>
@@ -198,7 +198,7 @@ const ContestScreen = () => {
                                         <div class="shadow stats">
                                             <div class="stat">
                                                 <div class="stat-title">
-                                                    Partecipanti totali
+                                                    Risposte totali
                                                 </div>
                                                 <div class="stat-value">
                                                     {total === 100
@@ -215,11 +215,10 @@ const ContestScreen = () => {
                                         <div class="shadow stats">
                                             <div class="stat">
                                                 <div class="stat-title">
-                                                    Partecipanti con almeno un
-                                                    voto
+                                                    Risposta corretta
                                                 </div>
                                                 <div class="stat-value">
-                                                    {fav1}
+                                                    {solution ? solution : "???"}
                                                 </div>
                                             </div>
                                         </div>
@@ -258,7 +257,7 @@ const ContestScreen = () => {
                                     }}
                                     className=" -m-10 text-primary-content w-full text-center font-bold"
                                 >
-                                    Sembra che non ci sia nessun contest attivo
+                                    Sembra che non ci sia nessun trivia attivo
                                     per #
                                     {window.location.search
                                         .toString()
@@ -287,4 +286,4 @@ const ContestScreen = () => {
     );
 };
 
-export default ContestScreen;
+export default TriviaScreen;

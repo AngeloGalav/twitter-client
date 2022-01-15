@@ -4,7 +4,7 @@ const RankingColumn = (props) => {
     return (
         <div
             style={{ height: props.height, minHeight: props.minHeight, maxWidth: "18rem", width: `${props.position === 1 ? "40%" : "33%"}` }}
-            className={`bg-primary rounded-md flex justify-center items-center relative p-4 shadow-xl`}
+            className={`${props.solution ? "bg-success" : "bg-primary"} text-primary-content rounded-md flex justify-center items-center relative p-4 shadow-xl`}
         >
             <img
                 className="absolute top-0 left-1/2 transform -translate-x-1/2"

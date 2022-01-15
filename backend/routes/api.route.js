@@ -149,7 +149,7 @@ router.get("/Contest", async (req, res, next) => {
         if (tweet.statuses.length > 0) {
             let data = new Map();
             let fav1 = 0;
-            let fav100 = 0;
+            let favTotal = 0;
             let total = 0;
             const HashtagRegex = /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+/g;
             tweet.statuses.forEach((tweet, i) => {
@@ -160,8 +160,8 @@ router.get("/Contest", async (req, res, next) => {
                 if (tweet.favorite_count > 0 && partecipant) {
                     fav1++;
                 }
-                if (tweet.favorite_count > 100 && partecipant) {
-                    fav100++;
+                if (tweet.favorite_count > 0 && partecipant) {
+                    favTotal += tweet.favorite_count;
                 }
                 if (partecipant) {
                     total++
@@ -172,7 +172,54 @@ router.get("/Contest", async (req, res, next) => {
             res.status(200).json({ranking: dataSort,
                 total,
                 fav1,
-                fav100
+                favTotal
+            })
+        } else {
+            next(new Error("Nessun tweet trovato"))
+        }
+
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+});
+
+router.get("/Trivia", async (req, res, next) => {
+    try {
+        var params = req.query;
+        if (!params.q || !params.q.includes("from:") || !params.q.includes("swe11")) {
+            return next(new Error("Richiesta non corretta"))
+        }
+        const tweet = await client.get("search/tweets.json", {q: "%23"+params.q, count: 100});
+        if (tweet.statuses.length > 0) {
+            let data = new Map();
+            let solution = null;
+            let favTotal = 0;
+            let total = 0;
+            const HashtagRegex = /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+/g;
+            tweet.statuses.forEach((tweet, i) => {
+                const partecipant = tweet.text.replace(HashtagRegex, "");
+
+                if (partecipant.includes("La risposta corretta era: ")) {
+                    solution = partecipant.replace("La risposta corretta era: ", "")
+                    return
+                } 
+                if (!data.has(partecipant) && partecipant) {
+                    data.set(partecipant, tweet.favorite_count)
+                }
+                if (tweet.favorite_count > 0 && partecipant) {
+                    favTotal += tweet.favorite_count;
+                }
+                if (partecipant) {
+                    total++
+                }
+            })
+
+            const dataSort = [...data.entries()].sort((a, b) => b[1] - a[1]);
+            res.status(200).json({ranking: dataSort,
+                total,
+                solution,
+                favTotal
             })
         } else {
             next(new Error("Nessun tweet trovato"))

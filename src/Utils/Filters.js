@@ -1,1 +1,1 @@
-export const filters = ["Keyword", "Username", "Hashtag", "Contest"];
+export const filters = ["Keyword", "Username", "Hashtag", "Contest/Trivia"];

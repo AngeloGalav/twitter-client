@@ -36,10 +36,11 @@ const NavbarMobile = () => {
     const onSubmit = (data) => {
         //questa funzione e' quella che viene chiamata quando l'utente preme su cerca, data contiene l'input in data.userInput
         //per cambiare pagina usate l'hook useHistory() per prendere la funzione di react router dom che gestisce la history e fare un history.push(`/tweets/mainFilter${tabFocus}?data.userInput`)
-        if (filters[tabFocus] !== "Contest") {
+        if (filters[tabFocus] !== "Contest/Trivia") {
             history.push(`/tweets/${filters[tabFocus]}?q=${filters[tabFocus] !== "Keyword" ? data.userInput.substring(1) :  data.userInput}`);
         } else {
-            history.push(`/contest?q=${data.userInput.substring(1)} from:${data.userInputContest.substring(1)}`)
+            if (!data.userInput.includes("trivia")) history.push(`/contest?q=${data.userInput.substring(1)} from:${data.userInputContest.substring(1)}`)
+            else history.push(`/trivia?q=${data.userInput.substring(1)} from:${data.userInputContest.substring(1)}`)
         }
        
         history.go(0);
@@ -136,6 +137,8 @@ const NavbarMobile = () => {
             ? (containerId = "about-screen-container")
             : location.pathname === "/contest" 
             ? (containerId = "contest-screen-container")
+            : location.pathname === "/trivia" 
+            ? (containerId = "trivia-screen-container")
             : (containerId = "tweets-screen-container");
 
         if (menuOpen) {
@@ -166,8 +169,10 @@ const NavbarMobile = () => {
                             ? "home-screen-container"
                             : location.pathname === "/about"
                             ? "about-screen-container"
-                            : location.pathname === "/contest"
+                            : location.pathname === "/contest" 
                             ? "contest-screen-container"
+                            : location.pathname === "/trivia" 
+                            ? "trivia-screen-container"
                             : "tweets-screen-container"
                     }`}
                     spy={true}
@@ -296,17 +301,17 @@ const NavbarMobile = () => {
                     <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                         <div class="form-control mt-8">
                             <div class="relative w-full">
-                                <input
+                            <input
                                     type="text"
-                                    placeholder={`${tabFocus === 0 ? "Inserisci ciò che preferisci" : tabFocus === 1 ? "Inserisci un username come @Twitter" : tabFocus === 2 ? "Inserisci un hashtag come #politica" : "Inerisci un hashtag che termina con swe11"}`}
+                                    placeholder={`${tabFocus === 0 ? "Inserisci ciò che preferisci" : tabFocus === 1 ? "Inserisci un username come @Twitter" : tabFocus === 2 ? "Inserisci un hashtag come #politica" : "Inerisci un hashtag che termina con contestswe11 o triviaswe11"}`}
                                     {...register("userInput", {
                                         required: true,
                                         pattern: {
-                                            value: new RegExp(`${tabFocus === 0 ? ".*" : tabFocus === 1 ? "^@[a-zA-Z0-9_]{1,15}$" : tabFocus === 2 ? /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+/.source : /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+swe11/.source}`),
-                                            message: `${tabFocus === 0 ? "Inserisci qualcosa" : tabFocus === 1 ? "Inserisci un username come @Twitter" : tabFocus === 2 ? "Inserisci un hashtag come #politica" : "L'hastag deve terminare esattamente con swe11"}`
+                                            value: new RegExp(`${tabFocus === 0 ? ".*" : tabFocus === 1 ? "^@[a-zA-Z0-9_]{1,15}$" : tabFocus === 2 ? /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+/.source : /#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+contestswe11|#[^\s!@#$%^&*()=+.\/,\[{\]};:'"?><]+triviaswe11/.source}`),
+                                            message: `${tabFocus === 0 ? "Inserisci qualcosa" : tabFocus === 1 ? "Inserisci un username come @Twitter" : tabFocus === 2 ? "Inserisci un hashtag come #politica" : "L'hastag deve terminare esattamente con contestswe11 o triviaswe11"}`
                                           }
                                     })}
-                                    className={`w-full pr-16 text h-14 input ${
+                                    className={`w-full pr-16 h-14 input ${
                                         errors.userInput
                                             ? "input-error"
                                             : "input-primary"

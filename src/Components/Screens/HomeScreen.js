@@ -143,7 +143,7 @@ const HomeScreen = () => {
 
                             <Zoom>
                                 <FunctionalityCard
-                                    title={"Contest"}
+                                    title={"Contest/Trivia"}
                                     icon={"bi-trophy"}
                                 >
                                     Crea un contest o poni una domanda ai tuoi
@@ -181,8 +181,10 @@ const HomeScreen = () => {
                                 avviene tramite la scelta di un hashtag speciale
                                 che termini con{" "}
                                 <span className=" font-bold text-primary">
-                                    swe11
-                                </span>
+                                    contestswe11
+                                </span> per i contest e con <span className=" font-bold text-primary">
+                                    triviaswe11
+                                </span> per i trivia
                                 .
                             </p>
                             <p>
@@ -190,15 +192,12 @@ const HomeScreen = () => {
                                 <span className="underline">
                                     tutti i link ai tweet partecipanti
                                 </span>
-                                . Ogni tweet partecipante deve avere l'hashtag
+                                , così che gli utenti possano raggiungerli facilmente. Ogni tweet partecipante deve avere l'hashtag
                                 che si è scelto per il contest o il trivia.{" "}
-                                <span className="font-bold">
-                                    Il tweet con più like sarà il vincitore!
-                                </span>
                             </p>
                             <p>
                                 Sotto potete vedere alcuni esempi di come devono
-                                essere i tweet partecipanti al contest.
+                                essere i tweet partecipanti al contest o trivia.
                             </p>
                             <div class="alert alert-warning mt-4">
                                 <div class="flex-1">
@@ -225,7 +224,48 @@ const HomeScreen = () => {
                             <br />
                             <TweetCard 
                                 tweet={{
-                                    text: `Il signore degli anelli<br/>#Contestswe11$La mia risposta al trivia<br/>#Triviaswe11`,
+                                    text: `Il signore degli anelli<br/>#testcontestswe11$Risposta trivia<br/>#testtriviaswe11`,
+                                    created_at: new Date(),
+                                    retweet_count: 50,
+                                    favorite_count: 100,
+                                    comment_count: 10,
+                                    user: {
+                                        profile_image_url:
+                                            "https://pbs.twimg.com/media/Dw-EQ2PU0AA2OKP.jpg",
+                                        name: "HITWEET",
+                                        screen_name: "HI_TWEET",
+                                    },
+                                }}
+                            />
+
+                            <br />
+
+                            <div class="alert alert-info mt-4">
+                        <div class="flex-1">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                class="w-6 h-6 mx-2 stroke-current"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                            </svg>
+                            <label>
+                                Per rivelare la risposta di un trivia bisogna creare un tweet esattamente come il seguente
+                            </label>
+                        </div>
+                    </div>
+                            
+                            <br />
+
+                            <TweetCard 
+                                tweet={{
+                                    text: `La risposta corretta era: Risposta<br/>#testtriviaswe11`,
                                     created_at: new Date(),
                                     retweet_count: 0,
                                     favorite_count: 0,
@@ -238,8 +278,6 @@ const HomeScreen = () => {
                                     },
                                 }}
                             />
-
-                            
                         </div>
                     </div>
                 </div>
