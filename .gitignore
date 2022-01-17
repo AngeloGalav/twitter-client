@@ -9,6 +9,7 @@
 # testing
 /coverage/lcov-report
 /.scannerwork
+/testResults
 
 # production
 /build
