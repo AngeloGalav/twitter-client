@@ -7,4 +7,4 @@ if [ -d "../build" ]; then
 else
     echo "frontend build directory not found..."
 fi
-rsync -av --omit-dir-times --exclude 'node_modules' . angelo.galavotti@annina.cs.unibo.it:/home/web/site202148/html/
+rsync -av --omit-dir-times --no-perms --exclude 'node_modules' . angelo.galavotti@annina.cs.unibo.it:/home/web/site202148/html/
