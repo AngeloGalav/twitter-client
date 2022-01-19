@@ -24,7 +24,7 @@ export const store = createStore(
   compose(
     applyMiddleware(...middleware),
     //permette di utilizzare l'estensione di redux per google chrome o firefox
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() //adios redux
   )
 );
 
