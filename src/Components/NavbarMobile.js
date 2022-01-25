@@ -303,7 +303,7 @@ const NavbarMobile = () => {
                             <div class="relative w-full">
                             <input
                                     type="text"
-                                    placeholder={`${tabFocus === 0 ? "Inserisci ciò che preferisci" : tabFocus === 1 ? "Inserisci un username come @Twitter" : tabFocus === 2 ? "Inserisci un hashtag come #politica" : "Inerisci un hashtag che termina con contestswe11 o triviaswe11"}`}
+                                    placeholder={`${tabFocus === 0 ? "Inserisci ciò che preferisci" : tabFocus === 1 ? "Inserisci un username come @Twitter" : tabFocus === 2 ? "Inserisci un hashtag come #politica" : "Inserisci un hashtag che termina con contestswe11 o triviaswe11"}`}
                                     {...register("userInput", {
                                         required: true,
                                         pattern: {
