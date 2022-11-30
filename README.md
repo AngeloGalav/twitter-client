@@ -1,5 +1,13 @@
 # twitter-client
-[![Build Status](https://aminsep.disi.unibo.it/jenkins/buildStatus/icon?job=team11-twitter-client)](https://aminsep.disi.unibo.it/jenkins/job/team11-twitter-client/)
+A twitter client which features tweet statistics, visualization of the position of tweets, sentiment analysis and more, made in React. 
+It's our project for the Software Engineering course @ UniBo for y. 2021/2022. 
+
+The whole client was made in an Agile environment, using SCRUM's main principles. 
+Much of the details can be found [Documentation.md](Documentation.md) and the project's [report](report_finale_team11.pdf). Both these documents are in Italian. 
+
+## Visual demo of the project
+
+[![Watch the video](demo.gif)](https://www.youtube.com/watch?v=v2LiRsR4ejs)
 
 ## Come avviare l'app React
 In questa dir fare
@@ -15,4 +23,10 @@ Per avviare il server (che verrà aperto nella porta 8000 dell'host), che purtop
 `npm install && npm run dev`
 
 ## Info aggiuntive
-Puoi trovare maggiori info sulla struttura del progetto [qui](https://aminsep.disi.unibo.it/gitlab/uniboswe-team-11/twitter-client/-/blob/master/Documentation.md).
+Puoi trovare maggiori info sulla struttura del progetto [qui](Documentation.md).
+
+## Authors
+- Giacomo Ciccone
+- Angelo Galavotti
+- Letizia Gorini
+- Matteo Baldazzi
