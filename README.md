@@ -9,6 +9,8 @@ Much of the details can be found [Documentation.md](Documentation.md) and the pr
 
 [![Watch the video](demo.gif)](https://www.youtube.com/watch?v=v2LiRsR4ejs)
 
+You can click on the gif to watch an higher quality video of the demo. 
+
 ## Come avviare l'app React
 In questa dir fare
 
