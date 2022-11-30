@@ -3,7 +3,7 @@ A twitter client which features tweet statistics, visualization of the position 
 It's our project for the Software Engineering course @ UniBo for y. 2021/2022. 
 
 The whole client was made in an Agile environment, using SCRUM's main principles. 
-Much of the details can be found [Documentation.md](Documentation.md) and the project's [report](report_finale_team11.pdf). Both these documents are in Italian. 
+Much of the details can be found in [Documentation.md](Documentation.md) and the project's [report](report_finale_team11.pdf). Both these documents are in Italian. 
 
 ## Visual demo of the project
 
